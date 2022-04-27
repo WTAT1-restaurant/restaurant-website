@@ -1,28 +1,40 @@
-const http = require("http");
-const httpStatus = require("http-status-codes");
-const fs = require("fs");
+const express = require("express");
 
 const port = 3000;
 
-const routeMap = {
-    "/": "views/index.html"
-};
+const app = express();
 
-const app = http.createServer((req, res) => {
-    console.log("Received an incoming request!");
-    res.writeHead(httpStatus.StatusCodes.OK, {
-        "Content-Type": "text/html"
-    });
-    if (routeMap[req.url]) {
-        fs.readFile(routeMap[req.url], (error, data) => {
-            res.write(data);
-            res.end();
-        });
-    } else {
-        res.end("<h1>Sorry, not found.</h1>");
-    }
+// example of data in the database
+let database = {
+    "1" : { "id": 1, "title": "Nigiri with tuna" },
+    "2" : { "id": 2, "title": "Nigiri with salmon" }
+}
+
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/views/index.html");
 });
 
-app.listen(port);
+app.get("/menu/items", (req, res) => {
+    let response = {
+        "items": [
+            { "id": 1, "title": "Nigiri with tuna" },
+            { "id": 2, "title": "Nigiri with salmon" }
+        ]
+    };
+    res.send(response);
+});
 
-console.log(`The server has started and is listening on port number: ${port}`);
+app.get("/menu/items/:itemId", (req, res) => {
+    let response = {
+        "item": database[req.params.itemId]
+    };
+    res.send(response);
+});
+
+app.post("/contact", (req, res) => {
+    res.send("Contact information submitted successfully.");
+});
+
+app.listen(port, () => {
+    console.log(`The Express.js server has started and is listening on port number: ${port}`);
+});
