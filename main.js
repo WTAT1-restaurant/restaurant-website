@@ -31,6 +31,10 @@ app.get("/menu/items/:itemId", (req, res) => {
     res.send(response);
 });
 
+app.get("/description", (req, res) => {
+    res.sendFile(__dirname + "/views/description.html");
+});
+
 app.post("/contact", (req, res) => {
     res.send("Contact information submitted successfully.");
 });
