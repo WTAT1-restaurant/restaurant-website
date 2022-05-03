@@ -1,10 +1,7 @@
-@charset "UTF-8";
-/* CSS Document */
-
-body{
-    text-align: center;
-	margin:0;
-	padding:0;
+body {
+	text-align: center;
+	margin: 0;
+	padding: 0;
 	list-style: none;
 	text-decoration: none;
 	font-family: 'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';
@@ -12,7 +9,8 @@ body{
 	font-style: normal;
 	font-weight: 100;
 	width: 100%;
-	overflow-x: hidden;}
+	overflow-x: hidden;
+}
 
 /* Container */
 .container {
@@ -21,16 +19,17 @@ body{
 	margin-right: auto;
 	background-color: #FFFFFF;
 }
+
 /* normaler Link */
 a:link {
-  color: orangered;
-  text-decoration: none;
+	color: orangered;
+	text-decoration: none;
 }
 
 /* mouse over link */
 a:hover {
-  color: black;
-  text-decoration:none;
+	color: black;
+	text-decoration: none;
 
 }
 
@@ -46,6 +45,7 @@ a:hover {
 	color: orangered;
 
 }
+
 /* Banner Section */
 .banner {
 	background: url("https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80");
@@ -82,10 +82,15 @@ a:hover {
 	font-size: 17px;
 	transition: all 0.3s linear;
 }
+
 .button:hover {
 	background-color: #FFF;
 	color: #000;
 	cursor: pointer;
 	text-decoration: none;
+}
 
+img {
+	max-width: 400px;
+	max-height: 200px;
 }
