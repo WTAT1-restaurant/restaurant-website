@@ -1,3 +1,7 @@
+// i tried to implement controller from lesson 9 on our project
+// require the homeController.js to main.js
+const homeController = require("./controllers/homeController");
+
 const express = require("express");
 
 const port = 3000;
@@ -10,9 +14,12 @@ let database = {
     "2" : { "id": 2, "title": "Ikura Nigiri", Weight: "36 gr.", Fats: "1.40 gr.", Carbohydrates: "37.10 g.", Calories: "197.00" }
 }
 
-app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/views/index.html");
-});
+// try to change this code to implement the controller
+// app.get("/", (req, res) => {
+//     res.sendFile(__dirname + "/views/index.html");
+// });
+
+app.get("/", homeController.homePage);
 
 app.get("/menu/items", (req, res) => {
     let response = {
