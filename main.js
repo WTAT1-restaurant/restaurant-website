@@ -4,6 +4,9 @@ const port = 3000;
 
 const app = express();
 
+// needed to load css in html: https://stackoverflow.com/a/54747432
+app.use(express.static('public'));
+
 // example of data in the database
 let database = {
     "1" : { "id": 1, "title": "Maguro Nigiri", Weight: "38 gr.", Fats: "2.90 gr.", Carbohydrates: "37.40 g.", Calories: "232.00"},
