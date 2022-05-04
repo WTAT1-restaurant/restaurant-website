@@ -8,14 +8,17 @@
 <body>
   <%- include("./partials/nav.ejs") %>
   <h1>items</h1>
-  <p><h4><a href="/menu/items/1">Maguro Nigiri</a></h4></p>
-  <div>
-    <img src="https://imageproxy.wolt.com/menu/menu-images/6019324568bc6b99044013c5/d4c35348-66c8-11eb-9787-2242c94d6bb2_101_maguronigiri.jpeg">
-  </div>
-  <p><h4><a href="/menu/items/2">Ikura Nigiri</a></h4></p>
-  <div>
-    <img src="https://imageproxy.wolt.com/menu/menu-images/6019324568bc6b99044013c5/00836fc2-66c9-11eb-b1e9-1af7a293cf79_112_ikuranigiri.jpeg">
-  </div>
+  <!-- display menu items in a loop https://stackoverflow.com/a/38371978 -->
+  <% for (var i = 0; i < items.length; i++) { %>
+    <div style="display: inline-block">
+      <h4>
+        <a href="/menu/items/<%= items[i].id %>">
+          <%= items[i].title %> - <%= items[i].price %>€
+        </a>
+      </h4>
+      <img src="<%= items[i].image %>">
+    </div>
+  <% } %>
   <%- include("./partials/footer.ejs") %>
 </body>
 
