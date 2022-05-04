@@ -1,8 +1,14 @@
 const express = require("express");
 
+// express app
+const app = express();
+
 const port = 3000;
 
-const app = express();
+// listen for requests
+// app.listen(3000);
+
+app.set("view engine", "ejs");
 
 // needed to load css in html: https://stackoverflow.com/a/54747432
 app.use(express.static('public'));
@@ -14,7 +20,8 @@ let database = {
 }
 
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/views/index.html");
+    //res.sendFile(__dirname + "/views/index.html");
+    res.render("index");
 });
 
 app.get("/menu/items", (req, res) => {
@@ -35,7 +42,13 @@ app.get("/menu/items/:itemId", (req, res) => {
 });
 
 app.get("/menu", (req, res) => {
-    res.sendFile(__dirname + "/views/menu.html");
+    //res.sendFile(__dirname + "/views/menu.html");
+    res.render("menu");
+});
+
+app.get("/about", (req, res) => {
+    //res.sendFile(__dirname + "/views/menu.html");
+    res.render("about");
 });
 
 app.post("/contact", (req, res) => {
@@ -44,6 +57,10 @@ app.post("/contact", (req, res) => {
 
 app.get("/error", (req, res) => {
     throw Error('my error');
+});
+
+app.use((req, res) => {
+  res.status(404).render("404", { title: "404"});
 });
 
 app.listen(port, () => {
