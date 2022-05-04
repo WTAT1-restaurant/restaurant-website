@@ -1,4 +1,5 @@
 const express = require("express");
+const menuController = require("./controllers/menuController");
 
 // express app
 const app = express();
@@ -13,38 +14,15 @@ app.set("view engine", "ejs");
 // needed to load css in html: https://stackoverflow.com/a/54747432
 app.use(express.static('public'));
 
-// example of data in the database
-let database = {
-    "1" : { "id": 1, "title": "Maguro Nigiri", Weight: "38 gr.", Fats: "2.90 gr.", Carbohydrates: "37.40 g.", Calories: "232.00"},
-    "2" : { "id": 2, "title": "Ikura Nigiri", Weight: "36 gr.", Fats: "1.40 gr.", Carbohydrates: "37.10 g.", Calories: "197.00" }
-}
-
 app.get("/", (req, res) => {
     //res.sendFile(__dirname + "/views/index.html");
     res.render("index");
 });
 
-app.get("/menu/items", (req, res) => {
-    let response = {
-        "items": [
-            { "id": 1, "title": "Maguro Nigiri" },
-            { "id": 2, "title": "Ikura Nigiri" }
-        ]
-    };
-    res.send(response);
-});
+// get menu item by ID
+app.get("/menu/items/:itemId", menuController.getItem);
 
-app.get("/menu/items/:itemId", (req, res) => {
-    let response = {
-        "item": database[req.params.itemId]
-    };
-    res.send(response);
-});
-
-app.get("/menu", (req, res) => {
-    //res.sendFile(__dirname + "/views/menu.html");
-    res.render("menu");
-});
+app.get("/menu", menuController.getMenu);
 
 app.get("/about", (req, res) => {
     //res.sendFile(__dirname + "/views/menu.html");
@@ -60,7 +38,7 @@ app.get("/error", (req, res) => {
 });
 
 app.use((req, res) => {
-  res.status(404).render("404", { title: "404"});
+    res.status(404).render("404", { title: "404" });
 });
 
 app.listen(port, () => {
