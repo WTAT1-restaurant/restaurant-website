@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Menu</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-<body>
-  <%- include("./partials/nav.ejs") %>
+  <head>
+      <meta charset="utf-8">
+      <title>menu</title>
+      <link rel="stylesheet" type="text/css" href="/css/style.css">
+  </head>
+  <body>
+    <%- include("./partials/nav.ejs") %>
 
-  <h1>items</h1>
-  <div class="container">
+    <h1>menu</h1>
+    <div class="container">
 
-  <!-- Banner -->
+    <!-- Banner -->
 
     <section class="banner" id="banner">
     <div class="button"><a href="/veggie">VEGETARIAN</a></div>
@@ -19,18 +19,17 @@
 
     </div>
 
-  <!-- display menu items in a loop https://stackoverflow.com/a/38371978 -->
-  <% for (var i = 0; i < items.length; i++) { %>
-    <div style="display: inline-block">
-      <h4>
-        <a href="/menu/items/<%= items[i].id %>">
-          <%= items[i].title %> - <%= items[i].price %>€
-        </a>
-      </h4>
-      <img src="<%= items[i].image %>">
-    </div>
-  <% } %>
-  <%- include("./partials/footer.ejs") %>
-</body>
-
+    <!-- display menu items in a loop https://stackoverflow.com/a/38371978 -->
+    <% for (var i = 0; i < items.length; i++) { %>
+      <div style="display: inline-block">
+        <h4>
+          <a href="/menu/items/<%= items[i].id %>">
+            <%= items[i].title %> - <%= items[i].price %>€
+          </a>
+        </h4>
+        <img src="<%= items[i].image %>">
+      </div>
+    <% } %>
+    <%- include("./partials/footer.ejs") %>
+  </body>
 </html>
