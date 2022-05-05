@@ -4,7 +4,7 @@ body {
 	padding: 0;
 	list-style: none;
 	text-decoration: none;
-	font-family: 'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';
+	font-family: 'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', 'Helvetica, Arial', 'sans-serif';
 	background-color: #fff;
 	font-style: normal;
 	font-weight: 100;
@@ -93,4 +93,47 @@ a:hover {
 img {
 	max-width: 400px;
 	max-height: 200px;
+}
+
+h1 {
+	background-color: #191919;
+	color: #4e1f86;
+	margin: 0;
+}
+
+nav ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #191919;
+	<!-- position: fixed; -->
+}
+
+nav li {
+	float: center;
+	display: inline;
+}
+
+nav li a {
+	display: inline-block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+/* Change the link color to #4e1f86 ( purple) on hover */
+nav a:hover {
+	color: #4e1f86;
+}
+
+footer {
+	list-style-type: none;
+	margin: 0;
+	padding: 14px 16px;
+	overflow: hidden;
+	background-color: #191919;
+	color: white;
+	text-align: center;
 }

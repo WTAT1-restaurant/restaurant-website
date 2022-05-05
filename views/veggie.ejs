@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>VEGETARIAN</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+  <%- include("./partials/nav.ejs") %>
+
+  <div class="veggie-content">
+    <h1>Vegetarian Dishes</h1>
+
+    <% if (veggie.length > 0) { %>
+    <% veggie.forEach(veggie => { %>
+    <h3 class="title">
+        <%= veggie.title %> - <%= veggie.price %> </h3>
+    <img src="<%= veggie.image %>">
+<% }) %>
+<% } %>
+
+  <%- include("./partials/footer.ejs") %>
+
+  </div>
+</body>
+
+</html>

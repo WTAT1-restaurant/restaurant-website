@@ -1,41 +1,41 @@
 const express = require("express");
+const menuController = require("./controllers/menuController");
+
+// express app
+const app = express();
 
 const port = 3000;
 
-const app = express();
+// listen for requests
+// app.listen(3000);
+
+app.set("view engine", "ejs");
 
 // needed to load css in html: https://stackoverflow.com/a/54747432
 app.use(express.static('public'));
 
-// example of data in the database
-let database = {
-    "1" : { "id": 1, "title": "Maguro Nigiri", Weight: "38 gr.", Fats: "2.90 gr.", Carbohydrates: "37.40 g.", Calories: "232.00"},
-    "2" : { "id": 2, "title": "Ikura Nigiri", Weight: "36 gr.", Fats: "1.40 gr.", Carbohydrates: "37.10 g.", Calories: "197.00" }
-}
-
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/views/index.html");
+    //res.sendFile(__dirname + "/views/index.html");
+    res.render("index");
 });
 
-app.get("/menu/items", (req, res) => {
-    let response = {
-        "items": [
-            { "id": 1, "title": "Maguro Nigiri" },
-            { "id": 2, "title": "Ikura Nigiri" }
-        ]
-    };
-    res.send(response);
+// get menu item by ID
+app.get("/menu/items/:itemId", menuController.getItem);
+
+app.get("/menu", menuController.getMenu);
+
+
+app.get("/veggie", (req, res) => {
+  const veggie = [
+     { "id": 4, "title": "Avocado Nigiri", "image": "https://imageproxy.wolt.com/menu/menu-images/6019324568bc6b99044013c5/afd770b8-6566-11eb-a08c-0a89d2884f48_avocadonigiri.jpeg", "price": 5.00, "weight": 30, "fats": 1.33, "carbohydrates": 35.10, "calories": 120.00},
+     { "id": 5, "title": "Avocado Nigiri", "image": "https://imageproxy.wolt.com/menu/menu-images/6019324568bc6b99044013c5/99c84496-6566-11eb-9bfa-fe9c1eb06953_inari.jpeg", "price": 4.50, "weight": 56, "fats": 2.33, "carbohydrates": 41.10, "calories": 134.00 },
+  ];
+    res.render("veggie", {title: "Vegetarian", veggie });
 });
 
-app.get("/menu/items/:itemId", (req, res) => {
-    let response = {
-        "item": database[req.params.itemId]
-    };
-    res.send(response);
-});
-
-app.get("/menu", (req, res) => {
-    res.sendFile(__dirname + "/views/menu.html");
+app.get("/about", (req, res) => {
+    //res.sendFile(__dirname + "/views/menu.html");
+    res.render("about");
 });
 
 app.post("/contact", (req, res) => {
@@ -44,6 +44,10 @@ app.post("/contact", (req, res) => {
 
 app.get("/error", (req, res) => {
     throw Error('my error');
+});
+
+app.use((req, res) => {
+    res.status(404).render("404", { title: "404" });
 });
 
 app.listen(port, () => {
