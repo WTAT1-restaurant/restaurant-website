@@ -24,6 +24,15 @@ app.get("/menu/items/:itemId", menuController.getItem);
 
 app.get("/menu", menuController.getMenu);
 
+
+app.get("/veggie", (req, res) => {
+  const veggie = [
+     { "id": 4, "title": "Avocado Nigiri", "image": "https://imageproxy.wolt.com/menu/menu-images/6019324568bc6b99044013c5/afd770b8-6566-11eb-a08c-0a89d2884f48_avocadonigiri.jpeg", "price": 5.00, "weight": 30, "fats": 1.33, "carbohydrates": 35.10, "calories": 120.00},
+     { "id": 5, "title": "Avocado Nigiri", "image": "https://imageproxy.wolt.com/menu/menu-images/6019324568bc6b99044013c5/99c84496-6566-11eb-9bfa-fe9c1eb06953_inari.jpeg", "price": 4.50, "weight": 56, "fats": 2.33, "carbohydrates": 41.10, "calories": 134.00 },
+  ];
+    res.render("veggie", {title: "Vegetarian", veggie });
+});
+
 app.get("/about", (req, res) => {
     //res.sendFile(__dirname + "/views/menu.html");
     res.render("about");
