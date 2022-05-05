@@ -26,11 +26,6 @@ app.get("/menu/items/:itemId", menuController.getItem);
 
 app.get("/menu", menuController.getMenu);
 
-// https://www.youtube.com/watch?v=pYj48mDXHBU
-// get error to check if the 500 page will load
-app.get("/error", (req, res) => res.send(error()));
-
-
 app.get("/veggie", (req, res) => {
   const veggie = [
      { "id": 4, "title": "Avocado Nigiri", "image": "https://imageproxy.wolt.com/menu/menu-images/6019324568bc6b99044013c5/afd770b8-6566-11eb-a08c-0a89d2884f48_avocadonigiri.jpeg", "price": 5.00, "weight": 30, "fats": 1.33, "carbohydrates": 35.10, "calories": 120.00},
@@ -48,9 +43,13 @@ app.post("/contact", (req, res) => {
     res.send("Contact information submitted successfully.");
 });
 
-app.get("/error", (req, res) => {
-    throw Error('my error');
-});
+// app.get("/error", (req, res) => {
+//     throw Error('my error');
+// });
+
+// https://www.youtube.com/watch?v=pYj48mDXHBU
+// get error to check if the 500 page will load
+app.get("/error", (req, res) => res.send(error()));
 
 app.use((req, res) => {
     res.status(404).render("404", { title: "404" });

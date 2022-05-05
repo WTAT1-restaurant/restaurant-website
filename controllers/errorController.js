@@ -4,8 +4,13 @@ const httpStatus = require("http-status-codes");
 exports.respondInternalError = (error, req, res, next) => {
     let errorCode = httpStatus.INTERNAL_SERVER_ERROR;
     res.status(errorCode);
-    res.sendFile(`./public/${errorCode}.html`, {
-        root: "./"
-    });
+
+    // using html file
+    // res.sendFile(`./public/${errorCode}.html`, {
+    //     root: "./"
+    // });
+
+    // using ejs
+    res.render("500");
 };
 
