@@ -4,7 +4,7 @@ body {
 	padding: 0;
 	list-style: none;
 	text-decoration: none;
-	font-family: 'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';
+	font-family: 'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', 'Helvetica, Arial', 'sans-serif';
 	background-color: #fff;
 	font-style: normal;
 	font-weight: 100;
@@ -93,4 +93,8 @@ a:hover {
 img {
 	max-width: 400px;
 	max-height: 200px;
+}
+h1 {
+	/* background-color: #191919; */
+	color: #4e1f86;
 }
