@@ -1,11 +1,8 @@
 const express = require("express");
 const menuController = require("./controllers/menuController");
-
 // express app
 const app = express();
-
 const port = 3000;
-
 // listen for requests
 // app.listen(3000);
 
@@ -24,7 +21,8 @@ app.get("/menu/items/:itemId", menuController.getItem);
 
 app.get("/menu", menuController.getMenu);
 
-
+// Not needed anymore as well as veggie.ejs
+// Replaced with vegetarian=true query parameter for /menu route in menuController
 app.get("/veggie", (req, res) => {
   const veggie = [
      { "id": 4, "title": "Avocado Nigiri", "image": "https://imageproxy.wolt.com/menu/menu-images/6019324568bc6b99044013c5/afd770b8-6566-11eb-a08c-0a89d2884f48_avocadonigiri.jpeg", "price": 5.00, "weight": 30, "fats": 1.33, "carbohydrates": 35.10, "calories": 120.00},
