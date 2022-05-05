@@ -95,6 +95,7 @@ img {
 	max-height: 200px;
 }
 h1 {
-	/* background-color: #191919; */
+	background-color: #191919;
 	color: #4e1f86;
+	margin: 0;
 }
