@@ -1,5 +1,6 @@
 const express = require("express");
 const menuController = require("./controllers/menuController");
+const errorController = require("./controllers/errorController");
 
 // express app
 const app = express();
@@ -12,6 +13,7 @@ const port = 3000;
 app.set("view engine", "ejs");
 
 // needed to load css in html: https://stackoverflow.com/a/54747432
+// book page 119
 app.use(express.static('public'));
 
 app.get("/", (req, res) => {
@@ -23,6 +25,10 @@ app.get("/", (req, res) => {
 app.get("/menu/items/:itemId", menuController.getItem);
 
 app.get("/menu", menuController.getMenu);
+
+// https://www.youtube.com/watch?v=pYj48mDXHBU
+// get error to check if the 500 page will load
+app.get("/error", (req, res) => res.send(error()));
 
 
 app.get("/veggie", (req, res) => {
@@ -49,6 +55,9 @@ app.get("/error", (req, res) => {
 app.use((req, res) => {
     res.status(404).render("404", { title: "404" });
 });
+
+// error-handling middleware
+app.use(errorController.respondInternalError);
 
 app.listen(port, () => {
     console.log(`The Express.js server has started and is listening on port number: ${port}`);
