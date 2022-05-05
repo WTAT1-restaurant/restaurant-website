@@ -7,7 +7,18 @@
 </head>
 <body>
   <%- include("./partials/nav.ejs") %>
+
   <h1>items</h1>
+  <div class="container">
+
+  <!-- Banner -->
+
+    <section class="banner" id="banner">
+    <div class="button"><a href="/veggie">VEGETARIAN</a></div>
+    </section>
+
+    </div>
+
   <!-- display menu items in a loop https://stackoverflow.com/a/38371978 -->
   <% for (var i = 0; i < items.length; i++) { %>
     <div style="display: inline-block">
