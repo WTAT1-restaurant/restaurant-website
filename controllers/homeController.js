@@ -39,7 +39,8 @@ exports.sendReqParamDataBase = (req, res) => {
 };
 
 exports.sendMenu = (req, res) => {
-  res.sendFile(__dirname + "/views/menu.html");
+  // res.sendFile(__dirname + "/views/menu.html");
+  res.render("menu");
 };
 
 // exports.respondWithName = (req, res) => {

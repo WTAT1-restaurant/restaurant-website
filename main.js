@@ -4,48 +4,47 @@ const port = 3000;
 
 const app = express();
 
+const homeController = require("./controllers/homeController");
+
+const layouts = require("express-ejs-layouts")
+
+//let  application knows to expect EJS in your views folder
+app.set("view engine", "ejs")
+
 // needed to load css in html: https://stackoverflow.com/a/54747432
-app.use(express.static('public'));
+app.use(express.static("public"));
+
+app.use(layouts);
 
 // example of data in the database
-let database = {
-    "1" : { "id": 1, "title": "Maguro Nigiri", Weight: "38 gr.", Fats: "2.90 gr.", Carbohydrates: "37.40 g.", Calories: "232.00"},
-    "2" : { "id": 2, "title": "Ikura Nigiri", Weight: "36 gr.", Fats: "1.40 gr.", Carbohydrates: "37.10 g.", Calories: "197.00" }
-}
 
-app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/views/index.html");
-});
+// module.exports = {database};
+//apllying MVC Design
+app.get("/", homeController.sendIndex);
 
-app.get("/menu/items", (req, res) => {
-    let response = {
-        "items": [
-            { "id": 1, "title": "Maguro Nigiri" },
-            { "id": 2, "title": "Ikura Nigiri" }
-        ]
-    };
-    res.send(response);
-});
+app.get("/menu/items", homeController.sendReqParamOfMenu);
 
-app.get("/menu/items/:itemId", (req, res) => {
-    let response = {
-        "item": database[req.params.itemId]
-    };
-    res.send(response);
-});
+app.get("/menu/items/:itemId", homeController.sendReqParamDataBase);
 
-app.get("/menu", (req, res) => {
-    res.sendFile(__dirname + "/views/menu.html");
-});
+app.get("/menu", homeController.sendMenu);
 
 app.post("/contact", (req, res) => {
-    res.send("Contact information submitted successfully.");
+  res.send("Contact information submitted successfully.");
 });
 
+//run
+// app.get("/thank_you", homeController.respondWithName);
+//using parameter
+app.get("/menu/:extraID", homeController.respondWithExtra );
+// app.get("/menu/:extraID", homeController.respondWithPrice)
+
+
 app.get("/error", (req, res) => {
-    throw Error('my error');
+  throw Error("my error");
 });
 
 app.listen(port, () => {
-    console.log(`The Express.js server has started and is listening on port number: ${port}`);
+  console.log(
+    `The Express.js server has started and is listening on port number: ${port}`
+  );
 });
