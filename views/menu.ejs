@@ -10,13 +10,7 @@
 
     <h1>menu</h1>
     <div class="container">
-
-    <!-- Banner -->
-
-    <section class="banner" id="banner">
-    <div class="button"><a href="/veggie">VEGETARIAN</a></div>
-    </section>
-
+      <div class="button"><a href="/menu?vegetarian=true">VEGETARIAN</a></div>
     </div>
 
     <!-- display menu items in a loop https://stackoverflow.com/a/38371978 -->
@@ -27,7 +21,9 @@
             <%= items[i].title %> - <%= items[i].price %>€
           </a>
         </h4>
-        <img src="<%= items[i].image %>">
+        <a href="/menu/items/<%= items[i].id %>">
+          <img src="<%= items[i].image %>">
+        </a>
       </div>
     <% } %>
     <%- include("./partials/footer.ejs") %>
