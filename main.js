@@ -1,4 +1,8 @@
 const express = require("express");
+
+const mongoose = require('mongoose');
+//const menu = require('./models/menu');
+
 const menuController = require("./controllers/menuController");
 const errorController = require("./controllers/errorController");
 
@@ -7,6 +11,19 @@ const app = express();
 const port = 3000;
 // listen for requests
 // app.listen(3000);
+
+// connect to mongodb database
+// const dbURI = 'mongodb+srv://<username>:<password>@foodorder.enn28.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+// maryna = p9Xn5MYjNaeklQMU
+// joey = j5dfn2MQnuHjZGp5
+// lana = UOwUBbYgUXhY1JQF
+// elsya = tgTEGOOfLC8PLzEq
+
+const dbURI = 'mongodb+srv://anni:i4eIB3sN6sAJ7pZP@foodorder.enn28.mongodb.net/FoodOrder?retryWrites=true&w=majority'
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
+.then((result) => app.listen(port, () => {
+    console.log(`The Express.js server has started and is listening on port number: ${port}`); }))
+.catch((err) => console.log(err));
 
 app.set("view engine", "ejs");
 
@@ -58,6 +75,7 @@ app.use((req, res) => {
 // error-handling middleware
 app.use(errorController.respondInternalError);
 
-app.listen(port, () => {
-    console.log(`The Express.js server has started and is listening on port number: ${port}`);
-});
+// first draft: mongoose and mongo sandbox routes
+//app.get('/add-menu', (req, res) => {
+//  const menu = new menu({})
+//} )
