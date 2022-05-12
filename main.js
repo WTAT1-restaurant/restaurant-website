@@ -5,12 +5,11 @@ const mongoose = require('mongoose');
 
 const menuController = require("./controllers/menuController");
 const errorController = require("./controllers/errorController");
+const cartController = require("./controllers/cartController");
 
 // express app
 const app = express();
 const port = 3000;
-// listen for requests
-// app.listen(3000);
 
 // connect to mongodb database
 // const dbURI = 'mongodb+srv://<username>:<password>@foodorder.enn28.mongodb.net/FoodOrder?retryWrites=true&w=majority'
@@ -45,6 +44,11 @@ app.get("/menu", menuController.getMenu);
 app.get("/about", (req, res) => {
     //res.sendFile(__dirname + "/views/menu.html");
     res.render("about");
+});
+// Shopping Cart
+
+app.get("/cart", (req, res) => {
+    res.render("cart");
 });
 
 app.post("/contact", (req, res) => {

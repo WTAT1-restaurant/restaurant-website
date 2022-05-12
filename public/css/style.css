@@ -97,7 +97,7 @@ img {
 
 h1 {
 	background-color: #191919;
-	color: #4e1f86;
+	color: #7a00dd;
 	margin: 0;
 }
 
@@ -125,7 +125,7 @@ nav li a {
 
 /* Change the link color to #4e1f86 ( purple) on hover */
 nav a:hover {
-	color: #4e1f86;
+	color: #7a00dd;
 }
 
 footer {
