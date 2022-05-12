@@ -55,4 +55,18 @@ exports.getMenu = (req, res) => {
             }
         });
     }
+
+    let priceSorted = req.query.sortPrice;
+
+    if (priceSorted == 'true') {
+        // create a query and sort them based on price
+        var query = MenuItem.find({})
+        .sort({price: 1});
+        query.exec((error, data) => {
+            if (data) {
+                res.render("menu", {"items": data});
+            }
+        });
+    }
+
 }
