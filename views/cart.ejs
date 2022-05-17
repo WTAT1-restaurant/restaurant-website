@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+  <%- include("./partials/nav.ejs") %>
+
+    <h1>Current Order</h1>
+
+    <section class="shoppingcart">
+      <div class="cart-row">
+          <span class="cart-item cart-header cart-column">ITEM</span>
+          <span class="cart-price cart-header cart-column">PRICE</span>
+          <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+      </div>
+
+      <div class="cart-total-qnt">
+        <h2><strong>TOTAL QUANTITY </strong></h2>
+        <span class="cart-total-qnt"> Hier wird die totale Anzahl der Items angezeigt</span>
+     </div>
+
+      <div class="cart-total">
+        <h2><strong>TOTAL PRICE </strong></h2>
+          <span class="cart-total-price"> Hier wird die Gesamtsumme der Bestellung angezeigt. </span>
+      </div>
+
+      <button class="order-btn" type="button">ORDER</button>
+  </section>
+
+    <% } %>
+    <%- include("./partials/footer.ejs") %>
+  </body>
+</html>

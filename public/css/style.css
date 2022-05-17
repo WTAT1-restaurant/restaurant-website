@@ -81,6 +81,7 @@ a:hover {
 	color: #FFFFFF;
 	font-size: 17px;
 	transition: all 0.3s linear;
+
 }
 
 .button:hover {
@@ -90,6 +91,47 @@ a:hover {
 	text-decoration: none;
 }
 
+.btn {
+	box-sizing: border-box;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background-color: transparent;
+	border: 2px solid #7a00dd;
+	border-radius: 0.5em;
+	color: #7a00dd;
+	cursor: pointer;
+	-webkit-align-self: center;
+	-ms-flex-item-align: center;
+	align-self: center;
+	font-size: 1rem;
+	line-height: 1;
+	padding: 1em 2em;
+	text-decoration: none;
+	text-align: center;
+	text-transform: uppercase;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 900;
+	margin: 0 auto;
+	display: inline-block;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.btn:hover {
+	color: #fff;
+	outline: 0;
+}
+
+.first {
+	-webkit-transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+	transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+}
+
+.first:hover {
+	box-shadow: 0 0 40px 40px #7a00dd inset;
+}
+
 img {
 	max-width: 400px;
 	max-height: 200px;
@@ -97,7 +139,7 @@ img {
 
 h1 {
 	background-color: #191919;
-	color: #4e1f86;
+	color: #7a00dd;
 	margin: 0;
 }
 
@@ -107,7 +149,6 @@ nav ul {
 	padding: 0;
 	overflow: hidden;
 	background-color: #191919;
-	<!-- position: fixed; -->
 }
 
 nav li {
@@ -125,7 +166,7 @@ nav li a {
 
 /* Change the link color to #4e1f86 ( purple) on hover */
 nav a:hover {
-	color: #4e1f86;
+	color: #7a00dd;
 }
 
 footer {
@@ -136,4 +177,12 @@ footer {
 	background-color: #191919;
 	color: white;
 	text-align: center;
+}
+
+/* Cell for menu item */
+.item-cell {
+	display: inline-block;
+	border-style: solid;
+	border-width: 1px;
+	margin-top: 5px
 }

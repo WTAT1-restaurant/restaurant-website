@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <meta charset="utf-8">
-      <title>menu</title>
-      <link rel="stylesheet" type="text/css" href="/css/style.css">
-  </head>
-  <body>
-    <%- include("./partials/nav.ejs") %>
+
+<head>
+  <meta charset="utf-8">
+  <title>menu</title>
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+  <%- include("./partials/nav.ejs") %>
 
     <h1>menu</h1>
     <div class="container">
       <div class="button"><a href="/menu?vegetarian=true">VEGETARIAN</a></div>
     </div>
 
+    <!-- button to sort the price -->
+    <div class="container">
+      <div class="button"><a href="/menu?sortPrice=true">SORT PRICE</a></div>
+    </div>
+
     <!-- display menu items in a loop https://stackoverflow.com/a/38371978 -->
-    <% for (var i = 0; i < items.length; i++) { %>
-      <div style="display: inline-block">
+    <% for (var i=0; i < items.length; i++) { %>
+      <div class="item-cell">
         <h4>
           <a href="/menu/items/<%= items[i].id %>">
             <%= items[i].title %> - <%= items[i].price %>€
@@ -24,8 +31,13 @@
         <a href="/menu/items/<%= items[i].id %>">
           <img src="<%= items[i].image %>">
         </a>
+        <div>
+          <button class="btn first">+</button>
+          <button class="btn first">−</button>
+        </div>
       </div>
-    <% } %>
-    <%- include("./partials/footer.ejs") %>
-  </body>
+      <% } %>
+        <%- include("./partials/footer.ejs") %>
+</body>
+
 </html>
