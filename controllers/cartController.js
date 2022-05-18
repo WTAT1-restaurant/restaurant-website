@@ -4,6 +4,9 @@
 // Just created file, couldnt finish it
 const Cart = require('./../models/cart');
 
+// 1. Check if the cart already exists in the database
+// 2. If the cart doesn't exist, create a new cart with the given userID, item, total cost and save it in the database
+// 3. If the cart exists, add item to the cart, update total cost and save it in the database
 exports.addItem = (req, res) => {
 	Cart.findOne({"userID": req.body.userID})
         .exec()
@@ -50,16 +53,4 @@ exports.addItem = (req, res) => {
 };
 
 exports.removeItem = (req, res) => {
-    // let newSubscriber = new Subscriber({
-    //     name: req.body.name,
-    //     email: req.body.email,
-    //     zipCode: req.body.zipCode
-    // });
-    // newSubscriber.save()
-    //     .then(result => {
-    //         res.render("thanks");
-    //     })
-    //     .catch(error => {
-    //         if (error) res.send(error);
-    //     });
 };
