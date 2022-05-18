@@ -31,6 +31,14 @@ app.set("view engine", "ejs");
 // book page 119
 app.use(express.static('public'));
 
+// is needed to parse POST body
+app.use(
+    express.urlencoded({
+        extended: false
+    })
+);
+app.use(express.json());
+
 app.get("/", (req, res) => {
     //res.sendFile(__dirname + "/views/index.html");
     res.render("index");
@@ -51,13 +59,13 @@ app.get("/cart", (req, res) => {
     res.render("cart");
 });
 
+app.post("/cart/add", cartController.addItem);
+
+app.post("/cart/remove", cartController.removeItem);
+
 app.post("/contact", (req, res) => {
     res.send("Contact information submitted successfully.");
 });
-
-// app.get("/error", (req, res) => {
-//     throw Error('my error');
-// });
 
 // https://www.youtube.com/watch?v=pYj48mDXHBU
 // get error to check if the 500 page will load
