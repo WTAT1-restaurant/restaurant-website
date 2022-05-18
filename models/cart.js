@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const cartSchema = mongoose.Schema({
-
  // user model has to be created and ref refers to user model (maybe next sprint)
   userID: {
     type: String,
@@ -11,15 +10,10 @@ const cartSchema = mongoose.Schema({
     type: Array,
     default: []
   },
-  totalQuantity: {
-    type: Number,
-    default: 0
-  },
   totalCost: {
     type: Number,
     default: 0
-  },
-
+  }
 });
 
 const cart = mongoose.model('cart', cartSchema);
