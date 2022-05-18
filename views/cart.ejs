@@ -8,28 +8,34 @@
 <body>
   <%- include("./partials/nav.ejs") %>
 
-    <h1>Current Order</h1>
 
-    <section class="shoppingcart">
-      <div class="cart-row">
-          <span class="cart-item cart-header cart-column">ITEM</span>
-          <span class="cart-price cart-header cart-column">PRICE</span>
-          <span class="cart-quantity cart-header cart-column">QUANTITY</span>
-      </div>
+  <div class="container">
+    <h1>Your Order</h1>
 
-      <div class="cart-total-qnt">
-        <h2><strong>TOTAL QUANTITY </strong></h2>
-        <span class="cart-total-qnt"> Hier wird die totale Anzahl der Items angezeigt</span>
-     </div>
+  <section class="shopping-cart">
 
-      <div class="cart-total">
-        <h2><strong>TOTAL PRICE </strong></h2>
-          <span class="cart-total-price"> Hier wird die Gesamtsumme der Bestellung angezeigt. </span>
-      </div>
+        <ul class="sc-items">
+          <li class="clearfix">
+            <span class="item-name">[Show Name Of Dish]</span>
+            <span class="item-price"><strong>[Show Price Of Dish]</strong></span>
+            <span class="item-quantity">[Show item quantity]</span>
+          </li>
+        </ul>
 
-      <button class="order-btn" type="button">ORDER</button>
-  </section>
+        <div class="sc-footer">
+          <div class="sc-total"><strong>
+            <span class="lighter-text">Total:</span>
+            <span class="total-price">[Show total sum of order]</span></strong>
+          </div>
+        </div> 
+        <a href="#" class="sc-btn">PLACE ORDER</a>
+      </div> 
+    </div> 
 
-    <%- include("./partials/footer.ejs") %>
+    </section>
+  </div> 
+
+  <%- include("./partials/footer.ejs") %>
+
   </body>
 </html>
