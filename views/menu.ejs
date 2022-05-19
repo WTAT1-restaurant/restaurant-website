@@ -38,7 +38,12 @@
             <input type="number" name="price" value="<%= items[i].price %>" hidden>
             <button type="submit" class="btn first">+</button>
           </form>
-          <button class="btn first">−</button>
+          <form action="/cart/remove" method="post">
+            <input type="text" name="userID" value="1" hidden>
+            <input type="text" name="title" value="<%= items[i].title %>" hidden>
+            <input type="number" name="price" value="<%= items[i].price %>" hidden>
+            <button class="btn first">−</button>
+          </form>
         </div>
       </div>
       <% } %>
