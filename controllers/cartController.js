@@ -53,4 +53,29 @@ exports.addItem = (req, res) => {
 };
 
 exports.removeItem = (req, res) => {
+	Cart.findOne({"userID": req.body.userID})
+	.exec()
+	
+	.then(cart => {
+
+	cart.items.pull(
+		{
+			"title": req.body.title,
+			"price": parseFloat(req.body.price)
+		}
+	);
+	cart.totalCost = cart.totalCost - parseFloat(req.body.price)
+	cart.save()
+		.then(result => {
+			res.send("Item removed from cart");
+		})
+		.catch(error => {
+			if (error) res.send(error);
+		});
+	})
+	.catch((error) => {
+		console.log(error.message);
+		return [];
+	})
+	
 };
