@@ -17,9 +17,9 @@
 
         <ul class="sc-items">
           <li class="clearfix">
-            <% for (var i=0; i < items.length; i++) { %>
-            <span class="item-name"><%= items[i].title%></span>
-            <span class="item-price"><strong><%= items[i].price%></strong></span>
+            <% for (var i=0; i < cart.items.length; i++) { %>
+            <span class="item-name"><%= cart.items[i].title%></span>
+            <span class="item-price"><strong><%= cart.items[i].price%></strong></span>
             <span class="item-quantity">1</span>
             <br>
             <% } %>
@@ -29,7 +29,7 @@
         <div class="sc-footer">
           <div class="sc-total"><strong>
             <span class="lighter-text">Total:</span>
-            <span class="total-price">[Show total sum of order]</span></strong>
+            <span class="total-price"><%= cart.totalCost %></span></strong>
           </div>
         </div> 
         <a href="#" class="sc-btn">PLACE ORDER</a>

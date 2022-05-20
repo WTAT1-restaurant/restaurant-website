@@ -102,8 +102,8 @@ exports.get = (req, res) => {
         .exec()
         .then(cart => {
 			// const items = JSON.stringify(cart.items);
-			const items = cart.items;
-			res.render("cart", {items: items});
+			const cartDoc = cart;
+			res.render("cart", {cart: cartDoc});
 		})
 		.catch((error) => {
             console.log(error.message);
