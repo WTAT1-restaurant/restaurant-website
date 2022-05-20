@@ -80,6 +80,24 @@ exports.removeItem = (req, res) => {
 	
 };
 
+exports.get = (req, res) => {
+	// Cart.findOne({"userID": req.body.userID})
+	Cart.findOne({"userID": 1})
+        .exec()
+        .then(cart => {
+			// const items = JSON.stringify(cart.items);
+			const cartDoc = cart;
+			const sizeCart = cartDoc.items.length;
+            const totalPrice = cartDoc.totalCost;
+			res.render("cart", {cart: cartDoc, cartSize: sizeCart, cartPrice: totalPrice});
+		})
+		.catch((error) => {
+            console.log(error.message);
+            return [];
+        })
+};
+
+// possible function for the nav bar? Still in progress
 exports.countBasketItems = (req, res) => {
 	Cart.findOne({"userID": req.body.userID})
 	.exec()
@@ -94,19 +112,4 @@ exports.countBasketItems = (req, res) => {
 	// .then(result => {	
 	// 	db.collection.find({arrayElementName : {$exists:true, $size:0}}) 
 	// }
-}
-
-exports.get = (req, res) => {
-	// Cart.findOne({"userID": req.body.userID})
-	Cart.findOne({"userID": 1})
-        .exec()
-        .then(cart => {
-			// const items = JSON.stringify(cart.items);
-			const cartDoc = cart;
-			res.render("cart", {cart: cartDoc});
-		})
-		.catch((error) => {
-            console.log(error.message);
-            return [];
-        })
 }
