@@ -17,7 +17,7 @@ exports.addItem = (req, res) => {
 					items: [
 						{
 							"title": req.body.title,
-							"price": req.body.price
+							"price": parseFloat(req.body.price)
 						}
 					],
 					totalCost: req.body.price
@@ -79,3 +79,34 @@ exports.removeItem = (req, res) => {
 	})
 	
 };
+
+exports.countBasketItems = (req, res) => {
+	Cart.findOne({"userID": req.body.userID})
+	.exec()
+	// .then(result => {
+	// 	res.send(db.inventory.aggregate([{
+	// 		$project: {
+	// 			item: 1,
+	// 			numberOfColors: { $cond: { if: { $isArray: "$colors" }, then: { $size: "$colors" }, else: "NA"} }
+	// 		}
+	// 	}]));
+	// })
+	// .then(result => {	
+	// 	db.collection.find({arrayElementName : {$exists:true, $size:0}}) 
+	// }
+}
+
+exports.get = (req, res) => {
+	// Cart.findOne({"userID": req.body.userID})
+	Cart.findOne({"userID": 1})
+        .exec()
+        .then(cart => {
+			// const items = JSON.stringify(cart.items);
+			const items = cart.items;
+			res.render("cart", {items: items});
+		})
+		.catch((error) => {
+            console.log(error.message);
+            return [];
+        })
+}

@@ -55,9 +55,7 @@ app.get("/about", (req, res) => {
 });
 // Shopping Cart
 
-app.get("/cart", (req, res) => {
-    res.render("cart");
-});
+app.get("/cart", cartController.get);
 
 app.post("/cart/add", cartController.addItem);
 

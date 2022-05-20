@@ -12,13 +12,16 @@
   <div class="container">
     <h1>Your Order</h1>
 
+    
   <section class="shopping-cart">
 
         <ul class="sc-items">
           <li class="clearfix">
-            <span class="item-name">[Show Name Of Dish]</span>
-            <span class="item-price"><strong>[Show Price Of Dish]</strong></span>
-            <span class="item-quantity">[Show item quantity]</span>
+            <% for (var i=0; i < items.length; i++) { %>
+            <span class="item-name"><%= items[i].title%></span>
+            <span class="item-price"><strong><%= items[i].price%></strong></span>
+            <% } %>
+            <span class="item-quantity">1</span>
           </li>
         </ul>
 
