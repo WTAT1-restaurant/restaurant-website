@@ -35,12 +35,17 @@ exports.getItem = (req, res) => {
 
 exports.getMenu = (req, res) => {
     let veggie = req.query.vegetarian;
+    let priceSorted = req.query.sortPrice;
 
     if (veggie == 'true') {
         // create a query to find vegetarian menu items
         var query = MenuItem.find({
             vegetarian: true
         });
+        
+        if (priceSorted == 'true') {
+            query.sort({price: 1});
+        }
         query.exec((error, data) => {
             if (data) {
                 res.render("menu", { "items": data, "vegetarian": true });
@@ -49,22 +54,13 @@ exports.getMenu = (req, res) => {
     } else {
         // create a query to find all menu items
         var query = MenuItem.find({});
+        
+        if (priceSorted == 'true') {
+            query.sort({price: 1});
+        }
         query.exec((error, data) => {
             if (data) {
                 res.render("menu", { "items": data });
-            }
-        });
-    }
-
-    let priceSorted = req.query.sortPrice;
-
-    if (priceSorted == 'true') {
-        // create a query and sort them based on price
-        var query = MenuItem.find({})
-        .sort({price: 1});
-        query.exec((error, data) => {
-            if (data) {
-                res.render("menu", {"items": data});
             }
         });
     }

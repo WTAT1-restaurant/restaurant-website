@@ -59,12 +59,13 @@ app.post("/contact", (req, res) => {
 // get error to check if the 500 page will load
 app.get("/error", (req, res) => res.send(error()));
 
-app.use((req, res) => {
-    res.status(404).render("404", { title: "404" });
-});
+// app.use((req, res) => {
+//     res.status(404).render("404", { title: "404" });
+// });
 
 // error-handling middleware
 app.use(errorController.respondInternalError);
+app.use(errorController.pageNotFoundError);
 
 // first draft: mongoose and mongo sandbox routes
 //app.get('/add-menu', (req, res) => {
