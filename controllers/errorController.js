@@ -14,3 +14,9 @@ exports.respondInternalError = (error, req, res, next) => {
     res.render("500");
 };
 
+exports.pageNotFoundError = (req, res) => {
+    let errorCode = httpStatus.NOT_FOUND;
+    res.status(errorCode);
+    res.render("404");
+};
+
