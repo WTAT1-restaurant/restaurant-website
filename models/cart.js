@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+// TODO: create schema for the Array so that the changes can be saved by mongoose
+
 const cartSchema = mongoose.Schema({
  // user model has to be created and ref refers to user model (maybe next sprint)
   userID: {

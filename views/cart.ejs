@@ -4,43 +4,44 @@
     <meta charset="UTF-8">
     <title>Home Page</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-<body>
-  <%- include("./partials/nav.ejs") %>
+  </head>
+  <body>
+    <%- include("./partials/nav.ejs") %>
 
-
-  <div class="container">
-    <h1>Your Order</h1>
-
-    
-  <section class="shopping-cart">
-
-        <ul class="sc-items">
-          <li class="clearfix">
-            <% for (var i=0; i < cart.items.length; i++) { %>
-            <span class="item-name"><%= cart.items[i].title%></span>
-            <span class="item-price"><strong><%= cart.items[i].price%></strong></span>
-            <span class="item-quantity">1</span>
-            <br>
-            <% } %>
-          </li>
-        </ul>
-
+    <div class="container">
+      <h1>Your Order</h1>
+      <section class="shopping-cart">
+        <table style="width:100%">
+          <tr>
+            <th><span class="table-header">dish</span></th>
+            <th><span class="table-header">quantity</span></th>
+            <th><span class="table-header">unit price</span></th>
+            <th><span class="table-header">total</span></th>
+          </tr>
+          <% for (var i = 0; i < cart.items.length; i++) { %>
+            <tr>
+              <% var itemName = cart.items[i].title %>
+              <th><span class="item-name"><%= itemName %></span></th>
+              <% var itemAmount = cart.items[i].quantity %>
+              <th><span class="item-quantity"><%= itemAmount %> x</span></th> 
+              <% var itemPrice = cart.items[i].price %>
+              <th><span class="item-price"><strong>€<%= itemPrice %></strong></span></th>
+              <th><span class="items-price"><strong>€<%= itemPrice * itemAmount %></strong></span></th>
+            </tr>
+          <% } %>
+        </table>
         <div class="sc-footer">
           <div class="sc-total"><strong>
             <span class="lighter-text">Number of items:</span>
             <span class="total-price"><%= cartSize %></span>
             <br>
             <span class="lighter-text">Total price:</span>
-            <span class="total-price"> €<%= cartPrice %></span></strong>
+            <span class="total-price">€<%= cartPrice %></span></strong>
           </div>
         </div> 
         <a href="#" class="sc-btn">PLACE ORDER</a>
-      </div> 
+      </section>
     </div> 
-
-    </section>
-  </div> 
 
   <%- include("./partials/footer.ejs") %>
 
