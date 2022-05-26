@@ -1,4 +1,4 @@
-
+'use scrict'
 // https://stackoverflow.com/questions/59174763/how-to-add-product-to-shopping-cart-with-nodejs-express-and-mongoose
 
 // Just created file, couldnt finish it
@@ -17,7 +17,8 @@ exports.addItem = (req, res) => {
 					items: [
 						{
 							"title": req.body.title,
-							"price": parseFloat(req.body.price)
+							"price": parseFloat(req.body.price),
+							"quantity": 1
 						}
 					],
 					totalCost: req.body.price
@@ -30,20 +31,39 @@ exports.addItem = (req, res) => {
 						if (error) res.send(error);
 					});
 			} else {
-				cart.items.push(
-					{
-						"title": req.body.title,
-						"price": parseFloat(req.body.price)
-					}
-				);
-				cart.totalCost = cart.totalCost + parseFloat(req.body.price)
-				cart.save()
-					.then(result => {
-						res.send("Item added to cart");
-					})
-					.catch(error => {
-						if (error) res.send(error);
-					});
+				const preExistentCartItem = cart.items.find(item => item.title == req.body.title);
+				
+				if (preExistentCartItem) { 
+					preExistentCartItem.quantity = preExistentCartItem.quantity + 1;
+					cart.totalCost = cart.totalCost + parseFloat(req.body.price);
+					// solution for mongoose to keep track of changes in a mixed Array and being able to save those changes. 
+					// https://mongoosejs.com/docs/schematypes.html
+					// TODO: create a nested/ child schema for the array, so that mongoose can save without the markModified call.
+					cart.markModified('items')
+					cart.save()
+						.then(result => {
+							res.send("Item added to cart");
+						})
+						.catch(error => {
+							if (error) res.send(error);
+						});
+				} else {
+					cart.items.push(
+						{
+							"title": req.body.title,
+							"price": parseFloat(req.body.price),
+							"quantity": 1
+						}
+					);
+					cart.totalCost = cart.totalCost + parseFloat(req.body.price)
+					cart.save()
+						.then(result => {
+							res.send("Item added to cart");
+						})
+						.catch(error => {
+							if (error) res.send(error);
+						});
+				}
 			}
         })
         .catch((error) => {
@@ -80,14 +100,18 @@ exports.removeItem = (req, res) => {
 	
 };
 
+// TODO: inplement what to output when there was no shopping cart created yet. 
 exports.get = (req, res) => {
 	// Cart.findOne({"userID": req.body.userID})
 	Cart.findOne({"userID": 1})
         .exec()
         .then(cart => {
-			// const items = JSON.stringify(cart.items);
 			const cartDoc = cart;
-			const sizeCart = cartDoc.items.length;
+			const itemArray = cart.items;
+			var sizeCart = 0;
+			for (const item of itemArray){
+				sizeCart = sizeCart + item.quantity;
+			};
             const totalPrice = cartDoc.totalCost;
 			res.render("cart", {cart: cartDoc, cartSize: sizeCart, cartPrice: totalPrice});
 		})
@@ -101,15 +125,12 @@ exports.get = (req, res) => {
 exports.countBasketItems = (req, res) => {
 	Cart.findOne({"userID": req.body.userID})
 	.exec()
-	// .then(result => {
-	// 	res.send(db.inventory.aggregate([{
-	// 		$project: {
-	// 			item: 1,
-	// 			numberOfColors: { $cond: { if: { $isArray: "$colors" }, then: { $size: "$colors" }, else: "NA"} }
-	// 		}
-	// 	}]));
-	// })
-	// .then(result => {	
-	// 	db.collection.find({arrayElementName : {$exists:true, $size:0}}) 
-	// }
-}
+	.then(cart => {
+		const sizeCart = cartDoc.items.length;
+		res.render("cart", {cartSize: sizeCart});
+	})
+	.catch((error) => {
+		console.log(error.message);
+		return [];
+	})
+}; 
