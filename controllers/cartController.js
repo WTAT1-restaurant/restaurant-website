@@ -77,21 +77,39 @@ exports.removeItem = (req, res) => {
 	.exec()
 	
 	.then(cart => {
-
-	cart.items.pull(
-		{
-			"title": req.body.title,
-			"price": parseFloat(req.body.price)
+		const preExistentCartItem = cart.items.find(item => item.title == req.body.title);
+		const newCartQuantity = preExistentCartItem.quantity - 1;
+		if (newCartQuantity != 0) {
+			preExistentCartItem.quantity = newCartQuantity;
+			cart.totalCost = cart.totalCost - parseFloat(req.body.price);
+			// solution for mongoose to keep track of changes in a mixed Array and being able to save those changes. 
+			// https://mongoosejs.com/docs/schematypes.html
+			// TODO: create a nested/ child schema for the array, so that mongoose can save without the markModified call.
+			cart.markModified('items')
+			cart.save()
+				.then(result => {
+					res.send("Item removed from cart");
+				})
+				.catch(error => {
+					if (error) res.send(error);
+				});
+		} else {
+			cart.items.pull(
+				{
+					"title": req.body.title,
+					"price": parseFloat(req.body.price),
+					"quantity": 1
+				}
+			);
+			cart.totalCost = cart.totalCost - parseFloat(req.body.price)
+			cart.save()
+				.then(result => {
+					res.send("Item removed from cart");
+				})
+				.catch(error => {
+					if (error) res.send(error);
+				});
 		}
-	);
-	cart.totalCost = cart.totalCost - parseFloat(req.body.price)
-	cart.save()
-		.then(result => {
-			res.send("Item removed from cart");
-		})
-		.catch(error => {
-			if (error) res.send(error);
-		});
 	})
 	.catch((error) => {
 		console.log(error.message);
@@ -106,14 +124,23 @@ exports.get = (req, res) => {
 	Cart.findOne({"userID": 1})
         .exec()
         .then(cart => {
-			const cartDoc = cart;
-			const itemArray = cart.items;
-			var sizeCart = 0;
-			for (const item of itemArray){
-				sizeCart = sizeCart + item.quantity;
-			};
-            const totalPrice = cartDoc.totalCost;
-			res.render("cart", {cart: cartDoc, cartSize: sizeCart, cartPrice: totalPrice});
+			if (cart == null) {
+			res.send("Empty shopping cart");
+			} else {
+				const cartDoc = cart;
+				const itemArray = cart.items;
+				var sizeCart = 0;
+				for (const item of itemArray){
+					sizeCart = sizeCart + item.quantity;
+				};
+				// TODO: decide whether to get rid of the totalPrice or not. 
+				// const totalPrice = cartDoc.totalCost;
+				var totalPrice = 0;
+				for (const item of itemArray){
+					totalPrice = totalPrice + item.quantity * item.price;
+				};
+				res.render("cart", {cart: cartDoc, cartSize: sizeCart, cartPrice: totalPrice});
+			}
 		})
 		.catch((error) => {
             console.log(error.message);
@@ -123,14 +150,18 @@ exports.get = (req, res) => {
 
 // possible function for the nav bar? Still in progress
 exports.countBasketItems = (req, res) => {
-	Cart.findOne({"userID": req.body.userID})
-	.exec()
-	.then(cart => {
-		const sizeCart = cartDoc.items.length;
-		res.render("cart", {cartSize: sizeCart});
-	})
-	.catch((error) => {
-		console.log(error.message);
-		return [];
-	})
-}; 
+	Cart.findOne({"userID": 1})
+        .exec()
+        .then(cart => {
+			const itemArray = cart.items;
+			var sizeCart = 0;
+			for (const item of itemArray){
+				sizeCart = sizeCart + item.quantity;
+			};
+			res.render("cart", {cartSize: sizeCart});
+		})
+		.catch((error) => {
+            console.log(error.message);
+            return [];
+        })
+};
