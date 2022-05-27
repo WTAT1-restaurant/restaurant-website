@@ -15,7 +15,17 @@ const cartSchema = mongoose.Schema({
   totalCost: {
     type: Number,
     default: 0
-  }
+  },
+  delivery: {
+    type: Boolean,
+    default: false,
+  },
+
+  pickUp: {
+    type: Boolean,
+    default: false,
+  },
+
 });
 
 const cart = mongoose.model('cart', cartSchema);
