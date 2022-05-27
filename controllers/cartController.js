@@ -158,7 +158,7 @@ exports.countBasketItems = (req, res) => {
 			for (const item of itemArray){
 				sizeCart = sizeCart + item.quantity;
 			};
-			res.render("cart", {cartSize: sizeCart});
+			res.send(sizeCart.toString());
 		})
 		.catch((error) => {
             console.log(error.message);

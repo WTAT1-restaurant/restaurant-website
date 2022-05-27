@@ -57,6 +57,8 @@ app.get("/about", (req, res) => {
 
 app.get("/cart", cartController.get);
 
+app.get("/API/cart", cartController.countBasketItems);
+
 app.post("/cart/add", cartController.addItem);
 
 app.post("/cart/remove", cartController.removeItem);
@@ -67,7 +69,7 @@ app.post("/contact", (req, res) => {
 
 // https://www.youtube.com/watch?v=pYj48mDXHBU
 // get error to check if the 500 page will load
-app.get("/error", (req, res) => res.send(error()));
+// app.get("/error", (req, res) => res.send(error()));
 
 // app.use((req, res) => {
 //     res.status(404).render("404", { title: "404" });
