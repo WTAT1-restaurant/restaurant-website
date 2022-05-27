@@ -63,6 +63,10 @@ app.post("/cart/add", cartController.addItem);
 
 app.post("/cart/remove", cartController.removeItem);
 
+app.post("/cart/delivery", cartController.deliverOrder
+);
+app.post("/cart/pickUp", cartController.pickUpOrder);
+
 app.post("/contact", (req, res) => {
     res.send("Contact information submitted successfully.");
 });

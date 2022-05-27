@@ -167,6 +167,45 @@ module.exports = {
             console.log(error.message);
             return [];
         })
-}
+},
+
+
+
+deliverOrder :  (req, res) => {
+	Cart.updateMany ({"userID": 1},{"$set":{"delivery":true}})
+  .then(cart => res.send(" the food will be delivered"))
+  .catch(err => res.status(422).json(err));
+ },
+
+ pickUpOrder :  (req, res) => {
+	Cart.updateMany ({"userID": 1},{"$set":{"pickUp":true}},
+	)
+  .then(res.send(" the food will be picked up"))
+  .catch(err => res.status(422).json(err));
+ },
+
+//TO DO : MODIFY METHOD SO IT CHANGES THE BOOLEAN VALUE WITH IF STATMENTS
+ // pickUpOrder :  (req, res) => {
+
+// 	Cart.findOneAndUpdate({"userID": 1} ,
+
+// 	{
+// 		$cond:  { if: {  $in: [ "cartSchema.$.pickUp", false ] }, then: true, else: true}
+// 	})
+
+//         .exec()
+//         .then(cart => {
+// 			cart.markModified('pickUp')
+// 			res.send(" the food will be picked up");
+		
+// 		})
+// 		.catch((error) => {
+//             console.log(error.message);
+//             return [];
+//         })
+
+
+// }
+
 
 };

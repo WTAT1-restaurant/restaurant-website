@@ -40,6 +40,18 @@
           </div>
         </div> 
         <a href="#" class="sc-btn">PLACE ORDER</a>
+
+        <form action="/cart/delivery" method="post">
+          <input type="text" name="userID" value="1" hidden>
+          <button type="submit" class="btn first">DELIVER FOOD</button>
+        </form>
+
+        <form action="/cart/pickUp" method="post">
+          <input type="text" name="userID" value="1" hidden>
+          <button type="submit" class="btn first">PICK UP FOOD</button>
+        </form>
+
+        
       </section>
     </div> 
 
