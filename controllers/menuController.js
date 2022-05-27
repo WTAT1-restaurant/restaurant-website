@@ -19,8 +19,8 @@ const MenuItem = require("../models/menuItem");
 //         console.log(savedDocument);
 //     });
 // });
-
-exports.getItem = (req, res) => {
+module.exports = {
+  getItem : (req, res) => {
     // create a query to find a menu item by ID
     var query = MenuItem.findOne({
         id: req.params.itemId
@@ -31,9 +31,9 @@ exports.getItem = (req, res) => {
             res.render("item", { "item": data });
         }
     });
-}
+},
 
-exports.getMenu = (req, res) => {
+ getMenu : (req, res) => {
     let veggie = req.query.vegetarian;
     let priceSorted = req.query.sortPrice;
 
@@ -66,3 +66,4 @@ exports.getMenu = (req, res) => {
     }
 
 }
+};
