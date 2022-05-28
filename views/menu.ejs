@@ -5,10 +5,34 @@
   <meta charset="utf-8">
   <title>menu</title>
   <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+  <!-- in progress -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const forms = document.querySelector('form');
+
+      forms.addEventListener("submit", (event) => {
+        // Returning early so that the page continues working until we fix below.
+        return;
+
+        event.preventDefault();
+        const form = event.target;
+
+        fetch(form.action, {
+          method: form.method,
+          // form data is missing here
+        })
+          .then((response) => {
+            response.text()
+              .then((text) => alert(text))
+          })
+      })
+    })
+  </script>
 </head>
 
 <body>
-  <%- include("./partials/nav.ejs", {cartItems: "to be defined"}) %>
+  <%- include("./partials/nav.ejs") %>
 
     <h1>menu</h1>
     <div class="container">
