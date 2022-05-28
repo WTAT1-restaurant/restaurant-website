@@ -1,10 +1,29 @@
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<script> 
+  // listen for DOMContentLoaded event in the document
+  document.addEventListener("DOMContentLoaded", function () {
+    // do things after the DOM loads partially
+    const itemCount = document.getElementsByClassName("total-count")[0];
+    const request = new Request("/API/cart");
+    fetch(request) 
+      .then((response)=> {
+        if (response.ok) {
+          response.text()
+            .then((text) => {
+              itemCount.textContent = text;
+            })
+        } 
+      }) 
+      .catch(error => {
+        itemCount.textContent = 'error'
+      });
+  });
+</script>
 <nav>
   <ul>
     <li><a href="/">Home</a></li>
     <li><a href="/about">About</a></li>
     <li><a href="/menu">Menu</a></li>
-    <li><a href="/cart" id="cart"><i class='fas fa-shopping-cart' style='font-size:19px;color:rgb(255, 255, 255)'></i><span class="total-count"> <%= cartItems || 0 %></span> </a></li>
-    
+    <li><a href="/cart" id="cart"><i class='fas fa-shopping-cart' style='font-size:19px;color:rgb(255, 255, 255)'></i><span class="total-count"></span> </a></li>   
   </ul>
 </nav>
