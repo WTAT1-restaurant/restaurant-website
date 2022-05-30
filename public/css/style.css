@@ -229,10 +229,11 @@ footer {
 }
 
 .sc-btn {
-		padding-top: 15px;
-		padding-right: 15px;
-		padding-bottom: 15px;
-		padding-left: 15px;
+	
+		padding: 15px;;
+	
+		justify-content: space-around;
+		align-items: center;
 		text-align: center;
 		vertical-align: middle;
 		text-transform: uppercase;
@@ -256,4 +257,64 @@ footer {
 		padding-left: 5px;
 	}
   
+  .button {
+	   
+	  	padding-top: 15px;
+		padding-right: 15px;
+		padding-bottom: 15px;
+		padding-left: 15px;
+		margin-top: 15px;
+		margin-bottom: 15px;
+		
+		text-align: center;
+		vertical-align: middle;
+		text-transform: uppercase;
+		font-weight: bold;
+		letter-spacing: 2px;
+		border: 3px solid black;
+		color: orangered;
+		font-size: 17px;
+		transition: all 0.3s linear;
+		background-color: #fff;
+		
+  }
+  .button:hover {
+	background-color: #7a00dd;
+	color: #FFF;
+	cursor: pointer;
+	text-decoration: none;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.food:active {
+	background-color: #5e03a8;
+	box-shadow: 0 5px #666;
+	transform: translateY(4px);
+  }
+
+.place {width: 20%;
+height: 30%;}
+
+.place span {
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	transition: 0.5s;
+  }
   
+  .place span:after {
+	content: '\00bb';
+	position: absolute;
+	opacity: 0;
+	top: 0;
+	right: -20px;
+	transition: 0.5s;
+  }
+  
+  .place:hover span {
+	padding-right: 25px;
+  }
+  
+  .place:hover span:after {
+	opacity: 1;
+	right: 0;
+  }
