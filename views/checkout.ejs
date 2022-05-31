@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+  <%- include("./partials/nav.ejs") %>
+
+  <div class="checkout">
+    
+    <form action="#" class="form" method="POST">
+      <h2>–– CHECKOUT ––</h2>
+
+        <fieldset>
+            <legend>Delivery Option</legend>
+        
+            <div class="delivery-options">
+    
+              <div class="delivery">
+                <label for="pickup">Pick-Up</label>
+                <input checked id="pickup" name="delivery-option" type="radio" />
+              </div>
+        
+              <div class="delivery">
+                <label for="deliverhome">Delivery</label>
+                <input id="deliverhome" name="delivery-option" type="radio" />
+              </div>
+        
+            </div>
+          </fieldset>
+
+        <div class="row">
+            <div class="col">
+              <h3>Billing Information</h3>
+              <div class="fillout">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="fullname" placeholder="Insert your name">
+              <label for="email">E-Mail</label>
+              <input type="text" id="email" name="email" placeholder="user@sushi.com">
+              <label for="adr">Address</label>
+              <input type="text" id="adr" name="address" placeholder="Sushistreet 2">
+              <label for="zip">Zipcode</label>
+              <input type="text" id="zip" name="zip" placeholder="10178">
+              <label for="city">City</label>
+              <input type="text" id="city" name="city" placeholder="Berlin">
+            </div>
+
+            </div>
+  
+      <div>
+        <legend class="order-ov">Order Overview</legend>
+        <section class="shopping-cart">
+          <table style="width:100%">
+            <tr>
+              <th><span class="table-header">dish</span></th>
+              <th><span class="table-header">quantity</span></th>
+              <th><span class="table-header">unit price</span></th>
+              <th><span class="table-header">total</span></th>
+            </tr>
+            <% for (var i = 0; i < cart.items.length; i++) { %>
+              <tr>
+                <% var itemName = cart.items[i].title %>
+                <th><span class="item-name"><%= itemName %></span></th>
+                <% var itemAmount = cart.items[i].quantity %>
+                <th><span class="item-quantity"><%= itemAmount %> x</span></th> 
+                <% var itemPrice = cart.items[i].price %>
+                <th><span class="item-price"><strong>€<%= itemPrice %></strong></span></th>
+                <th><span class="items-price"><strong>€<%= itemPrice * itemAmount %></strong></span></th>
+              </tr>
+            <% } %>
+          </table>
+          <div class="sc-footer">
+            <div class="sc-total"><strong>
+              <span class="lighter-text">Number of items:</span>
+              <span class="total-price"><%= cartSize %></span>
+              <br>
+              <span class="lighter-text">Total price:</span>
+              <span class="total-price">€<%= cartPrice %></span></strong>
+            </div>
+          </div> 
+        </section> 
+      </div>
+
+      <fieldset>
+        <legend>Payment Method</legend>
+    
+        <div class="payment-options">
+
+          <div class="payment">
+            <label for="cash">Cash </label>
+            <input checked id="cash" name="payment-method" type="radio" />
+          </div>
+    
+          <div class="payment">
+            <label for="paypal">PayPal</label>
+            <input id="paypal" name="payment-method" type="radio" />
+          </div>
+    
+          <div class="payment">
+            <label for="Apple Pay">Apple Pay</label>
+            <input id="apple-pay" name="payment-method" type="radio" />
+          </div>
+        </div>
+      </fieldset>
+  
+      <div>
+            <button type="submit" class="button place"><span>PLACE ORDER</span></button>  
+      </div>
+    </form>
+  </div>
+  
+  
+
+  <%- include("./partials/footer.ejs") %>
+
+  </body>
+</html>
