@@ -323,7 +323,6 @@ height: 30%;}
   
   .checkout {
 	border-radius: 2em;
-	block-size: 60em;
 	inline-size: 60em;
 	overflow: auto;
 	display: grid;
