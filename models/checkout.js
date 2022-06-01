@@ -85,6 +85,5 @@ const checkoutSchema = mongoose.Schema({
 
 });
 
-
 const cart = mongoose.model('checkout', checkoutSchema);
 module.exports = checkout;

@@ -20,50 +20,77 @@ const MenuItem = require("../models/menuItem");
 //     });
 // });
 module.exports = {
-  getItem : (req, res) => {
-    // create a query to find a menu item by ID
-    var query = MenuItem.findOne({
-        id: req.params.itemId
-    });
-    // execute query
-    query.exec((error, data) => {
-        if (data) {
-            res.render("item", { "item": data });
-        }
-    });
-},
-
- getMenu : (req, res) => {
-    let veggie = req.query.vegetarian;
-    let priceSorted = req.query.sortPrice;
-
-    if (veggie == 'true') {
-        // create a query to find vegetarian menu items
-        var query = MenuItem.find({
-            vegetarian: true
+    getItem: (req, res) => {
+        // create a query to find a menu item by ID
+        var query = MenuItem.findOne({
+            id: req.params.itemId
         });
-        
-        if (priceSorted == 'true') {
-            query.sort({price: 1});
-        }
+        // execute query
         query.exec((error, data) => {
             if (data) {
-                res.render("menu", { "items": data, "vegetarian": true });
+                res.render("item", { "item": data });
             }
         });
-    } else {
-        // create a query to find all menu items
-        var query = MenuItem.find({});
-        
-        if (priceSorted == 'true') {
-            query.sort({price: 1});
-        }
-        query.exec((error, data) => {
-            if (data) {
-                res.render("menu", { "items": data });
+    },
+
+    getMenu: (req, res) => {
+        let veggie = req.query.vegetarian;
+        let priceSorted = req.query.sortPrice;
+
+        if (veggie == 'true') {
+            // create a query to find vegetarian menu items
+            var query = MenuItem.find({
+                vegetarian: true
+            });
+
+            if (priceSorted == 'true') {
+                query.sort({ price: 1 });
             }
+            query.exec((error, data) => {
+                if (data) {
+                    res.render("menu", { "items": data, "vegetarian": true });
+                }
+            });
+        } else {
+            // create a query to find all menu items
+            var query = MenuItem.find({});
+
+            if (priceSorted == 'true') {
+                query.sort({ price: 1 });
+            }
+            query.exec((error, data) => {
+                if (data) {
+                    res.render("menu", { "items": data });
+                }
+            });
+        }
+
+    },
+
+    addNewItem: (req, res) => {
+        MenuItem.findOne().sort('-id').exec(function (error, data) {
+            var id = data.id + 1;
+            console.log(id);
+            console.log(req.body);
+            var menuItem = new MenuItem({
+                id: id,
+                vegetarian: req.body.vegetarian === "on",
+                title: req.body.title,
+                image: req.body.picture,
+                price: req.body.price,
+                weight: req.body.weight,
+                fats: req.body.fats,
+                carbohydrates: req.body.carbohydrates,
+                calories: req.body.calories
+            });
+            menuItem
+                .save()
+                .then((result) => {
+                    res.send("Item added to menu");
+                })
+                .catch((error) => {
+                    if (error) res.send(error);
+                });
         });
     }
-
-}
 };

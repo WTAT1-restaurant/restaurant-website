@@ -358,19 +358,6 @@ height: 30%;}
 	margin-bottom: 2em;
   }
 
-  input {
-	border: 0;
-	color: inherit;
-	font: inherit;
-  }
-
-
-  input[type=text] {
-	width: 100%;
-	margin-bottom: 2em;
-	padding: 1em;
-  }
-
   .payment-options, .delivery-options {
 	display: grid;
 	gap: 1em;
