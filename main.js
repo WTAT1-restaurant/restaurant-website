@@ -53,6 +53,12 @@ app.get("/about", (req, res) => {
     //res.sendFile(__dirname + "/views/menu.html");
     res.render("about");
 });
+
+// page for the restaurant
+app.get("/restaurant", (req, res) => {
+    res.render("restaurant");
+});
+
 // Shopping Cart
 
 app.get("/cart", cartController.get);
@@ -63,13 +69,15 @@ app.post("/cart/add", cartController.addItem);
 
 app.post("/cart/remove", cartController.removeItem);
 
-app.post("/cart/delivery", cartController.deliverOrder
-);
+app.post("/cart/delivery", cartController.deliverOrder);
+
 app.post("/cart/pickUp", cartController.pickUpOrder);
 
 app.post("/contact", (req, res) => {
     res.send("Contact information submitted successfully.");
 });
+
+app.post("/menu/items", menuController.addNewItem);
 
 // https://www.youtube.com/watch?v=pYj48mDXHBU
 // get error to check if the 500 page will load
