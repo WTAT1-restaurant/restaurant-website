@@ -195,7 +195,7 @@ footer {
 	height: auto;
 	position: relative;
 	border-radius: 20px;
-	padding:100px;
+	padding: 100px;
 	border: 2px solid #7a00dd;
 
 }
@@ -208,7 +208,7 @@ footer {
 }
 
 .item-name {
-	display:inline;
+	display: inline;
 	padding-top: 10px;
 }
 
@@ -229,99 +229,104 @@ footer {
 }
 
 .sc-btn {
-	
-		padding: 15px;;
-	
-		justify-content: space-around;
-		align-items: center;
-		text-align: center;
-		vertical-align: middle;
-		text-transform: uppercase;
-		font-weight: bold;
-		letter-spacing: 2px;
-		border: 3px solid black;
-		color: orangered;
-		font-size: 17px;
-		transition: all 0.3s linear;
-	
-	}
-	
-	.sc-btn:hover {
-		background-color: #7a00dd;
-		color: #FFF;
-		cursor: pointer;
-		text-decoration: none;
-	}
 
-	.total-count {
-		padding-left: 5px;
-	}
-  
-  .button {
-	   
-	  	padding-top: 15px;
-		padding-right: 15px;
-		padding-bottom: 15px;
-		padding-left: 15px;
-		margin-top: 15px;
-		margin-bottom: 15px;
-		
-		text-align: center;
-		vertical-align: middle;
-		text-transform: uppercase;
-		font-weight: bold;
-		letter-spacing: 2px;
-		border: 3px solid black;
-		color: orangered;
-		font-size: 17px;
-		transition: all 0.3s linear;
-		background-color: #fff;
-		
-  }
-  .button:hover {
+	padding: 15px;
+	;
+
+	justify-content: space-around;
+	align-items: center;
+	text-align: center;
+	vertical-align: middle;
+	text-transform: uppercase;
+	font-weight: bold;
+	letter-spacing: 2px;
+	border: 3px solid black;
+	color: orangered;
+	font-size: 17px;
+	transition: all 0.3s linear;
+
+}
+
+.sc-btn:hover {
 	background-color: #7a00dd;
 	color: #FFF;
 	cursor: pointer;
 	text-decoration: none;
-	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
+
+.total-count {
+	padding-left: 5px;
+}
+
+.button {
+
+	padding-top: 15px;
+	padding-right: 15px;
+	padding-bottom: 15px;
+	padding-left: 15px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+
+	text-align: center;
+	vertical-align: middle;
+	text-transform: uppercase;
+	font-weight: bold;
+	letter-spacing: 2px;
+	border: 3px solid black;
+	color: orangered;
+	font-size: 17px;
+	transition: all 0.3s linear;
+	background-color: #fff;
+
+}
+
+.button:hover {
+	background-color: #7a00dd;
+	color: #FFF;
+	cursor: pointer;
+	text-decoration: none;
+	box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
 .food:active {
 	background-color: #5e03a8;
 	box-shadow: 0 5px #666;
 	transform: translateY(4px);
-  }
+}
 
-.place {width: 20%;
-height: 30%;}
+.place {
+	width: 20%;
+	height: 30%;
+}
 
 .place span {
 	cursor: pointer;
 	display: inline-block;
 	position: relative;
 	transition: 0.5s;
-  }
-  
-  .place span:after {
+}
+
+.place span:after {
 	content: '\00bb';
 	position: absolute;
 	opacity: 0;
 	top: 0;
 	right: -20px;
 	transition: 0.5s;
-  }
-  
-  .place:hover span {
+}
+
+.place:hover span {
 	padding-right: 25px;
-  }
-  
-  .place:hover span:after {
+}
+
+.place:hover span:after {
 	opacity: 1;
 	right: 0;
-  }
+}
 
-  /* Checkout */
-  
-  .checkout {
+/* Checkout */
+
+.checkout {
 	border-radius: 2em;
 	inline-size: 60em;
 	overflow: auto;
@@ -333,62 +338,74 @@ height: 30%;}
 	padding: 5vmin;
 	place-items: center;
 
-  }
-    
-  .form {
+}
+
+.form {
 	display: grid;
 	gap: 2em;
-  }
+}
 
-  fieldset {
-	border: 0;  
-  }
-  
-  legend {
+fieldset {
+	border: 0;
+}
+
+legend {
 	font-size: 1.2em;
 	font-weight: 600;
 	margin-block-end: 1em;
-  }
-  
-  .col {
+}
+
+.col {
 	border-radius: 1em;
 	background-color: rgb(172, 174, 209);
 	color: #fff;
 	padding: 4.5em;
 	margin-bottom: 2em;
-  }
+}
 
-  .payment-options, .delivery-options {
+.payment-options,
+.delivery-options {
 	display: grid;
 	gap: 1em;
 	justify-content: center;
 	margin-bottom: 2em;
-  }
-  
-  .payment, .delivery {
+}
+
+.payment,
+.delivery {
 	align-items: center;
 	background-color: #fefdfe;
 	border-radius: 1em;
 	display: flex;
 	padding: 1em;
 	width: 20em;
-  }
-  
-  .payment label, .delivery label {
+}
+
+.payment label,
+.delivery label {
 	align-items: center;
 	display: flex;
 	flex: 1;
 	gap: 1em;
-  }
-  
-  .order-ov{
-	  margin-top: 3em;
-	  margin-bottom: -3.5em;
+}
 
-  }
- 
+.order-ov {
+	margin-top: 3em;
+	margin-bottom: -3.5em;
 
-  
-   
+}
 
+input {
+	height: 10px;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	margin-top: 6px;
+	margin-bottom: 6px;
+	resize: vertical
+}
 
+input[type="checkbox"] {
+	height: 16px;
+}
