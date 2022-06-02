@@ -176,15 +176,5 @@ module.exports = {
       });
   },
 
-  deliverOrder: (req, res) => {
-    Cart.updateMany({ userID: 1 }, { $set: { delivery: true, pickUp: false } })
-      .then((cart) => res.send(" the food will be delivered"))
-      .catch((err) => res.status(422).json(err));
-  },
 
-  pickUpOrder: (req, res) => {
-    Cart.updateMany({ userID: 1 }, { $set: { pickUp: true, delivery: false } })
-      .then(res.send(" the food will be picked up"))
-      .catch((err) => res.status(422).json(err));
-  },
 };

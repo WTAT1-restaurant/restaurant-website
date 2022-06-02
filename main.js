@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const menuController = require("./controllers/menuController");
 const errorController = require("./controllers/errorController");
 const cartController = require("./controllers/cartController");
+const checkOutController = require("./controllers/checkOutContoller");
 
 // express app
 const app = express();
@@ -69,9 +70,11 @@ app.post("/cart/add", cartController.addItem);
 
 app.post("/cart/remove", cartController.removeItem);
 
-app.post("/cart/delivery", cartController.deliverOrder);
+app.get("/checkout", checkOutController.get);
 
-app.post("/cart/pickUp", cartController.pickUpOrder);
+app.post("/cart/delivery", checkOutController.deliverOrder);
+
+app.post("/cart/pickUp", checkOutController.pickUpOrder);
 
 app.post("/contact", (req, res) => {
     res.send("Contact information submitted successfully.");

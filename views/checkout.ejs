@@ -5,7 +5,7 @@
     <title>Checkout</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
-<body>
+<body id="checkoutBody">
   <%- include("./partials/nav.ejs") %>
 
   <div class="checkout">
@@ -18,15 +18,16 @@
         
             <div class="delivery-options">
     
-              <div class="delivery">
-                <label for="pickup">Pick-Up</label>
-                <input checked id="pickup" name="delivery-option" type="radio" />
-              </div>
-        
-              <div class="delivery">
-                <label for="deliverhome">Delivery</label>
-                <input id="deliverhome" name="delivery-option" type="radio" />
-              </div>
+              <form action="/cart/delivery" method="post">
+                <input type="text" name="userID" value="1" hidden>
+                <button onclick="delivery()" type="submit" class="button food">DELIVER FOOD</button>
+              </form>
+      
+              <form action="/cart/pickUp" method="post">
+                <input type="text" name="userID" value="1" hidden>
+                <button onclick="pickUp()"type="submit" class="button food">PICK UP FOOD</button>
+              </form>
+      
         
             </div>
           </fieldset>
@@ -62,12 +63,12 @@
             <% for (var i = 0; i < cart.items.length; i++) { %>
               <tr>
                 <% var itemName = cart.items[i].title %>
-                <th><span class="item-name"><%= itemName %></span></th>
-                <% var itemAmount = cart.items[i].quantity %>
-                <th><span class="item-quantity"><%= itemAmount %> x</span></th> 
-                <% var itemPrice = cart.items[i].price %>
-                <th><span class="item-price"><strong>€<%= itemPrice %></strong></span></th>
-                <th><span class="items-price"><strong>€<%= itemPrice * itemAmount %></strong></span></th>
+              <th><span class="item-name"><%= itemName %></span></th>
+              <% var itemAmount = cart.items[i].quantity %>
+              <th><span class="item-quantity"><%= itemAmount %> x</span></th> 
+              <% var itemPrice = cart.items[i].price %>
+              <th><span class="item-price"><strong>€<%= itemPrice %></strong></span></th>
+              <th><span class="items-price"><strong>€<%= itemPrice * itemAmount %></strong></span></th>
               </tr>
             <% } %>
           </table>

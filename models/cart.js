@@ -1,20 +1,20 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // TODO: create schema for the Array so that the changes can be saved by mongoose
 
 const cartSchema = mongoose.Schema({
- // user model has to be created and ref refers to user model (maybe next sprint)
+  // user model has to be created and ref refers to user model (maybe next sprint)
   userID: {
     type: String,
-    ref: 'User'
+    ref: "User",
   },
   items: {
     type: Array,
-    default: []
+    default: [],
   },
   totalCost: {
     type: Number,
-    default: 0
+    default: 0,
   },
   delivery: {
     type: Boolean,
@@ -25,8 +25,7 @@ const cartSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-
 });
 
-const cart = mongoose.model('cart', cartSchema);
+const cart = mongoose.model("cart", cartSchema);
 module.exports = cart;

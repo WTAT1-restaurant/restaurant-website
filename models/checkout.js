@@ -16,22 +16,13 @@ const checkoutSchema = mongoose.Schema({
 	cartID: {
 		type: String,
 		ref: 'Cart',
+		required : true
 	},
 	status: {
 		type: String,
 		enum: enumStatus,
 		default: 'waiting',
 	},
-
-    pickUp: {
-        type: Boolean,
-     default: false,
-    },
-
-    delivery: {
-        type: Boolean,
-        default: false,
-      },
     
     fullname: {
         type: String,
@@ -69,6 +60,16 @@ const checkoutSchema = mongoose.Schema({
         default: 0
       },
 
+	  delivery: {
+		type: Boolean,
+		default: false,
+	  },
+	
+	  pickUp: {
+		type: Boolean,
+		default: false,
+	  },	
+
 	shippingFee: {
 		type: Number,
 		default: 0,
@@ -85,5 +86,5 @@ const checkoutSchema = mongoose.Schema({
 
 });
 
-const cart = mongoose.model('checkout', checkoutSchema);
+const checkout = mongoose.model('checkout', checkoutSchema);
 module.exports = checkout;
