@@ -28,6 +28,18 @@
           })
       })
     })
+
+    function updateLink() {
+       var link = document.getElementById("sortLink");
+       var veggieLink = "http://localhost:3000/menu?vegetarian=true";
+ 
+       // see
+       if (window.location.href == veggieLink) {
+         link.setAttribute("href", "/menu?vegetarian=true&sortPrice=true");
+       } else {
+         link.setAttribute("href", "/menu?sortPrice=true");
+       }
+     }
   </script>
 </head>
 
@@ -41,8 +53,9 @@
 
     <!-- button to sort the price -->
     <div class="container">
-      <div class="button"><a href="/menu?sortPrice=true">SORT PRICE</a></div>
+      <div class="button" onclick="updateLink()"><a id="sortLink" href="">SORT PRICE</a></div>
     </div>
+
 
     <!-- display menu items in a loop https://stackoverflow.com/a/38371978 -->
     <% for (var i=0; i < items.length; i++) { %>
