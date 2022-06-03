@@ -12,6 +12,7 @@ const checkoutSchema = mongoose.Schema({
 	userID: {
 		type: String,
 		ref: 'User',
+		unique: true
 	},
 	cartID: {
 		type: String,
@@ -27,10 +28,13 @@ const checkoutSchema = mongoose.Schema({
     fullname: {
         type: String,
         default: '',
+		required : true
     },
 	email: {
 		type: String,
 		default: '',
+		required : true,
+		unique: true
 	},
 
 	address: {
@@ -40,6 +44,8 @@ const checkoutSchema = mongoose.Schema({
     zip: {
 		type: Number,
 		default: '',
+		min: [10000, "Zip code too short"],
+		max: 99999
 	},
 	city: {
 		type: String,
@@ -81,6 +87,7 @@ const checkoutSchema = mongoose.Schema({
 	paymentMethod: {
 		type: String,
 		enum: enumPaymentMethod,
+		required : true
 		
 	},
 
