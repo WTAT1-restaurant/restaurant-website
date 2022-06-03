@@ -36,35 +36,44 @@ module.exports = {
     getMenu: (req, res) => {
         let veggie = req.query.vegetarian;
         let priceSorted = req.query.sortPrice;
-
-        if (veggie == 'true') {
-            // create a query to find vegetarian menu items
+      
+        if (veggie) {
             var query = MenuItem.find({
                 vegetarian: true
             });
-
-            if (priceSorted == 'true') {
-                query.sort({ price: 1 });
+      
+            if (priceSorted) {
+                query.sort({price: 1}).exec((error, data) => {
+                    if (data) {
+                        res.render("menu", {"items": data, "vegetarian": true});
+                    }
+                });
+            } else {
+                query.exec((error, data) => {
+                    if (data) {
+                        res.render("menu", {"items": data, "vegetarian": true});
+                    }
+                });
             }
-            query.exec((error, data) => {
-                if (data) {
-                    res.render("menu", { "items": data, "vegetarian": true });
-                }
-            });
+      
         } else {
-            // create a query to find all menu items
             var query = MenuItem.find({});
-
-            if (priceSorted == 'true') {
-                query.sort({ price: 1 });
+      
+            if (priceSorted) {
+                query.sort({price: 1}).exec((error, data) => {
+                    if (data) {
+                        res.render("menu", { "items": data });
+                    }
+                });
+            } else {
+                query.exec((error, data) => {
+                    if (data) {
+                        res.render("menu", { "items": data });
+                    }
+                });
             }
-            query.exec((error, data) => {
-                if (data) {
-                    res.render("menu", { "items": data });
-                }
-            });
         }
-
+      
     },
 
     addNewItem: (req, res) => {
