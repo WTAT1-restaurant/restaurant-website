@@ -10,14 +10,11 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const forms = document.querySelector('form');
-
       forms.addEventListener("submit", (event) => {
         // Returning early so that the page continues working until we fix below.
         return;
-
         event.preventDefault();
         const form = event.target;
-
         fetch(form.action, {
           method: form.method,
           // form data is missing here
@@ -33,7 +30,6 @@
        var link = document.getElementById("sortLink");
        var veggieLink = "http://localhost:3000/menu?vegetarian=true";
  
-       // see
        if (window.location.href == veggieLink) {
          link.setAttribute("href", "/menu?vegetarian=true&sortPrice=true");
        } else {
@@ -56,16 +52,15 @@
       <div class="button" onclick="updateLink()"><a id="sortLink" href="">SORT PRICE</a></div>
     </div>
 
-
     <!-- display menu items in a loop https://stackoverflow.com/a/38371978 -->
     <% for (var i=0; i < items.length; i++) { %>
       <div class="item-cell">
         <h4>
-          <a href="/menu/items/<%= items[i].id %>">
+          <a href="/menu/restaurant/<%= items[i].id %>">
             <%= items[i].title %> - <%= items[i].price %>€
           </a>
         </h4>
-        <a href="/menu/items/<%= items[i].id %>">
+        <a href="/menu/restaurant/<%= items[i].id %>">
           <img src="<%= items[i].image %>">
         </a>
         <div>
@@ -84,7 +79,7 @@
         </div>
       </div>
       <% } %>
-        <%- include("./partials/footer.ejs") %>
+      <%- include("./partials/footer.ejs") %>
 </body>
 
 </html>

@@ -36,31 +36,31 @@ module.exports = {
     getMenu: (req, res) => {
         let veggie = req.query.vegetarian;
         let priceSorted = req.query.sortPrice;
-      
+
         if (veggie) {
             var query = MenuItem.find({
                 vegetarian: true
             });
-      
+
             if (priceSorted) {
-                query.sort({price: 1}).exec((error, data) => {
+                query.sort({ price: 1 }).exec((error, data) => {
                     if (data) {
-                        res.render("menu", {"items": data, "vegetarian": true});
+                        res.render("menu", { "items": data, "vegetarian": true });
                     }
                 });
             } else {
                 query.exec((error, data) => {
                     if (data) {
-                        res.render("menu", {"items": data, "vegetarian": true});
+                        res.render("menu", { "items": data, "vegetarian": true });
                     }
                 });
             }
-      
+
         } else {
             var query = MenuItem.find({});
-      
+
             if (priceSorted) {
-                query.sort({price: 1}).exec((error, data) => {
+                query.sort({ price: 1 }).exec((error, data) => {
                     if (data) {
                         res.render("menu", { "items": data });
                     }
@@ -73,10 +73,20 @@ module.exports = {
                 });
             }
         }
-      
+
+    },
+    // add the menu to the restaurant page
+    getRestaurantMenu: (req, res) => {
+        var query = MenuItem.find({});
+        query.exec((error, data) => {
+            if (data) {
+                res.render("restaurant", { "items": data });
+            }
+        });
     },
 
-    addNewItem: (req, res) => {
+    // allows a restaurant owner to add new item to a menu
+    addNewItem: (req, res, next) => {
         MenuItem.findOne().sort('-id').exec(function (error, data) {
             var id = data.id + 1;
             console.log(id);
@@ -94,12 +104,37 @@ module.exports = {
             });
             menuItem
                 .save()
-                .then((result) => {
-                    res.send("Item added to menu");
+                .then((data) => {
+                    res.locals.redirect = "/restaurant";
+                    res.locals.addedMenuItem = data;
+                    next();
                 })
                 .catch((error) => {
-                    if (error) res.send(error);
+                    console.log(`Error saving menu item: ${error.message}`);
+                    next(error);
                 });
         });
+    },
+    // allows a restaurant owner to delete items from a menu
+    deleteMenuItem: (req, res, next) => {
+        MenuItem.findOne({
+            id: req.params.itemId
+        }).remove()
+            .then(() => {
+                res.locals.redirect = "/restaurant";
+                next();
+            })
+            .catch(error => {
+                console.log(`Error deleting menu item by ID: ${error.message}`);
+                next();
+            });
+    },
+
+    // Handle requests to view the creation form, to submit
+    // data from the creation form, and display a view
+    redirectView: (req, res, next) => {
+        let redirectPath = res.locals.redirect;
+        if (redirectPath) res.redirect(redirectPath);
+        else next();
     }
 };
