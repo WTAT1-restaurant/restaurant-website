@@ -1,4 +1,5 @@
 const express = require("express");
+const expressLayouts = require("express-ejs-layouts");
 const router = express.Router();
 const mongoose = require('mongoose');
 //const menu = require('./models/menu');
@@ -28,6 +29,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
 .catch((err) => console.log(err));
 
 app.set("view engine", "ejs");
+app.use(expressLayouts);
 
 // needed to load css in html: https://stackoverflow.com/a/54747432
 // book page 119
@@ -43,18 +45,18 @@ router.use(express.json());
 
 router.get("/", (req, res) => {
     //res.sendFile(__dirname + "/views/index.html");
-    res.render("index");
+    res.render("index", {title: "home page"});
+});
+
+router.get("/about", (req, res) => {
+    //res.sendFile(__dirname + "/views/menu.html");
+    res.render("about", {title: "about"});
 });
 
 // get menu item by ID
 router.get("/menu/items/:itemId", menuController.getItem);
 
 router.get("/menu", menuController.getMenu);
-
-router.get("/about", (req, res) => {
-    //res.sendFile(__dirname + "/views/menu.html");
-    res.render("about");
-});
 
 // page for the restaurant
 router.get("/restaurant", menuController.getRestaurantMenu);
@@ -65,8 +67,7 @@ router.post("/menu/items/:itemId/update", menuController.update, menuController.
 
 router.post("/menu/items/:itemId/delete", menuController.deleteMenuItem, menuController.redirectView);
 
-// Shopping Cart
-
+// shopping Cart
 router.get("/cart", cartController.get);
 
 router.get("/API/cart", cartController.countBasketItems);

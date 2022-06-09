@@ -1,56 +1,40 @@
-<!DOCTYPE html>
-<html>
+<h1>Add or remove a menu item</h1>
+<p>
+<h2><b>To add a new item to the menu, fill in the fields and click the button to confirm</b></h2>
+</p>
+<form action="/menu/items" method="post">
+  <label>Title: <br><input type="text" name="title" placeholder="Title" autofocus></label><br>
+  <label>Price: <br><input type="number" step=0.1 name="price" placeholder="Price" autofocus></label><br>
+  <label>Picture url: <br><input type="url" name="picture" placeholder="Picture url"></label><br>
+  <label>Weight: <br><input type="number" step=0.1 name="weight" placeholder="Weight" autofocus></label><br>
+  <label>Fats: <br><input type="number" name="fats" placeholder="Fats" autofocus></label><br>
+  <label>Carbohydrates: <br><input type="number" name="carbohydrates" placeholder="Carbohydrates"
+      autofocus></label><br>
+  <label>Calories: <br><input type="number" name="calories" placeholder="Calories" autofocus></label><br>
+  <label>Vegetarian: <input type="checkbox" name="vegetarian"></label><br>
+  <button class="button food">ADD ITEM</button>
+</form>
 
-<head>
-  <meta charset="utf-8">
-  <title>For restaurant</title>
-  <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-
-<body>
-  <%- include("./partials/nav.ejs") %>
-    <h1>Add or remove a menu item</h1>
-    <p>
-    <h2><b>To add a new item to the menu, fill in the fields and click the button to confirm</b></h2>
-    </p>
-    <form action="/menu/items" method="post">
-      <label>Title: <br><input type="text" name="title" placeholder="Title" autofocus></label><br>
-      <label>Price: <br><input type="number" step=0.1 name="price" placeholder="Price" autofocus></label><br>
-      <label>Picture url: <br><input type="url" name="picture" placeholder="Picture url"></label><br>
-      <label>Weight: <br><input type="number" step=0.1 name="weight" placeholder="Weight" autofocus></label><br>
-      <label>Fats: <br><input type="number" name="fats" placeholder="Fats" autofocus></label><br>
-      <label>Carbohydrates: <br><input type="number" name="carbohydrates" placeholder="Carbohydrates"
-          autofocus></label><br>
-      <label>Calories: <br><input type="number" name="calories" placeholder="Calories" autofocus></label><br>
-      <label>Vegetarian: <input type="checkbox" name="vegetarian"></label><br>
-      <button class="button food">ADD ITEM</button>
-    </form>
-
-    <!-- display menu items in a loop https://stackoverflow.com/a/38371978 -->
-    <% for (var i=0; i < items.length; i++) { %>
-      <div class="item-cell">
-        <h4>
-          <a href="/menu/items/<%= items[i].id %>">
-            <%= items[i].title %> - <%= items[i].price %>€
-          </a>
-        </h4>
-        <a href="/menu/items/<%= items[i].id %>">
-          <img src="<%= items[i].image %>">
-        </a>
-        <div>
-          <form action="/menu/items/<%= items[i].id %>/delete" method="post">
-            <button class="btn first">DELETE</button>
-          </form>
-          <form action="/menu/items/<%= items[i].id %>/update" method="post">
-            <label>Price: <br><input type="number" step=0.1 name="price" placeholder="Price" value="<%= items[i].price %>" autofocus></label><br>
-            <label>Picture url: <br><input type="url" name="picture" placeholder="Picture url" value="<%= items[i].image %>"></label><br>
-            <button class="btn first">UPDATE</button>
-          </form>
-        </div>
-      </div>
-      <% } %>
-
-        <%- include("./partials/footer.ejs") %>
-</body>
-
-</html>
+<!-- display menu items in a loop https://stackoverflow.com/a/38371978 -->
+<% for (var i=0; i < items.length; i++) { %>
+  <div class="item-cell">
+    <h4>
+      <a href="/menu/items/<%= items[i].id %>">
+        <%= items[i].title %> - <%= items[i].price %>€
+      </a>
+    </h4>
+    <a href="/menu/items/<%= items[i].id %>">
+      <img src="<%= items[i].image %>">
+    </a>
+    <div>
+      <form action="/menu/items/<%= items[i].id %>/delete" method="post">
+        <button class="btn first">DELETE</button>
+      </form>
+      <form action="/menu/items/<%= items[i].id %>/update" method="post">
+        <label>Price: <br><input type="number" step=0.1 name="price" placeholder="Price" value="<%= items[i].price %>" autofocus></label><br>
+        <label>Picture url: <br><input type="url" name="picture" placeholder="Picture url" value="<%= items[i].image %>"></label><br>
+        <button class="btn first">UPDATE</button>
+      </form>
+    </div>
+  </div>
+<% } %>
