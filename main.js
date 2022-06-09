@@ -61,8 +61,6 @@ app.get("/restaurant", (req, res) => {
     res.render("restaurant");
 });
 
-router.post("/menu/items/:itemId/update", menuController.update, menuController.redirectView);
-
 // Shopping Cart
 
 app.get("/cart", cartController.get);
@@ -104,5 +102,3 @@ app.use(errorController.pageNotFoundError);
 //app.get('/add-menu', (req, res) => {
 //  const menu = new menu({})
 //} )
-
-app.use("/", router);
