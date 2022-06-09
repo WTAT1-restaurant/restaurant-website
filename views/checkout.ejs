@@ -15,38 +15,61 @@
 
         <fieldset>
             <legend>Delivery Option</legend>
-        
             <div class="delivery-options">
     
-              <form action="/cart/delivery" method="post">
+              <form action="/checkOut/delivery" method="post">
+                <input type="text" name="userID" value="1" hidden>
+                <button onclick="delivery()" type="submit" class="button food"  disabled >NOT WORKING</button>
+              </form>
+              
+              <form action="/checkOut/delivery" method="post">
                 <input type="text" name="userID" value="1" hidden>
                 <button onclick="delivery()" type="submit" class="button food">DELIVER FOOD</button>
               </form>
       
-              <form action="/cart/pickUp" method="post">
+              <form action="/checkOut/pickUp" method="post">
                 <input type="text" name="userID" value="1" hidden>
                 <button onclick="pickUp()"type="submit" class="button food">PICK UP FOOD</button>
               </form>
-      
-        
+
             </div>
+
+
           </fieldset>
 
-        <div class="row">
-            <div class="col">
-              <h3>Billing Information</h3>
+          <p>food will be delivered ASAP, but you can set time to deliver or to pick up</p>
+          <form action="/checkout/time" method="post">
+            <label for="appt">Select a time:</label>
+            <input type="time" id="time" name="time" placeholder="00:00 am">
+            <button type="submit" class="button food">SET TIME</button>
+          </form>
+
+
+
+
+            <div class="row">
+              <div class="col">
+            <form action="/checkout/information" method="post">
+              <input type="text" hidden>
+
               <div class="fillout">
-              <label for="name">Full Name</label>
-              <input type="text" id="name" name="fullname" placeholder="Insert your name">
-              <label for="email">E-Mail</label>
-              <input type="text" id="email" name="email" placeholder="user@sushi.com">
-              <label for="adr">Address</label>
-              <input type="text" id="adr" name="address" placeholder="Sushistreet 2">
-              <label for="zip">Zipcode</label>
-              <input type="text" id="zip" name="zip" placeholder="10178">
-              <label for="city">City</label>
-              <input type="text" id="city" name="city" placeholder="Berlin">
-            </div>
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="fullname" placeholder="Insert your name">
+                <label for="email">E-Mail</label>
+                <input type="text" id="email" name="email" placeholder="user@sushi.com">
+                <label for="adr">Address</label>
+                <input type="text" id="adr" name="address" placeholder="Sushistreet 2">
+                <label for="zip">Zipcode</label>
+                <input type="text" id="zip" name="zip" placeholder="10178">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" placeholder="Berlin">
+              </div>
+
+
+              <button type="submit" class="button food">SAVE INFORMATION</button>
+            </form>
+
+
 
             </div>
   

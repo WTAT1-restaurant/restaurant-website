@@ -1,6 +1,7 @@
 "use scrict";
 const checkOut = require("./../models/checkout");
 const Cart = require("./../models/cart");
+const { use } = require("express/lib/application");
 module.exports = {
 
   get: (req, res) => {
@@ -42,14 +43,57 @@ module.exports = {
   // },
 
   deliverOrder: (req, res) => {
-    Cart.updateMany({ userID: 1 }, { $set: { delivery: true, pickUp: false } })
+    checkOut.updateMany({ userID: 1 }, { $set: { delivery: true, pickUp: false } })
       .then((cart) => res.send(" the food will be delivered"))
       .catch((err) => res.status(422).json(err));
   },
 
   pickUpOrder: (req, res) => {
-    Cart.updateMany({ userID: 1 }, { $set: { pickUp: true, delivery: false } })
+    checkOut.updateMany({ userID: 1 }, { $set: { pickUp: true, delivery: false } })
       .then(res.send(" the food will be picked up"))
       .catch((err) => res.status(422).json(err));
   },
-};
+
+  saveInfo: (req, res) => {
+    checkOut.find()
+    .exec()
+    .then((checkout) => {
+      if(checkout != null) {
+        checkout = new checkOut ({
+          fullname: req.body.fullname,
+          email: req.body.email,
+          address: req.body.address,
+          zip: req.body.zip,
+          city: req.body.city,
+
+        })
+        checkout
+        .save()
+        .then((result) => {
+          res.send("your information have been saved");
+        })
+        .catch((error) => {
+          if (error) res.send(error);
+        });
+      } else{
+        checkout.updateMany({ userID: 1 }, { $set: { fullname: req.body.fullname ,email: req.body.email, address: req.body.address,
+          zip: req.body.zip,
+          city: req.body.city, } })
+        .then(res.send("your information have been updated and saved"))
+        .catch((err) => res.status(422).json(err));
+      }
+    
+})
+},
+
+setTime:(req,res) => {
+  checkOut.updateMany({fullname: 'lana' }, { $set: { time:req.body.time} })
+  .then(res.send(" the food will be picked up at the this time"))
+  .catch((err) => res.status(422).json(err));
+
+}
+
+ 
+
+}
+
