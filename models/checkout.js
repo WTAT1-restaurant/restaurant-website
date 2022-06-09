@@ -12,12 +12,12 @@ const checkoutSchema = mongoose.Schema({
 	userID: {
 		type: String,
 		ref: 'User',
-		unique: true
+		default: '1',
 	},
 	cartID: {
 		type: String,
 		ref: 'Cart',
-		required : true
+		// required : true
 	},
 	status: {
 		type: String,
@@ -75,6 +75,10 @@ const checkoutSchema = mongoose.Schema({
 		type: Boolean,
 		default: false,
 	  },	
+	  time: {
+        type: String,
+		default:""
+	},
 
 	shippingFee: {
 		type: Number,
@@ -82,12 +86,12 @@ const checkoutSchema = mongoose.Schema({
 	},
 	totalPayment: {
 		type: Number,
-		required: [true],
+		// required: [true],
 	}, 	
 	paymentMethod: {
 		type: String,
 		enum: enumPaymentMethod,
-		required : true
+		// required : true
 		
 	},
 
