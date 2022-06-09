@@ -62,6 +62,8 @@ router.post("/menu/items", menuController.addNewItem, menuController.redirectVie
 
 router.post("/menu/items/:itemId/delete", menuController.deleteMenuItem, menuController.redirectView);
 
+router.post("/menu/items/:itemId/update", menuController.update, menuController.redirectView);
+
 // Shopping Cart
 
 router.get("/cart", cartController.get);
@@ -100,3 +102,4 @@ router.use(errorController.pageNotFoundError);
 //} )
 
 app.use("/", router);
+
