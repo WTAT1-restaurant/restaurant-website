@@ -1,5 +1,5 @@
 const express = require("express");
-
+const router = express.Router();
 const mongoose = require('mongoose');
 //const menu = require('./models/menu');
 
@@ -31,77 +31,77 @@ app.set("view engine", "ejs");
 
 // needed to load css in html: https://stackoverflow.com/a/54747432
 // book page 119
-app.use(express.static('public'));
+router.use(express.static('public'));
 
 // is needed to parse POST body
-app.use(
+router.use(
     express.urlencoded({
         extended: false
     })
 );
-app.use(express.json());
+router.use(express.json());
 
-app.get("/", (req, res) => {
+router.get("/", (req, res) => {
     //res.sendFile(__dirname + "/views/index.html");
     res.render("index");
 });
 
 // get menu item by ID
-app.get("/menu/items/:itemId", menuController.getItem);
+router.get("/menu/items/:itemId", menuController.getItem);
 
-app.get("/menu", menuController.getMenu);
+router.get("/menu", menuController.getMenu);
 
-app.get("/about", (req, res) => {
+router.get("/about", (req, res) => {
     //res.sendFile(__dirname + "/views/menu.html");
     res.render("about");
 });
 
 // page for the restaurant
-app.get("/restaurant", (req, res) => {
-    res.render("restaurant");
-});
+router.get("/restaurant", menuController.getRestaurantMenu);
+
+router.post("/menu/items", menuController.addNewItem, menuController.redirectView);
 
 router.post("/menu/items/:itemId/update", menuController.update, menuController.redirectView);
 
+router.post("/menu/items/:itemId/delete", menuController.deleteMenuItem, menuController.redirectView);
+
 // Shopping Cart
 
-app.get("/cart", cartController.get);
+router.get("/cart", cartController.get);
 
-app.get("/API/cart", cartController.countBasketItems);
+router.get("/API/cart", cartController.countBasketItems);
 
-app.post("/cart/add", cartController.addItem);
+router.post("/cart/add", cartController.addItem);
 
-app.post("/cart/remove", cartController.removeItem);
+router.post("/cart/remove", cartController.removeItem);
 
-app.get("/checkout", checkOutController.get);
+router.get("/checkout", checkOutController.get);
 
-app.post("/checkOut/delivery", checkOutController.deliverOrder);
+router.post("/checkOut/delivery", checkOutController.deliverOrder);
 
-app.post("/checkOut/pickUp", checkOutController.pickUpOrder);
-app.post("/checkout/time", checkOutController.setTime);
-// app.post("/checkout/information", infoController.saveInfo);
-app.post("/checkout/information", checkOutController.saveInfo);
+router.post("/checkOut/pickUp", checkOutController.pickUpOrder);
+router.post("/checkout/time", checkOutController.setTime);
+// router.post("/checkout/information", infoController.saveInfo);
+router.post("/checkout/information", checkOutController.saveInfo);
 
-app.post("/menu/items", menuController.addNewItem);
-
-app.post("/contact", (req, res) => {
+router.post("/contact", (req, res) => {
     res.send("Contact information submitted successfully.");
 });
 
 // https://www.youtube.com/watch?v=pYj48mDXHBU
 // get error to check if the 500 page will load
-// app.get("/error", (req, res) => res.send(error()));
+// router.get("/error", (req, res) => res.send(error()));
 
-// app.use((req, res) => {
+// router.use((req, res) => {
 //     res.status(404).render("404", { title: "404" });
 // });
 
 // error-handling middleware
-app.use(errorController.respondInternalError);
-app.use(errorController.pageNotFoundError);
+router.use(errorController.respondInternalError);
+router.use(errorController.pageNotFoundError);
 
 // first draft: mongoose and mongo sandbox routes
-//app.get('/add-menu', (req, res) => {
+//router.get('/add-menu', (req, res) => {
 //  const menu = new menu({})
 //} )
 
