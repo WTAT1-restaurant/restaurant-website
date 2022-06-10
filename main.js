@@ -96,6 +96,7 @@ router.post("/menu/items", menuController.addNewItem);
 router.get("/users", usersController.index, usersController.indexView);
 router.get("/users/new", usersController.new);
 router.post("/users/create", usersController.create, usersController.redirectView);
+router.get("/users/:id", usersController.show, usersController.showView);
 
 // https://www.youtube.com/watch?v=pYj48mDXHBU
 // error-handling middleware
