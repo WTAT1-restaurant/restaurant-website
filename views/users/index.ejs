@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <title>Users</title>
+</head>
+<body>
+    <h2>Users Table</h2>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(user => { %>
+            <tr>
+                <td><%= user.fullName %></td>
+                <td><%= user.address %></td>
+                <td><%= user.email %></td>
+            </tr> 
+            <% }); %>
+        </tbody>
+    </table>
+    
+</body>
+</html>

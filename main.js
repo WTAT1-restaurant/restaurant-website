@@ -8,6 +8,7 @@ const menuController = require("./controllers/menuController");
 const errorController = require("./controllers/errorController");
 const cartController = require("./controllers/cartController");
 const checkOutController = require("./controllers/checkOutContoller");
+const usersController = require("./controllers/usersController");
 
 
 // express app
@@ -89,14 +90,14 @@ router.post("/contact", (req, res) => {
     res.send("Contact information submitted successfully.");
 });
 
+router.post("/menu/items", menuController.addNewItem);
+
+// Users
+router.get("/users", usersController.index, usersController.indexView);
+router.get("/users/new", usersController.new);
+router.post("/users/create", usersController.create, usersController.redirectView);
+
 // https://www.youtube.com/watch?v=pYj48mDXHBU
-// get error to check if the 500 page will load
-// router.get("/error", (req, res) => res.send(error()));
-
-// router.use((req, res) => {
-//     res.status(404).render("404", { title: "404" });
-// });
-
 // error-handling middleware
 router.use(errorController.respondInternalError);
 router.use(errorController.pageNotFoundError);
