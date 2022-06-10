@@ -1,5 +1,6 @@
 const express = require("express");
-
+const expressLayouts = require("express-ejs-layouts");
+const router = express.Router();
 const mongoose = require('mongoose');
 //const menu = require('./models/menu');
 
@@ -8,6 +9,7 @@ const errorController = require("./controllers/errorController");
 const cartController = require("./controllers/cartController");
 const checkOutController = require("./controllers/checkOutContoller");
 const usersController = require("./controllers/usersController");
+
 
 // express app
 const app = express();
@@ -28,72 +30,81 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
 .catch((err) => console.log(err));
 
 app.set("view engine", "ejs");
+app.use(expressLayouts);
 
 // needed to load css in html: https://stackoverflow.com/a/54747432
 // book page 119
-app.use(express.static('public'));
+router.use(express.static('public'));
 
 // is needed to parse POST body
-app.use(
+router.use(
     express.urlencoded({
         extended: false
     })
 );
-app.use(express.json());
+router.use(express.json());
 
-app.get("/", (req, res) => {
+router.get("/", (req, res) => {
     //res.sendFile(__dirname + "/views/index.html");
-    res.render("index");
+    res.render("index", {title: "home page"});
+});
+
+router.get("/about", (req, res) => {
+    //res.sendFile(__dirname + "/views/menu.html");
+    res.render("about", {title: "about"});
 });
 
 // get menu item by ID
-app.get("/menu/items/:itemId", menuController.getItem);
+router.get("/menu/items/:itemId", menuController.getItem);
 
-app.get("/menu", menuController.getMenu);
-
-app.get("/about", (req, res) => {
-    //res.sendFile(__dirname + "/views/menu.html");
-    res.render("about");
-});
+router.get("/menu", menuController.getMenu);
 
 // page for the restaurant
-app.get("/restaurant", (req, res) => {
-    res.render("restaurant");
-});
+router.get("/restaurant", menuController.getRestaurantMenu);
 
-// Shopping Cart
+router.post("/menu/items", menuController.addNewItem, menuController.redirectView);
 
-app.get("/cart", cartController.get);
+router.post("/menu/items/:itemId/update", menuController.update, menuController.redirectView);
 
-app.get("/API/cart", cartController.countBasketItems);
+router.post("/menu/items/:itemId/delete", menuController.deleteMenuItem, menuController.redirectView);
 
-app.post("/cart/add", cartController.addItem);
+// shopping Cart
+router.get("/cart", cartController.get);
 
-app.post("/cart/remove", cartController.removeItem);
+router.get("/API/cart", cartController.countBasketItems);
 
-app.get("/checkout", checkOutController.get);
+router.post("/cart/add", cartController.addItem);
 
-app.post("/cart/delivery", checkOutController.deliverOrder);
+router.post("/cart/remove", cartController.removeItem);
 
-app.post("/cart/pickUp", checkOutController.pickUpOrder);
+router.get("/checkout", checkOutController.get);
 
-app.post("/contact", (req, res) => {
+router.post("/checkOut/delivery", checkOutController.deliverOrder);
+
+router.post("/checkOut/pickUp", checkOutController.pickUpOrder);
+router.post("/checkout/time", checkOutController.setTime);
+// router.post("/checkout/information", infoController.saveInfo);
+router.post("/checkout/information", checkOutController.saveInfo);
+
+router.post("/contact", (req, res) => {
     res.send("Contact information submitted successfully.");
 });
 
-app.post("/menu/items", menuController.addNewItem);
+router.post("/menu/items", menuController.addNewItem);
 
 // Users
-app.get("/users", usersController.index, usersController.indexView);
-app.get("/users/new", usersController.new);
-app.post("/users/create", usersController.create, usersController.redirectView);
+router.get("/users", usersController.index, usersController.indexView);
+router.get("/users/new", usersController.new);
+router.post("/users/create", usersController.create, usersController.redirectView);
 
 // https://www.youtube.com/watch?v=pYj48mDXHBU
 // error-handling middleware
-app.use(errorController.respondInternalError);
-app.use(errorController.pageNotFoundError);
+router.use(errorController.respondInternalError);
+router.use(errorController.pageNotFoundError);
 
 // first draft: mongoose and mongo sandbox routes
-//app.get('/add-menu', (req, res) => {
+//router.get('/add-menu', (req, res) => {
 //  const menu = new menu({})
 //} )
+
+app.use("/", router);

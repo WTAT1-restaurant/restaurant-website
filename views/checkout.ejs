@@ -1,41 +1,41 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Checkout</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-<body id="checkoutBody">
-  <%- include("./partials/nav.ejs") %>
+<div class="checkout">
+  
+  <form action="#" class="form" method="POST">
+    <h2>–– CHECKOUT ––</h2>
 
-  <div class="checkout">
+      <fieldset>
+          <legend>Delivery Option</legend>
+          <div class="delivery-options">
+            <form action="/checkOut/delivery" method="post">
+              <input type="text" name="userID" value="1" hidden>
+              <button onclick="delivery()" type="submit" class="button food"  disabled >NOT WORKING</button>
+            </form>
+            
+            <form action="/checkOut/delivery" method="post">
+              <input type="text" name="userID" value="1" hidden>
+              <button onclick="delivery()" type="submit" class="button food">DELIVER FOOD</button>
+            </form>
     
-    <form action="#" class="form" method="POST">
-      <h2>–– CHECKOUT ––</h2>
+            <form action="/checkOut/pickUp" method="post">
+              <input type="text" name="userID" value="1" hidden>
+              <button onclick="pickUp()"type="submit" class="button food">PICK UP FOOD</button>
+            </form>
+          </div>
+        </fieldset>
 
-        <fieldset>
-            <legend>Delivery Option</legend>
-        
-            <div class="delivery-options">
-    
-              <form action="/cart/delivery" method="post">
-                <input type="text" name="userID" value="1" hidden>
-                <button onclick="delivery()" type="submit" class="button food">DELIVER FOOD</button>
-              </form>
-      
-              <form action="/cart/pickUp" method="post">
-                <input type="text" name="userID" value="1" hidden>
-                <button onclick="pickUp()"type="submit" class="button food">PICK UP FOOD</button>
-              </form>
-      
-        
-            </div>
-          </fieldset>
+        <p>food will be delivered ASAP, but you can set time to deliver or to pick up</p>
+        <form action="/checkout/time" method="post">
+          <label for="appt">Select a time:</label>
+          <input type="time" id="time" name="time" placeholder="00:00 am">
+          <button type="submit" class="button food">SET TIME</button>
+        </form>
 
-        <div class="row">
+          <div class="row">
             <div class="col">
-              <h3>Billing Information</h3>
-              <div class="fillout">
+          <form action="/checkout/information" method="post">
+            <input type="text" hidden>
+
+            <div class="fillout">
               <label for="name">Full Name</label>
               <input type="text" id="name" name="fullname" placeholder="Insert your name">
               <label for="email">E-Mail</label>
@@ -48,73 +48,67 @@
               <input type="text" id="city" name="city" placeholder="Berlin">
             </div>
 
-            </div>
-  
-      <div>
-        <legend class="order-ov">Order Overview</legend>
-        <section class="shopping-cart">
-          <table style="width:100%">
+            <button type="submit" class="button food">SAVE INFORMATION</button>
+          </form>
+
+          </div>
+
+    <div>
+      <legend class="order-ov">Order Overview</legend>
+      <section class="shopping-cart">
+        <table style="width:100%">
+          <tr>
+            <th><span class="table-header">dish</span></th>
+            <th><span class="table-header">quantity</span></th>
+            <th><span class="table-header">unit price</span></th>
+            <th><span class="table-header">total</span></th>
+          </tr>
+          <% for (var i = 0; i < cart.items.length; i++) { %>
             <tr>
-              <th><span class="table-header">dish</span></th>
-              <th><span class="table-header">quantity</span></th>
-              <th><span class="table-header">unit price</span></th>
-              <th><span class="table-header">total</span></th>
+              <% var itemName = cart.items[i].title %>
+            <th><span class="item-name"><%= itemName %></span></th>
+            <% var itemAmount = cart.items[i].quantity %>
+            <th><span class="item-quantity"><%= itemAmount %> x</span></th> 
+            <% var itemPrice = cart.items[i].price %>
+            <th><span class="item-price"><strong>€<%= itemPrice %></strong></span></th>
+            <th><span class="items-price"><strong>€<%= itemPrice * itemAmount %></strong></span></th>
             </tr>
-            <% for (var i = 0; i < cart.items.length; i++) { %>
-              <tr>
-                <% var itemName = cart.items[i].title %>
-              <th><span class="item-name"><%= itemName %></span></th>
-              <% var itemAmount = cart.items[i].quantity %>
-              <th><span class="item-quantity"><%= itemAmount %> x</span></th> 
-              <% var itemPrice = cart.items[i].price %>
-              <th><span class="item-price"><strong>€<%= itemPrice %></strong></span></th>
-              <th><span class="items-price"><strong>€<%= itemPrice * itemAmount %></strong></span></th>
-              </tr>
-            <% } %>
-          </table>
-          <div class="sc-footer">
-            <div class="sc-total"><strong>
-              <span class="lighter-text">Number of items:</span>
-              <span class="total-price"><%= cartSize %></span>
-              <br>
-              <span class="lighter-text">Total price:</span>
-              <span class="total-price">€<%= cartPrice %></span></strong>
-            </div>
-          </div> 
-        </section> 
-      </div>
+          <% } %>
+        </table>
+        <div class="sc-footer">
+          <div class="sc-total"><strong>
+            <span class="lighter-text">Number of items:</span>
+            <span class="total-price"><%= cartSize %></span>
+            <br>
+            <span class="lighter-text">Total price:</span>
+            <span class="total-price">€<%= cartPrice %></span></strong>
+          </div>
+        </div> 
+      </section> 
+    </div>
 
-      <fieldset>
-        <legend>Payment Method</legend>
-    
-        <div class="payment-options">
-
-          <div class="payment">
-            <label for="cash">Cash </label>
-            <input checked id="cash" name="payment-method" type="radio" />
-          </div>
-    
-          <div class="payment">
-            <label for="paypal">PayPal</label>
-            <input id="paypal" name="payment-method" type="radio" />
-          </div>
-    
-          <div class="payment">
-            <label for="Apple Pay">Apple Pay</label>
-            <input id="apple-pay" name="payment-method" type="radio" />
-          </div>
+    <fieldset>
+      <legend>Payment Method</legend>
+      <div class="payment-options">
+        <div class="payment">
+          <label for="cash">Cash </label>
+          <input checked id="cash" name="payment-method" type="radio" />
         </div>
-      </fieldset>
   
-      <div>
-            <button type="submit" class="button place"><span>PLACE ORDER</span></button>  
+        <div class="payment">
+          <label for="paypal">PayPal</label>
+          <input id="paypal" name="payment-method" type="radio" />
+        </div>
+  
+        <div class="payment">
+          <label for="Apple Pay">Apple Pay</label>
+          <input id="apple-pay" name="payment-method" type="radio" />
+        </div>
       </div>
-    </form>
-  </div>
-  
-  
+    </fieldset>
 
-  <%- include("./partials/footer.ejs") %>
-
-  </body>
-</html>
+    <div>
+          <button type="submit" class="button place"><span>PLACE ORDER</span></button>  
+    </div>
+  </form>
+</div>
