@@ -4,6 +4,9 @@ const router = express.Router();
 const mongoose = require('mongoose');
 //const menu = require('./models/menu');
 
+// middleware that interprets requests according to a specific query parameter and HTTP method
+const methodOverride = require("method-override");
+
 const menuController = require("./controllers/menuController");
 const errorController = require("./controllers/errorController");
 const cartController = require("./controllers/cartController");
@@ -35,6 +38,11 @@ app.use(expressLayouts);
 // needed to load css in html: https://stackoverflow.com/a/54747432
 // book page 119
 router.use(express.static('public'));
+
+// methodOverride middleware configuration
+router.use(methodOverride("_method", {
+    methods: ["POST", "GET"]
+}));
 
 // is needed to parse POST body
 router.use(
@@ -97,6 +105,9 @@ router.get("/users", usersController.index, usersController.indexView);
 router.get("/users/new", usersController.new);
 router.post("/users/create", usersController.create, usersController.redirectView);
 router.get("/users/:id", usersController.show, usersController.showView);
+router.get("/users/:id/edit", usersController.edit);
+router.put("/users/:id/update", usersController.update, usersController.redirectView);
+router.delete("/users/:id/delete", usersController.delete, usersController.redirectView);
 
 // https://www.youtube.com/watch?v=pYj48mDXHBU
 // error-handling middleware
