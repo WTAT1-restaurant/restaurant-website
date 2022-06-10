@@ -23,8 +23,15 @@
                         <%= user.fullName %>
                     </a>
                 </td>
-                <td><%= user.address %></td>
+                <td><%= user.fullAddress %></td>
                 <td><%= user.email %></td>
+                <td>
+                    <a href="<%= `/users/${user._id}/edit` %>">Edit</a>
+                </td>
+                <td>
+                    <a href="<%= `users/${user._id}/delete?_method=DELETE` %>"
+                        onclick="return confirm('Are you sure you want to delete this record?') " >Delete</a>
+                </td>
             </tr> 
             <% }); %>
         </tbody>

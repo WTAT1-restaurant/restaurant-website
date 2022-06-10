@@ -1,3 +1,4 @@
+const { resolveInclude } = require("ejs");
 const User = require("../models/user");
 
 module.exports = {
@@ -62,5 +63,57 @@ module.exports = {
     },
     showView: (req, res) => {
         res.render("users/show");
+    },
+    edit: (req, res, next) => {
+        let userId = req.params.id;
+        User.findById(userId)
+            .then(user => {
+                res.render("users/edit", {
+                    user: user
+                });
+            })
+            .catch(error => {
+                console.log(`Error fetching user by ID: ${error.message}`);
+                next(error);
+            });
+    },
+    update: (req, res, next) => {
+        let userId = req.params.id;
+        let userParams = {
+            name: {
+                first: req.body.first,
+                last: req.body.last
+            },
+            address: {
+                zipCode: req.body.zipCode
+            },
+            email: req.body.email,
+            password: req.body.password,
+            
+        };
+
+        User.findByIdAndUpdate(userId, {
+            $set: userParams
+        })
+            .then(user => {
+                res.locals.redirect = `/users/${userId}`;
+                res.locals.user = user;
+                next();
+            })
+            .catch(error => {
+                console.log(`Error updating user by ID: ${error.message}`);
+            });
+    },
+    delete: (req, res, next) => {
+        let userId = req.params.id;
+        User.findByIdAndRemove(userId)
+            .then(() => {
+                res.locals.redirect = "/users";
+                next();
+            })
+            .catch(error => {
+                console.lof(`Error deleting user by ID ${error.message}`);
+                next();
+            });
     }
 };

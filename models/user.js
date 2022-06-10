@@ -53,6 +53,8 @@ userSchema.virtual("fullName").get(function() {
     return `${this.name.first} ${this.name.last}`;
 });
 
-// TODO add user schema for address
+userSchema.virtual("fullAddress").get(function() {
+    return `${this.address.zipCode}`;
+});
 
 module.exports = mongoose.model("User", userSchema);
