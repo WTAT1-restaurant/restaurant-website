@@ -1,41 +1,37 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <title>Users</title>
-</head>
-<body>
-    <h2>Users Table</h2>
-    
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% users.forEach(user => { %>
-            <tr>
-                <td>
-                    <a href="<%= `/users/${user._id}` %>">
-                        <%= user.fullName %>
-                    </a>
-                </td>
-                <td><%= user.fullAddress %></td>
-                <td><%= user.email %></td>
-                <td>
-                    <a href="<%= `/users/${user._id}/edit` %>">Edit</a>
-                </td>
-                <td>
-                    <a href="<%= `users/${user._id}/delete?_method=DELETE` %>"
-                        onclick="return confirm('Are you sure you want to delete this record?') " >Delete</a>
-                </td>
-            </tr> 
-            <% }); %>
-        </tbody>
-    </table>
-    
-</body>
-</html>
+
+<h2>Users Table</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <% users.forEach(user => { %>
+        <tr>
+            <td>
+                <a href="<%= `/users/${user._id}` %>">
+                    <%= user.fullName %>
+                </a>
+            </td>
+            <td><%= user.fullAddress %></td>
+            <td><%= user.email %></td>
+            <td>
+                <a href="<%= `/users/${user._id}/edit` %>">Edit</a>
+            </td>
+            <td>
+                <a href="<%= `/users/${user._id}/delete?_method=DELETE` %>"
+                    onclick="return confirm('Are you sure you want to delete this record?') " >Delete</a>
+            </td>
+        </tr> 
+        <% }); %>
+    </tbody>
+</table>
+
+<div class="container">
+    <a class="button" href="/users/new">Add User</a>
+</div>
