@@ -26,7 +26,11 @@ module.exports = {
                 last: req.body.last
             },
             address: {
-                zipCode: req.body.zipCode
+                streetName: req.body.streetName,
+                houseNumber: req.body.houseNumber,
+                addition: req.body.addition,
+                zipCode: req.body.zipCode,
+                city: req.body.city
             },
             email: req.body.email,
             password: req.body.password,
@@ -90,7 +94,11 @@ module.exports = {
                 last: req.body.last
             },
             address: {
-                zipCode: req.body.zipCode
+                streetName: req.body.streetName,
+                houseNumber: req.body.houseNumber,
+                addition: req.body.addition,
+                zipCode: req.body.zipCode,
+                city: req.body.city
             },
             email: req.body.email,
             password: req.body.password,
