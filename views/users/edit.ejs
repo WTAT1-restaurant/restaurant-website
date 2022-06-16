@@ -7,8 +7,20 @@
         <label for="inputLastName">Last Name</label>
         <input type="text" name="last" id="inputLastName" value="<%= user.name.last %>" placeholder="Last">
         <br>
+        <label for="inputStreetName">Street</label>
+        <input type="text" name="streetName" id="inputStreetName" value="<%= user.streetName %>" placeholder="Street">
+        <br>
+        <label for="inputHouseNumber">House Number</label>
+        <input type="text" name="houseNumber" id="inputHouseNumber" placeholder="House Number">
+        <br>
+        <label for="inputAddition">Address Addition</label>
+        <input type="text" name="addition" id="inputAddition" placeholder="Address Addition">
+        <br>
         <label for="inputZipCode">Zip Code</label>
         <input type="text" name="zipCode" id="inputZipCode" pattern="\d*"  value="<%= user.zipCode %>" placeholder="Zip Code" required>
+        <br>
+        <label for="inputCity">City</label>
+        <input type="text" name="city" id="inputCity" placeholder="City">
         <br>
         <label for="inputEmail">E-mail address</label>
         <input type="email" name="email" id="inputEmail" value="<%= user.email %>" placeholder="Email address" required>
