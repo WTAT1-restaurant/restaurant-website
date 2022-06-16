@@ -9,7 +9,7 @@ const Cart = require("./../models/cart");
 // 3. If the cart exists, add item to the cart, update total cost and save it in the database
 
 module.exports = {
-  addItem: (req, res) => {
+  addItem: (req, res, next) => {
     Cart.findOne({ userID: req.body.userID })
       .exec()
       .then((cart) => {
@@ -28,10 +28,16 @@ module.exports = {
           cart
             .save()
             .then((result) => {
-              res.send("Item added to cart");
+              req.flash("success", `Item added to cart: ${req.body.title}`);
+              res.locals.redirect = "/menu";
+              next();
             })
             .catch((error) => {
-              if (error) res.send(error);
+              req.flash(
+                "error",
+                `Error adding item to cart: ${error.message}.`);
+              res.locals.redirect = "/menu";
+              next();
             });
         } else {
           const preExistentCartItem = cart.items.find(
@@ -48,10 +54,16 @@ module.exports = {
             cart
               .save()
               .then((result) => {
-                res.send("Item added to cart");
+                req.flash("success", `Item added to cart: ${req.body.title}`);
+                res.locals.redirect = "/menu";
+                next();
               })
               .catch((error) => {
-                if (error) res.send(error);
+                req.flash(
+                  "error",
+                  `Error adding item to cart: ${error.message}.`);
+                res.locals.redirect = "/menu";
+                next();
               });
           } else {
             cart.items.push({
@@ -63,21 +75,30 @@ module.exports = {
             cart
               .save()
               .then((result) => {
-                res.send("Item added to cart");
+                req.flash("success", `Item added to cart: ${req.body.title}`);
+                res.locals.redirect = "/menu";
+                next();
               })
               .catch((error) => {
-                if (error) res.send(error);
+                req.flash(
+                  "error",
+                  `Error adding item to cart: ${error.message}.`);
+                res.locals.redirect = "/menu";
+                next();
               });
           }
         }
       })
       .catch((error) => {
-        console.log(error.message);
-        return [];
+        req.flash(
+          "error",
+          `Error adding item to cart: ${error.message}.`);
+        res.locals.redirect = "/menu";
+        next();
       });
   },
 
-  removeItem: (req, res) => {
+  removeItem: (req, res, next) => {
     Cart.findOne({ userID: req.body.userID })
       .exec()
 
@@ -96,10 +117,16 @@ module.exports = {
           cart
             .save()
             .then((result) => {
-              res.send("Item removed from cart");
+              req.flash("success", `Item removed from cart: ${req.body.title}`);
+              res.locals.redirect = "/menu";
+              next();
             })
             .catch((error) => {
-              if (error) res.send(error);
+              req.flash(
+                "error",
+                `Error removing item from cart: ${error.message}.`);
+              res.locals.redirect = "/menu";
+              next();
             });
         } else {
           cart.items.pull({
@@ -111,10 +138,16 @@ module.exports = {
           cart
             .save()
             .then((result) => {
-              res.send("Item removed from cart");
+              req.flash("success", `Item removed from cart: ${req.body.title}`);
+              res.locals.redirect = "/menu";
+              next();
             })
             .catch((error) => {
-              if (error) res.send(error);
+              req.flash(
+                "error",
+                `Error removing item from cart: ${error.message}.`);
+              res.locals.redirect = "/menu";
+              next();
             });
         }
       })
@@ -176,5 +209,9 @@ module.exports = {
       });
   },
 
-
+  redirectView: (req, res, next) => {
+    let redirectPath = res.locals.redirect;
+    if (redirectPath) res.redirect(redirectPath);
+    else next();
+  }
 };
