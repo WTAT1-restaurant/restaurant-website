@@ -15,7 +15,7 @@ const methodOverride = require("method-override");
 const menuController = require("./controllers/menuController");
 const errorController = require("./controllers/errorController");
 const cartController = require("./controllers/cartController");
-const checkOutController = require("./controllers/checkOutContoller");
+const checkOutController = require("./controllers/checkOutController");
 const usersController = require("./controllers/usersController");
 
 
