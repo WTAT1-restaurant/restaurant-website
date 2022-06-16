@@ -20,6 +20,48 @@ body {
 	background-color: #FFFFFF;
 }
 
+.restaurantContainer {
+	display: flex;
+	position: center;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	margin: 10px;
+}
+
+.item {
+	flex-grow: 1;
+	height: 100%;
+	text-align: left;
+	padding: 10px;
+	border: 1px solid #7a00dd;
+	white-space: 0;
+}
+
+.item + .item {
+	margin-left: 1%
+}
+
+.aboutUs {
+	margin: 10px;
+}
+
+/* in progress */
+.item.day {
+	text-align:right;
+	width: 50%;
+	display:inline-block;
+	box-sizing:border-box;
+}
+
+.item.time {
+	text-align:left;
+	padding-left:10px;
+	width:50%;
+	display:inline-block;
+	box-sizing:border-box;
+}
+
 /* normaler Link */
 a:link {
 	color: orangered;
@@ -511,4 +553,9 @@ input[type="checkbox"] {
 
 .user-ovw th {
 	padding: 0.7em;
+}
+
+#map {
+	width: 100%;
+	height: 500px;
 }
