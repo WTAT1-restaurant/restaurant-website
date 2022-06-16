@@ -37,6 +37,7 @@ module.exports = {
             
         };
 
+        // Adding flash messages to the create action in usersController.js
         User.create(userParams)
             .then(user => {
                 req.flash('success', `${user.fullName}'s account created successfully!` );
