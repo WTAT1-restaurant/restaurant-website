@@ -34,7 +34,7 @@ module.exports = {
             },
             email: req.body.email,
             password: req.body.password,
-            
+            role: req.body.role
         };
 
         // Adding flash messages to the create action in usersController.js
@@ -103,7 +103,7 @@ module.exports = {
             },
             email: req.body.email,
             password: req.body.password,
-            
+            role: req.body.role
         };
 
         User.findByIdAndUpdate(userId, {

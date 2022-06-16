@@ -46,7 +46,11 @@ userSchema = new Schema({
         type: String,
         required: true
     },
-    
+    role: {
+        type: String,
+        required: true,
+        lowercase: true
+    }
 });
 
 userSchema.virtual("fullName").get(function() {

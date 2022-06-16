@@ -9,25 +9,32 @@
         <input type="text" name="last" id="inputLastName" value="<%= user.name.last %>" placeholder="Last">
         <br>
         <label for="inputStreetName">Street</label>
-        <input type="text" name="streetName" id="inputStreetName" value="<%= user.streetName %>" placeholder="Street">
+        <input type="text" name="streetName" id="inputStreetName" value="<%= user.address.streetName %>" placeholder="Street">
         <br>
         <label for="inputHouseNumber">House Number</label>
-        <input type="text" name="houseNumber" id="inputHouseNumber" placeholder="House Number">
+        <input type="text" name="houseNumber" id="inputHouseNumber" value="<%= user.address.houseNumber %>" placeholder="House Number">
         <br>
         <label for="inputAddition">Address Addition</label>
-        <input type="text" name="addition" id="inputAddition" placeholder="Address Addition">
+        <input type="text" name="addition" id="inputAddition" value="<%= user.address.addition %>" placeholder="Address Addition">
         <br>
         <label for="inputZipCode">Zip Code</label>
-        <input type="text" name="zipCode" id="inputZipCode" pattern="\d*"  value="<%= user.zipCode %>" placeholder="Zip Code" required>
+        <input type="text" name="zipCode" id="inputZipCode" pattern="\d*"  value="<%= user.address.zipCode %>" placeholder="Zip Code" required>
         <br>
         <label for="inputCity">City</label>
-        <input type="text" name="city" id="inputCity" placeholder="City">
+        <input type="text" name="city" id="inputCity" value="<%= user.address.city %>" placeholder="City">
         <br>
         <label for="inputEmail">E-mail address</label>
         <input type="email" name="email" id="inputEmail" value="<%= user.email %>" placeholder="Email address" required>
         <br>
         <label for="inputPassword">Password</label>
         <input type="password" name="password" id="inputPassword" value="<%= user.password %>" placeholder="Password" required>
+        <br>
+        <label for="role">Choose a role:</label>
+        <select id="role" name="role">
+          <option value="customer">customer</option>
+          <option value="restaurant">restaurant</option>
+          <option value="admin">admin</option>
+        </select>
         <br>
             <button class="button" type="submit">Update</button>
     </form>

@@ -9,6 +9,7 @@
             <th>Name</th>
             <th>Address</th>
             <th>Email</th>
+            <th>Role</th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +23,7 @@
             </td>
             <td><%= user.fullAddress %></td>
             <td><%= user.email %></td>
+            <td><%= user.role %></td>
             <td>
                <button type="submit" class="btn first"><a href="<%= `/users/${user._id}/edit` %>">Edit</a></button>
             </td>
