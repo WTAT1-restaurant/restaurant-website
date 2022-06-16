@@ -1,5 +1,6 @@
 <div class="data-form">
-    <form action="<%= `/users/${user._id}/update?_method=PUT` %>" method="POST">
+    <div class="userdata">
+    <form action="<%= `/users/${user._id}/update?_method=PUT` %>" method="POST" class="profile">
         <h2>Edit Profile</h2>
         <label for="inputFirstName">First Name</label>
         <input type="text" name="first" id="inputFirstName" value="<%= user.name.first %>" placeholder="First" autofocus>
@@ -15,9 +16,8 @@
         <br>
         <label for="inputPassword">Password</label>
         <input type="password" name="password" id="inputPassword" value="<%= user.password %>" placeholder="Password" required>
-
-        <div class="container">
+        <br>
             <button class="button" type="submit">Update</button>
-        </div>
     </form>
+</div>
 </div>

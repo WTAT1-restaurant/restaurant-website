@@ -21,8 +21,11 @@
         <tr>
           <% var itemName = cart.items[i].title %>
           <th><span class="item-name"><%= itemName %></span></th>
+
+
           <% var itemAmount = cart.items[i].quantity %>
           <th><span class="item-quantity"><%= itemAmount %> x</span></th> 
+
           <% var itemPrice = cart.items[i].price %>
           <th><span class="item-price"><strong>€<%= itemPrice %></strong></span></th>
           <th><span class="items-price"><strong>€<%= itemPrice * itemAmount %></strong></span></th>
