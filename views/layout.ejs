@@ -1,15 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width", initial-scale="1.0">
-        <!-- <title> %= //title %></title>  -->
-        <title><%= "in progress" %></title>
-        <link rel="stylesheet" type="text/css" href="/css/style.css">
-    </head>
-    <body>
-        <%- include("./partials/nav.ejs") %>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0">
+    <!-- <title> %= //title %></title>  -->
+    <title>
+        <%= "in progress" %>
+    </title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+    <%- include("./partials/nav.ejs") %>
+
+        <div class="flashes">
+            <% if (flashMessages) { %>
+                <% if (flashMessages.success) { %>
+                    <div class="flash success">
+                        <%= flashMessages.success %>
+                    </div>
+                    <% } else if (flashMessages.error) { %>
+                    <div class="flash error">
+                        <%= flashMessages.error %>
+                    </div>
+                    <% } %>
+            <% } %>
+        </div>
+
         <%- body %>
-        <%- include("./partials/footer.ejs") %>
-    </body>
+            <%- include("./partials/footer.ejs") %>
+</body>
+
 </html>
