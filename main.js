@@ -74,6 +74,14 @@ router.use((req, res, next) => {
     next();
 });
 
+// Set user role to admin by default
+router.use((req, res, next) => {
+    res.locals.user = {
+        role: "admin"
+    }
+    next();
+});
+
 router.get("/", (req, res) => {
     //res.sendFile(__dirname + "/views/index.html");
     res.render("index", {title: "home page"});
@@ -103,9 +111,9 @@ router.get("/cart", cartController.get);
 
 router.get("/API/cart", cartController.countBasketItems);
 
-router.post("/cart/add", cartController.addItem);
+router.post("/cart/add", cartController.addItem, cartController.redirectView);
 
-router.post("/cart/remove", cartController.removeItem);
+router.post("/cart/remove", cartController.removeItem, cartController.redirectView);
 
 router.get("/checkout", checkOutController.get);
 
