@@ -17,6 +17,10 @@
         <th>Password</th>
         <td><%= user.password %></td>
     </tr>
+    <tr>
+        <th>Role</th>
+        <td><%= user.role %></td>
+    </tr>
 </table>
 <button class="button" type="submit"><a href="/users">View users</a></button>
 <button class="button" type="submit"><a href="<%= `/users/${user._id}/edit` %>">Edit User</a></button>
