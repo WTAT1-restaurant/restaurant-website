@@ -15,26 +15,26 @@ userSchema = new Schema({
         }
     },
     address: {
-        // streetName: {
-        //     type: String,
-        //     required: true,
-        // },
-        // houseNumber: {
-        //     type: Number,
-        //     required: true,
-        // },
-        // addition: {
-        //     type: String
-        // },
+        streetName: {
+            type: String,
+            required: true,
+        },
+        houseNumber: {
+            type: Number,
+            required: true,
+        },
+        addition: {
+            type: String
+        },
         zipCode: {
             type: Number,
             min: [10000, "Zip code too short"],
             max: 99999
         },
-        // city: {
-        //     type: String,
-        //     required: true,
-        // }
+        city: {
+            type: String,
+            required: true,
+        }
     },
     email: {
         type: String,
@@ -53,8 +53,9 @@ userSchema.virtual("fullName").get(function() {
     return `${this.name.first} ${this.name.last}`;
 });
 
+// haven't figured out how to show the data
 userSchema.virtual("fullAddress").get(function() {
-    return `${this.address.zipCode}`;
+    return `${this.address.streetName} ${this.address.houseNumber} ${this.address.zipCode}`;
 });
 
 module.exports = mongoose.model("User", userSchema);
