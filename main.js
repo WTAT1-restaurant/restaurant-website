@@ -2,6 +2,11 @@ const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const router = express.Router();
 const mongoose = require('mongoose');
+
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const flash = require('connect-flash');
+
 //const menu = require('./models/menu');
 
 // middleware that interprets requests according to a specific query parameter and HTTP method
@@ -51,6 +56,7 @@ router.use(
     })
 );
 router.use(express.json());
+
 
 router.get("/", (req, res) => {
     //res.sendFile(__dirname + "/views/index.html");
@@ -108,6 +114,23 @@ router.get("/users/:id", usersController.show, usersController.showView);
 router.get("/users/:id/edit", usersController.edit);
 router.put("/users/:id/update", usersController.update, usersController.redirectView);
 router.delete("/users/:id/delete", usersController.delete, usersController.redirectView);
+
+// Set Cookie Parser
+router.use(cookieParser('SecretCookies'));
+router.use(session({
+    secret: "SecretCookies",
+    cookie: {maxAge: 4000000},
+    resave: false,
+    saveUninitialized: false
+}));
+
+router.use(flash());
+
+// Middleware to associate connectFlash to flashes on response
+router.use((req, res, next) => {
+    res.locals.flashMessages = req.flash();
+    next();
+});
 
 // https://www.youtube.com/watch?v=pYj48mDXHBU
 // error-handling middleware
