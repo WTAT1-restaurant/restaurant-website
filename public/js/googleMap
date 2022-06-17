@@ -1,0 +1,26 @@
+{/* Initialize and add the map */}
+function initMap() {
+    // The location of school
+    const school = { lat: 52.457901, lng: 13.526690 };
+    // The map, centered at school
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: school,
+        mapId: "a140a26501efcc66",
+        zoomControl: false,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+        rotateControl: false,
+        fullscreenControl: false
+    });
+    // The marker, positioned at school
+    const markerPNG = "../images/sushiMarker.png"; 
+    const marker = new google.maps.Marker({
+        position: school,
+        map: map,
+        title: "restaurant",
+        // icon: markerPNG
+    });
+}
+window.initMap = initMap;

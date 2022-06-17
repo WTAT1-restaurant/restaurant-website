@@ -1,11 +1,38 @@
 <h1>restaurant information</h1>
-<p><h4><b>address:</b></h4></p>
-<p><h4>Sültstrasse 62</h4></p>
-<p><h4>10409 Berlin</h4></p>
-<!-- found here: https://extension.umaine.edu/plugged-in/technology-marketing-communications/web/tips-for-web-managers/embed-map/ -->
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2426.131292179356!2d13.431381416127026!3d52.54914997981982!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a84dfaece32d89%3A0x8d9f27e12e054c9f!2sS%C3%BCltstra%C3%9Fe%2062%2C%2010409%20Berlin!5e0!3m2!1sen!2sde!4v1651687114165!5m2!1sen!2sde" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<div class="aboutUs">
+    <div class="item">
+        <p>From a very young age, I saw my mom take out a little book, wrapped in dark leather, and write something down with an inscrutable smile while she cooked or ate. One day she gave us the very mysterious little book she had kept for years. A book in which she wrote all her wonderful letters - we thought. Curious, we opened the first pages and were surprised to find exact cooking information missing over and over again.
+            It was not a recipe book - but what was it?
+            The surprise was astonishing when we looked more closely at the pages and realized that while details of the steps might be missing, the book revealed much more about one thing; one thing much more valuable than knowing if there was a pinch of salt: feelings. What our mother had done was to fill a recipe book with sentiments. Like a diary, she had put into words the unique atmosphere that emerged each time we sat together and tried one of her newly created dishes; how my brother's mood changed from initial skepticism, to thoughtfulness at the first bite, to scooping to try the dish. And, as is often the case, made us all laugh.
+            No matter what she prepared, she never forgot the most important ingredient in everything she cooked for us: love.
+        </p>
+    </div>
+</div>
+<div class="restaurantContainer">
+    <div class="item">
+        <h4><b>address:</b></h4>
+        <p>HTW Berlin</p>
+        <p>Wilhelminenhofstraße 75A</p>
+        <p>12459 Berlin</p>
+    </div>
+    <div class="item">
+        <h4><b>opening hours:</b></h4>
+        <div class="day"><p><b>mon-thu</b></div><div class="time"> 06:00 - 22:00</p></div>
+        <div class="day"><p><b>fri-sat</b></div><div class="time"> 07:00 - 24:00</p></div>
+        <div class="day"><p><b>sun</b>    </div><div class="time"> closed</p></div>
+    </div>
+    <div class="item">
+        <h4><b>contact:</b></h4>
+        <p>(030) 5019 - 0</p>
+    </div>
+</div>
+<script type="text/javascript" src="/js/googleMap"></script>
+<!--The div element for the map -->
+<div id="map"></div>
 
-<p><h4><b>phone:</b></h4></p>
-<p><h4>+49(0)15174446479</h4></p>
-  
-
+<script async
+src="https://maps.googleapis.com/maps/api/js?
+key=AIzaSyDCn8c4ZGrm7UJ-HBZIxw-r1SKqJ9ZM6-M
+&map_ids=a140a26501efcc66
+&callback=initMap"
+></script>
