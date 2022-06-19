@@ -22,7 +22,7 @@ body {
 
 .flexContainer {
 	display: flex;
-  	width: 100%;
+	width: 100%;
 	justify-content: center;
 	/*
 	flex-direction: row;
@@ -76,7 +76,7 @@ body {
 	box-sizing:border-box;
 }
 
-#map {
+.map {
 	width: 64%;
 	height: 500px;
 }
@@ -193,7 +193,7 @@ a:hover {
 	box-shadow: 0 0 40px 40px #7a00dd inset;
 }
 
-img {
+.item-cell img {
 	max-width: 400px;
 	max-height: 200px;
 }

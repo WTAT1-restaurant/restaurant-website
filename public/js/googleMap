@@ -3,7 +3,7 @@ function initMap() {
     // The location of school
     const school = { lat: 52.457901, lng: 13.526690 };
     // The map, centered at school
-    const map = new google.maps.Map(document.getElementById("map"), {
+    const map = new google.maps.Map(document.getElementsByClassName("map")[0], {
         zoom: 15,
         center: school,
         mapId: "a140a26501efcc66",
