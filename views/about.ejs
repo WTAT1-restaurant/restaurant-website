@@ -1,6 +1,6 @@
 <h1>restaurant information</h1>
-<div class="aboutUs">
-    <div class="item">
+<div class="flexContainer">
+    <div class="aboutUs">
         <p>From a very young age, I saw my mom take out a little book, wrapped in dark leather, and write something down with an inscrutable smile while she cooked or ate. One day she gave us the very mysterious little book she had kept for years. A book in which she wrote all her wonderful letters - we thought. Curious, we opened the first pages and were surprised to find exact cooking information missing over and over again.
             It was not a recipe book - but what was it?
             The surprise was astonishing when we looked more closely at the pages and realized that while details of the steps might be missing, the book revealed much more about one thing; one thing much more valuable than knowing if there was a pinch of salt: feelings. What our mother had done was to fill a recipe book with sentiments. Like a diary, she had put into words the unique atmosphere that emerged each time we sat together and tried one of her newly created dishes; how my brother's mood changed from initial skepticism, to thoughtfulness at the first bite, to scooping to try the dish. And, as is often the case, made us all laugh.
@@ -8,7 +8,7 @@
         </p>
     </div>
 </div>
-<div class="restaurantContainer">
+<div class="flexContainer">
     <div class="item">
         <h4><b>address:</b></h4>
         <p>HTW Berlin</p>
@@ -17,18 +17,22 @@
     </div>
     <div class="item">
         <h4><b>opening hours:</b></h4>
-        <div class="day"><p><b>mon-thu</b></div><div class="time"> 06:00 - 22:00</p></div>
-        <div class="day"><p><b>fri-sat</b></div><div class="time"> 07:00 - 24:00</p></div>
-        <div class="day"><p><b>sun</b>    </div><div class="time"> closed</p></div>
+        <div class="key"><p><b>mon-thu</b></div><div class="value"> 06:00 - 22:00</p></div>
+        <div class="key"><p><b>fri-sat</b></div><div class="value"> 07:00 - 24:00</p></div>
+        <div class="key"><p><b>sun</b>    </div><div class="value"> closed</p></div>
     </div>
     <div class="item">
         <h4><b>contact:</b></h4>
-        <p>(030) 5019 - 0</p>
+        <div class="key"><p><b>phone</b></div><div class="value">(030) 5019 - 0</p></div>
+        <div class="key"><p><b>fax</b></div><div class="value"></p>555-123-4567</div>
+        <div class="key"><p><b>email</b></div><div class="value">sushi@gmail.com</p></div>
     </div>
 </div>
 <script type="text/javascript" src="/js/googleMap"></script>
 <!--The div element for the map -->
-<div id="map"></div>
+<div class="flexContainer">
+    <div id="map"></div>
+</div>
 
 <script async
 src="https://maps.googleapis.com/maps/api/js?
