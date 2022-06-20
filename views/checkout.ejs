@@ -1,4 +1,13 @@
-<div class="checkout">
+<script>
+  function delivery() {
+    alert("the food will be delivered");
+  }
+  function pickUp() {
+    alert("the food will be picked up");
+  }
+  </script>
+  
+  <div class="checkout">
   
   <form action="#" class="form" method="POST">
     <h2>–– CHECKOUT ––</h2>
@@ -21,7 +30,7 @@
               <button onclick="pickUp()"type="submit" class="button food">PICK UP FOOD</button>
             </form>
           </div>
-        </fieldset>
+     
 
         <p>food will be delivered ASAP, but you can set time to deliver or to pick up</p>
         <form action="/checkout/time" method="post">
@@ -29,7 +38,8 @@
           <input type="time" id="time" name="time" placeholder="00:00 am">
           <button type="submit" class="button food">SET TIME</button>
         </form>
-
+        
+      </fieldset>
           <div class="row">
             <div class="col">
           <form action="/checkout/information" method="post">
@@ -86,29 +96,40 @@
         </div> 
       </section> 
     </div>
+    
 
     <fieldset>
       <legend>Payment Method</legend>
+      <form action="/checkOut/placeOrder" method="post">
       <div class="payment-options">
+     
+
+      
         <div class="payment">
           <label for="cash">Cash </label>
-          <input checked id="cash" name="payment-method" type="radio" />
+          <input type="radio"  checked id="cash" name="Method" value="cash" />
         </div>
+     
   
+      
         <div class="payment">
           <label for="paypal">PayPal</label>
-          <input id="paypal" name="payment-method" type="radio" />
+          <input type="radio"  id="paypal" name="Method" value="paypal" />
         </div>
-  
+       
+         
         <div class="payment">
           <label for="Apple Pay">Apple Pay</label>
-          <input id="apple-pay" name="payment-method" type="radio" />
+          <input type="radio"   id="apple-pay" name="Method" value="applepay" />
         </div>
+     
       </div>
-    </fieldset>
 
     <div>
           <button type="submit" class="button place"><span>PLACE ORDER</span></button>  
     </div>
   </form>
+
+  </fieldset>
+
 </div>

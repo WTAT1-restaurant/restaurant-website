@@ -116,12 +116,12 @@ router.post("/cart/add", cartController.addItem, cartController.redirectView);
 router.post("/cart/remove", cartController.removeItem, cartController.redirectView);
 
 router.get("/checkout", checkOutController.get);
+// router.get("/checkout/placeOrder", checkOutController.getOrder);
 
-router.post("/checkOut/delivery", checkOutController.deliverOrder);
-
+router.post("/checkOut/delivery", checkOutController.deliverOrder );
 router.post("/checkOut/pickUp", checkOutController.pickUpOrder);
 router.post("/checkout/time", checkOutController.setTime);
-// router.post("/checkout/information", infoController.saveInfo);
+router.post("/checkout/placeOrder", checkOutController.setPayment);
 router.post("/checkout/information", checkOutController.saveInfo);
 
 router.post("/contact", (req, res) => {
