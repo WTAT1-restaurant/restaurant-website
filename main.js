@@ -7,6 +7,8 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 
+const { body, check, validationResult } = require("express-validator");
+
 //const menu = require('./models/menu');
 
 // middleware that interprets requests according to a specific query parameter and HTTP method
@@ -133,7 +135,24 @@ router.post("/menu/items", menuController.addNewItem);
 // Users
 router.get("/users", usersController.index, usersController.indexView);
 router.get("/users/new", usersController.new);
-router.post("/users/create", usersController.create, usersController.redirectView);
+router.post("/users/create",
+    check("email", "Email is invalid").normalizeEmail({ gmail_remove_dots: false, all_lowercase: true }).trim().isEmail(), 
+    check("zipCode", "Zip Code is invalid").notEmpty().isInt().isLength({ min: 5, max: 5 }), 
+    check("password", "Password cannot be empty").notEmpty(),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            let messages = errors.array().map(e => e.msg);
+            req.skip = true;
+            req.flash("error", messages.join(" and "));
+            res.locals.redirect = "/users/new";
+            next();
+        } else {
+            next();
+        }
+    }, usersController.create, usersController.redirectView);
+router.get("/users/login", usersController.login);
+router.post("/users/login", usersController.authenticate, usersController.redirectView);
 router.get("/users/:id", usersController.show, usersController.showView);
 router.get("/users/:id/edit", usersController.edit);
 router.put("/users/:id/update", usersController.update, usersController.redirectView);
