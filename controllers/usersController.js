@@ -34,7 +34,7 @@ module.exports = {
             },
             email: req.body.email,
             password: req.body.password,
-            role: req.body.role,
+            role: req.body.role
         };
 
         User.create(userParams)
@@ -102,7 +102,7 @@ module.exports = {
             },
             email: req.body.email,
             password: req.body.password,
-
+            role: req.body.role
         };
 
         User.findByIdAndUpdate(userId, {
@@ -162,14 +162,6 @@ module.exports = {
             });
     },
     validate: (req, res, next) => {
-        req.body("email").normalizeEmail().trim();
-        req.check("email", "Email is invalid").isEmail();
-        req.check("zipCode", "Zip Code is invalid").notEmpty().isInt().isLength({
-            min: 5,
-            max: 5
-        }).equals(req.body.zipCode);
-        req.check("password", "Password cannot be empty").notEmpty();
-
         req.getValidationResult().then((error) => {
             if (!error.isEmpty()) {
                 let messages = error.array().map(e => e.msg);
