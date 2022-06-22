@@ -31,9 +31,9 @@
         <br>
         <label for="role">Choose a role:</label>
         <select id="role" name="role">
-          <option value="customer">customer</option>
-          <option value="restaurant">restaurant</option>
-          <option value="admin">admin</option>
+          <option value="customer" selected="<%= user.role === 'customer' %>">customer</option>
+          <option value="restaurant" selected="<%= user.role === 'restaurant' %>">restaurant</option>
+          <option value="admin" selected="<%= user.role === 'admin' %>">admin</option>
         </select>
         <br>
             <button class="button" type="submit">Update</button>
