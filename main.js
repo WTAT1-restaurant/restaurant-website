@@ -8,7 +8,6 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 
 const { body, check, validationResult } = require("express-validator");
-
 //const menu = require('./models/menu');
 
 // middleware that interprets requests according to a specific query parameter and HTTP method
@@ -19,6 +18,9 @@ const errorController = require("./controllers/errorController");
 const cartController = require("./controllers/cartController");
 const checkOutController = require("./controllers/checkOutController");
 const usersController = require("./controllers/usersController");
+
+const passport = require("passport");
+const User = require("./models/user");
 
 
 // express app
@@ -34,10 +36,11 @@ const port = 3000;
 // anni = i4eIB3sN6sAJ7pZP
 
 const dbURI = 'mongodb+srv://anni:i4eIB3sN6sAJ7pZP@foodorder.enn28.mongodb.net/FoodOrder?retryWrites=true&w=majority'
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
-.then((result) => app.listen(port, () => {
-    console.log(`The Express.js server has started and is listening on port number: ${port}`); }))
-.catch((err) => console.log(err));
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then((result) => app.listen(port, () => {
+        console.log(`The Express.js server has started and is listening on port number: ${port}`);
+    }))
+    .catch((err) => console.log(err));
 
 app.set("view engine", "ejs");
 app.use(expressLayouts);
@@ -51,6 +54,21 @@ router.use(methodOverride("_method", {
     methods: ["POST", "GET"]
 }));
 
+// Set Cookie Parser
+router.use(cookieParser('SecretCookies'));
+router.use(session({
+    secret: "SecretCookies",
+    cookie: { maxAge: 4000000 },
+    resave: false,
+    saveUninitialized: false
+}));
+
+router.use(passport.initialize());
+router.use(passport.session());
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 // is needed to parse POST body
 router.use(
     express.urlencoded({
@@ -59,16 +77,14 @@ router.use(
 );
 router.use(express.json());
 
-// Set Cookie Parser
-router.use(cookieParser('SecretCookies'));
-router.use(session({
-    secret: "SecretCookies",
-    cookie: {maxAge: 4000000},
-    resave: false,
-    saveUninitialized: false
-}));
-
 router.use(flash());
+
+// Add information about the user and whether he is logged in or not
+router.use((req, res, next) => {
+    res.locals.loggedIn = req.isAuthenticated();
+    res.locals.currentUser = req.user;
+    next();
+});
 
 // Middleware to associate connectFlash to flashes on response
 router.use((req, res, next) => {
@@ -76,22 +92,14 @@ router.use((req, res, next) => {
     next();
 });
 
-// Set user role to admin by default
-router.use((req, res, next) => {
-    res.locals.user = {
-        role: "admin"
-    }
-    next();
-});
-
 router.get("/", (req, res) => {
     //res.sendFile(__dirname + "/views/index.html");
-    res.render("index", {title: "home page"});
+    res.render("index", { title: "home page" });
 });
 
 router.get("/about", (req, res) => {
     //res.sendFile(__dirname + "/views/menu.html");
-    res.render("about", {title: "about"});
+    res.render("about", { title: "about" });
 });
 
 // get menu item by ID
@@ -120,7 +128,7 @@ router.post("/cart/remove", cartController.removeItem, cartController.redirectVi
 router.get("/checkout", checkOutController.get);
 // router.get("/checkout/placeOrder", checkOutController.getOrder);
 
-router.post("/checkOut/delivery", checkOutController.deliverOrder );
+router.post("/checkOut/delivery", checkOutController.deliverOrder);
 router.post("/checkOut/pickUp", checkOutController.pickUpOrder);
 router.post("/checkout/time", checkOutController.setTime);
 router.post("/checkout/placeOrder", checkOutController.setPayment);
@@ -136,8 +144,8 @@ router.post("/menu/items", menuController.addNewItem);
 router.get("/users", usersController.index, usersController.indexView);
 router.get("/users/new", usersController.new);
 router.post("/users/create",
-    check("email", "Email is invalid").normalizeEmail({ gmail_remove_dots: false, all_lowercase: true }).trim().isEmail(), 
-    check("zipCode", "Zip Code is invalid").notEmpty().isInt().isLength({ min: 5, max: 5 }), 
+    check("email", "Email is invalid").normalizeEmail({ gmail_remove_dots: false, all_lowercase: true }).trim().isEmail(),
+    check("zipCode", "Zip Code is invalid").notEmpty().isInt().isLength({ min: 5, max: 5 }),
     check("password", "Password cannot be empty").notEmpty(),
     (req, res, next) => {
         const errors = validationResult(req);
@@ -153,6 +161,7 @@ router.post("/users/create",
     }, usersController.create, usersController.redirectView);
 router.get("/users/login", usersController.login);
 router.post("/users/login", usersController.authenticate, usersController.redirectView);
+router.get("/users/logout", usersController.logout, usersController.redirectView);
 router.get("/users/:id", usersController.show, usersController.showView);
 router.get("/users/:id/edit", usersController.edit);
 router.put("/users/:id/update", usersController.update, usersController.redirectView);
