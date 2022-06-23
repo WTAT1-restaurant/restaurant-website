@@ -1,8 +1,9 @@
-const mongoose = require("mongoose"),
-bcrypt = require("bcrypt"),
-{Schema} = mongoose,
+const passportLocalMongoose = require("passport-local-mongoose");
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const { Schema } = mongoose;
 
-userSchema = new Schema({
+const userSchema = new Schema({
     name: {
         first: {
             type: String,
@@ -53,11 +54,14 @@ userSchema = new Schema({
         lowercase: true
     }
 });
+userSchema.plugin(passportLocalMongoose, {
+    usernameField: "email"
+});
 
-userSchema.pre("save", function(next) {     // add a pre hook to the user schema
+userSchema.pre("save", function (next) {     // add a pre hook to the user schema
     let user = this;
 
-    bcrypt.hash(user.password, 10). then(hash => {  // hash the user's password
+    bcrypt.hash(user.password, 10).then(hash => {  // hash the user's password
         user.password = hash;
         next();
     })
@@ -67,17 +71,17 @@ userSchema.pre("save", function(next) {     // add a pre hook to the user schema
         });
 });
 
-userSchema.methods.passwordComparison = function(inputPassword) {
+userSchema.methods.passwordComparison = function (inputPassword) {
     let user = this;
     return bcrypt.compare(inputPassword, user.password); // compare the user password with the stored password
 }
 
-userSchema.virtual("fullName").get(function() {
+userSchema.virtual("fullName").get(function () {
     return `${this.name.first} ${this.name.last}`;
 });
 
 // haven't figured out how to show the data
-userSchema.virtual("fullAddress").get(function() {
+userSchema.virtual("fullAddress").get(function () {
     return `${this.address.streetName} ${this.address.houseNumber} ${this.address.zipCode}`;
 });
 
