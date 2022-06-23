@@ -44,11 +44,11 @@
 <% for (var i=0; i < items.length; i++) { %>
   <div class="item-cell">
     <h4>
-      <a href="/menu/restaurant/<%= items[i].id %>">
+      <a href="/menu/items/<%= items[i].id %>">
         <%= items[i].title %> - <%= items[i].price %>€
       </a>
     </h4>
-    <a href="/menu/restaurant/<%= items[i].id %>">
+    <a href="/menu/items/<%= items[i].id %>">
       <img src="<%= items[i].image %>">
     </a>
     <div>

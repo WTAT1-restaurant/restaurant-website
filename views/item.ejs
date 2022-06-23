@@ -1,4 +1,4 @@
-<div>
+<div class="item-cell">
     <h1><%= item.title %></h1>
     <img src="<%= item.image %>">
     <p>price: <%= item.price %>€</p> 
@@ -6,7 +6,19 @@
     <p>fats: <%= item.fats %>g</p> 
     <p>carbohydrates: <%= item.carbohydrates %>g</p> 
     <p>calories: <%= item.calories %></p>
-    <button class="btn first">+</button>
-    <button class="btn first">−</button>
+    <div>
+        <form action="/cart/add" method="post">
+            <input type="text" name="userID" value="1" hidden>
+            <input type="text" name="title" value="<%= item.title%>" hidden>
+            <input type="number" name="price" value="<%= item.price %>" hidden>
+            <button type="submit" class="btn first">+</button>
+        </form>
+        <form action="/cart/remove" method="post">
+            <input type="text" name="userID" value="1" hidden>
+            <input type="text" name="title" value="<%= item.title %>" hidden>
+            <input type="number" name="price" value="<%= item.price %>" hidden>
+            <button class="btn first">−</button>
+        </form>
+      </div>
 </div>
     
