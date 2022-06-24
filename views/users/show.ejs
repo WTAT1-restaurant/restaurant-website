@@ -1,5 +1,9 @@
-
-<h1><%= user.fullName %>'s Profile</h1>
+<%var fullName = user.fullName %>
+<%if(fullName.charAt(fullName.length - 1) == "s") { %> 
+    <h1><%= fullName %>' Profile</h1> 
+<%} else {%>
+    <h1><%= fullName %>'s Profile</h1>
+<%} %>
 <table class="user-ovw">
     <tr>
         <th>Name</th>

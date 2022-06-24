@@ -31,6 +31,7 @@ module.exports = {
             cart: cartDoc,
             cartSize: sizeCart,
             cartPrice: totalPrice,
+            title: "checkout"
           }
           );
         }
@@ -64,6 +65,7 @@ module.exports = {
         
           cartSize: sizeCart,
           cartPrice: totalPrice,
+          title: "checkout"
         }
         );
       }

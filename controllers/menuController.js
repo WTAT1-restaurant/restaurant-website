@@ -1,3 +1,4 @@
+"use scrict";
 const menuItem = require("../models/menuItem");
 const MenuItem = require("../models/menuItem");
 
@@ -19,7 +20,7 @@ module.exports = {
         // execute query
         query.exec((error, data) => {
             if (data) {
-                res.render("item", { "item": data });
+                res.render("item", { "item": data, title: data.title });
             }
         });
     },
@@ -36,13 +37,13 @@ module.exports = {
             if (priceSorted) {
                 query.sort({ price: 1 }).exec((error, data) => {
                     if (data) {
-                        res.render("menu", { "items": data, "vegetarian": true });
+                        res.render("menu", { "items": data, "vegetarian": true, title: "vegetarian menu" });
                     }
                 });
             } else {
                 query.exec((error, data) => {
                     if (data) {
-                        res.render("menu", { "items": data, "vegetarian": true });
+                        res.render("menu", { "items": data, "vegetarian": true, title: "vegetarian menu" });
                     }
                 });
             }
@@ -53,13 +54,13 @@ module.exports = {
             if (priceSorted) {
                 query.sort({ price: 1 }).exec((error, data) => {
                     if (data) {
-                        res.render("menu", { "items": data });
+                        res.render("menu", { "items": data, title: "menu" });
                     }
                 });
             } else {
                 query.exec((error, data) => {
                     if (data) {
-                        res.render("menu", { "items": data });
+                        res.render("menu", { "items": data, title: "menu" });
                     }
                 });
             }
@@ -71,7 +72,7 @@ module.exports = {
         var query = MenuItem.find({});
         query.exec((error, data) => {
             if (data) {
-                res.render("restaurant", { "items": data });
+                res.render("restaurant", { "items": data, title: "restaurant menu" });
             }
         });
     },

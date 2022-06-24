@@ -94,7 +94,7 @@ router.use((req, res, next) => {
 
 router.get("/", (req, res) => {
     //res.sendFile(__dirname + "/views/index.html");
-    res.render("index", { title: "home page" });
+    res.render("index", { title: "home" });
 });
 
 router.get("/about", (req, res) => {

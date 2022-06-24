@@ -1,3 +1,4 @@
+"use scrict";
 {/* Initialize and add the map */}
 function initMap() {
     // The location of school
@@ -15,11 +16,11 @@ function initMap() {
         fullscreenControl: false
     });
     // The marker, positioned at school
-    const markerPNG = "../images/sushiMarker.png"; 
+    // const markerPNG = "../images/sushiMarker.png"; 
+    const markerPNG = "https://pngtree.com/so/Sushi"; 
     const marker = new google.maps.Marker({
         position: school,
         map: map,
-        title: "restaurant",
         // icon: markerPNG
     });
 }

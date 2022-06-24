@@ -1,3 +1,4 @@
+"use scrict";
 const passport = require("passport");
 const { resolveInclude } = require("ejs");
 const User = require("../models/user");
@@ -15,10 +16,10 @@ module.exports = {
             });
     },
     indexView: (req, res) => {
-        res.render("users/index");
+        res.render("users/index", { title: "users overview" });
     },
     new: (req, res) => {
-        res.render("users/new");
+        res.render("users/new", { title: " setup new user" });
     },
     create: (req, res, next) => {
         if (req.skip) next();
@@ -77,15 +78,31 @@ module.exports = {
             });
     },
     showView: (req, res) => {
-        res.render("users/show");
+        var firstName = res.locals.user.name.first;
+        var lastName = res.locals.user.name.last;
+        if(lastName.charAt(lastName.length - 1) == "s"){
+            res.render("users/show", { title: firstName + " " + lastName + "' profile" });
+        } else {
+        res.render("users/show", { title: firstName + " " + lastName + "'s profile" });
+        }
     },
     edit: (req, res, next) => {
         let userId = req.params.id;
         User.findById(userId)
             .then(user => {
-                res.render("users/edit", {
-                    user: user
-                });
+                var firstName = user.name.first;
+                var lastName = user.name.last;
+                if(lastName.charAt(lastName.length - 1) == "s"){
+                    res.render("users/edit", {
+                        user: user,
+                        title: firstName + " " + lastName + "' profile"
+                    });
+                } else {
+                    res.render("users/edit", {
+                        user: user,
+                        title: firstName + " " + lastName + "'s profile"
+                    });
+                }
             })
             .catch(error => {
                 console.log(`Error fetching user by ID: ${error.message}`);
@@ -137,7 +154,7 @@ module.exports = {
     },
 
     login: (req, res) => {
-        res.render("users/login");
+        res.render("users/login", { title: "login" });
     },
 
     authenticate: passport.authenticate("local", {

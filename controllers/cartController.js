@@ -182,6 +182,7 @@ module.exports = {
             cart: cartDoc,
             cartSize: sizeCart,
             cartPrice: totalPrice,
+            title: "shopping cart"
           });
         }
       })

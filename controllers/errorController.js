@@ -1,3 +1,4 @@
+"use scrict";
 const httpStatus = require("http-status-codes");
 
 // catch all errors and respond with a 500 status code
@@ -6,13 +7,13 @@ module.exports = {
         let errorCode = httpStatus.INTERNAL_SERVER_ERROR;
         res.status(errorCode);
         console.log(error)
-        res.render("500");
+        res.render("500", { title: "500" });
     },
 
     pageNotFoundError : (req, res) => {
         let errorCode = httpStatus.NOT_FOUND;
         res.status(errorCode);
         console.log(errorCode);
-        res.render("404");
+        res.render("404", { title: "404" });
     }
 };
