@@ -2,6 +2,7 @@
 const checkOut = require("./../models/checkout");
 const Cart = require("./../models/cart");
 const { use } = require("express/lib/application");
+const user = require("../models/user");
 
 var ObjectId = require("mongoose").Types.ObjectId;
 var query = { checkOut_id: new ObjectId(checkOut._id) };
@@ -27,13 +28,12 @@ module.exports = {
           for (const item of itemArray) {
             totalPrice = totalPrice + item.quantity * item.price;
           }
-          res.render("checkout",  {
+          res.render("checkout", {
             cart: cartDoc,
             cartSize: sizeCart,
             cartPrice: totalPrice,
-            title: "checkout"
-          }
-          );
+            title: "checkout",
+          });
         }
       })
       .catch((error) => {
@@ -42,38 +42,36 @@ module.exports = {
       });
   },
 
-  getOrder: (req, res) => {
-    Cart.findOne({ userID: 1 })
-    .exec()
-    .then((cart) => {
-      if (cart == null) {
-        res.send("Empty shopping cart");
-      } else {
-        const cartDoc = cart;
-        const itemArray = cart.items;
-        var sizeCart = 0;
-        for (const item of itemArray) {
-          sizeCart = sizeCart + item.quantity;
-        }
-        // TODO: decide whether to get rid of the totalPrice or not.
-        // const totalPrice = cartDoc.totalCost;
-        var totalPrice = 0;
-        for (const item of itemArray) {
-          totalPrice = totalPrice + item.quantity * item.price;
-        }
-        res.render("placeOrder",  {
-        
-          cartSize: sizeCart,
-          cartPrice: totalPrice,
-          title: "checkout"
-        }
-        );
-      }
-    })
-    .catch((error) => {
-      console.log(error.message);
-      return [];
-    });
+  // getBilling: (req, res) => {
+  //   // Cart.findOne({"userID": req.body.userID})
+  //   checkOut
+  //     .findOne({ fullname: "joey" })
+  //     .exec()
+  //     .then((user) => {
+  //       res.render("placeOrder", {
+  //         user: user,
+  //         fullname: user.fullname,
+  //         title: "checkout",
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.message);
+  //       return [];
+  //     });
+  // },
+
+
+  getBilling: (req, res, next) => {
+    // Cart.findOne({"userID": req.body.userID})
+    checkOut.findOne().sort({ _id: -1 })
+      .then((checkout) => {
+        if (checkout) {
+          res.render("placeOrder", { user: checkout, title: "info" });
+      }})
+      .catch((error) => {
+        console.log(error.message);
+        return [];
+      });
   },
 
   deliverOrder: (req, res) => {
@@ -97,45 +95,50 @@ module.exports = {
   },
 
   saveInfo: (req, res) => {
-    checkOut.find()
-        .exec()
-        .then((checkout) => {
-            if (checkout != null) {
-                checkout = new checkOut({
-                    fullname: req.body.fullname,
-                    email: req.body.email,
-                    address: req.body.address,
-                    zip: req.body.zip,
-                    city: req.body.city,
-
-                })
-                checkout
-                    .save()
-                    .then((result) => {
-                        res.send("your information have been saved");
-                    })
-                    .catch((error) => {
-                        if (error) res.send( "THE ERROR IS HERE" + error);
-                    });
-            } else {
-                checkout.updateMany({ query }, {
-                    $set: {
-                        fullname: req.body.fullname, email: req.body.email, address: req.body.address,
-                        zip: req.body.zip,
-                        city: req.body.city,
-                    }
-                })
-                    .then(res.send("your information have been updated and saved"))
-                    .catch((err) => res.status(422).json(err));
-            }
-
-        })
-},
+    checkOut
+      .find()
+      .exec()
+      .then((checkout) => {
+        if (checkout != null) {
+          checkout = new checkOut({
+            fullname: req.body.fullname,
+            email: req.body.email,
+            address: req.body.address,
+            zip: req.body.zip,
+            city: req.body.city,
+          });
+          checkout
+            .save()
+            .then((result) => {
+              res.send("your information have been saved");
+            })
+            .catch((error) => {
+              if (error) res.send("THE ERROR IS HERE" + error);
+            });
+        } else {
+          checkout
+            .updateMany(
+              { query },
+              {
+                $set: {
+                  fullname: req.body.fullname,
+                  email: req.body.email,
+                  address: req.body.address,
+                  zip: req.body.zip,
+                  city: req.body.city,
+                },
+              }
+            )
+            .then(res.send("your information have been updated and saved"))
+            .catch((err) => res.status(422).json(err));
+        }
+      });
+  },
 
   setTime: (req, res) => {
     let time = req.body.time;
     checkOut
-      .updateMany({query}, { $set: { time: time } })
+      .updateMany({ query }, { $set: { time: time } })
       .then(
         req.flash("success", ` food will be picked up at ${time}`),
         res.redirect("/checkout")
@@ -147,10 +150,20 @@ module.exports = {
     let payment = req.body;
     let paymentMethod = payment.Method;
     checkOut
-      .updateMany({ query}, { $set: { paymentMethod : paymentMethod } })
-      .then(res.send("your paymentMethod information have been saved"))
+      .updateMany({ query }, { $set: { paymentMethod: paymentMethod } })
+      .then(
+        req.flash(
+          "success",
+          ` your payment with ${paymentMethod} have been saved`
+        ),
+        res.redirect("/checkout")
+      )
       .catch((error) => {
-        if (error) res.send( "THE ERROR IS  " + error);
-    });
+        req.flash(
+          "error",
+          `Failed to create user account because: ${error.message}.`,
+          res.redirect("/checkout")
+        );
+      });
   },
 };

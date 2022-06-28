@@ -131,8 +131,9 @@ router.get("/checkout", checkOutController.get);
 router.post("/checkOut/delivery", checkOutController.deliverOrder);
 router.post("/checkOut/pickUp", checkOutController.pickUpOrder);
 router.post("/checkout/time", checkOutController.setTime);
-router.post("/checkout/placeOrder", checkOutController.setPayment);
+router.post("/checkOut/save", checkOutController.setPayment);
 router.post("/checkout/information", checkOutController.saveInfo);
+router.post("/checkout/placeOrder", checkOutController.getBilling);
 
 router.post("/contact", (req, res) => {
     res.send("Contact information submitted successfully.");
