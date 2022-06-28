@@ -24,12 +24,15 @@
             <td><%= user.fullAddress %></td>
             <td><%= user.email %></td>
             <td><%= user.role %></td>
-            <td>
-               <button type="submit" class="btn first"><a href="<%= `/users/${user._id}/edit` %>">Edit</a></button>
+            <td> 
+                <a href="<%= `/users/${user._id}/edit` %>">
+                    <button type="submit" class="btn first">Edit</button>
+                </a>
             </td>
             <td>
-                <button type="submit" class="btn first"> <a href="<%= `/users/${user._id}/delete?_method=DELETE` %>"
-                    onclick="return confirm('Are you sure you want to delete this record?') " >Delete</a></button>
+                <a href="<%= `/users/${user._id}/delete?_method=DELETE` %>" onclick="return confirm('Are you sure you want to delete this record?')">
+                    <button type="submit" class="btn first">Delete</button>
+                </a>
             </td>
         </tr> 
         <% }); %>

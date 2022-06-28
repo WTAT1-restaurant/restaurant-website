@@ -32,12 +32,18 @@
 
 <h1>menu</h1>
 <div class="container">
-  <div class="button"><a href="/menu?vegetarian=true">VEGETARIAN</a></div>
+  <a href="/menu?vegetarian=true">
+    <button class="button">VEGETARIAN</button>
+  </a>
 </div>
+
+<!-- <button onclick="updateLink()" type="button" class="button" id="sortLink" href="">SORT PRICE</button> -->
 
 <!-- button to sort the price -->
 <div class="container">
-  <div class="button" onclick="updateLink()"><a id="sortLink" href="">SORT PRICE</a></div>
+  <a id="sortLink" href="">
+    <button class="button" onclick="updateLink()">SORT PRICE</button>
+  </a>
 </div>
 
 <!-- display menu items in a loop https://stackoverflow.com/a/38371978 -->
