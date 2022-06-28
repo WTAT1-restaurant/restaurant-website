@@ -8,26 +8,79 @@
   </head>
   <body>
     <h1>we recieved your Order, Thank you</h1>
+    <div>
+      <legend class="order-ov">your billing information::</legend>
+     
+    <div>
+      <section class="shopping-cart">
+        <table style="width: 100%">
+          <table class="user-ovw">
+            <tr>
+              <th>Name</th>
+              <td><%= user.fullname %></td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td><%= user.email %></td>
+            </tr>
+            <tr>
+              <th>Address</th>
+              <td><%= user.address %></td>
+            </tr>
+         
+            <tr>
+              <th>zipcode</th>
+              <td><%= user.zip %></td>
+            </tr>
+            <tr>
+              <th>city</th>
+              <td><%= user.city %></td>
+            </tr>
 
-    <h2>your Order review:</h2>
+            <% if (user.delivery) { %>
+              <tr>
+                <th>your food will be delivered</th>
+               
+              </tr>
+                  <% } else if (user.pickUp) { %>
+                  <div class="flash error">
+                    <tr>
+                      <th>your food will be picked up</th>
+                      
+                    </tr>
+                  </div>
+                 
+          <% } %>
 
-    <div class="sc-footer">
-      <div class="sc-total">
-        <strong>
-            <span class="lighter-text">you food will be :</span>
-            <span class="total-price"><%= cartSize %></span>
-            <span class="lighter-text">items</span>
-            <br />
 
+          <% if (user.time != null) { %>
+            <tr>
+              <th>Time:</th>
+              <td><%= user.time %></td>
+             
+            </tr>
+                <% } else if (user.time == null) { %>
+                <div class="flash error">
+                  <tr>
+                    <th>your food will be ready ASAP</th>
+                    
+                  </tr>
+                </div>
+               
+        <% } %>
 
-          <span class="lighter-text">you ordered:</span>
-          <span class="total-price"><%= cartSize %></span>
-          <span class="lighter-text">items</span>
-          <br />
-          <span class="lighter-text">you payed:</span>
-          <span class="total-price">€<%= cartPrice %></span></strong
-        >
-      </div>
+          
+
+            <tr>
+              <th>payment method</th>
+              <td><%= user.paymentMethod %></td>
+            </tr>
+          </table>
+          <button onclick="location.href='/'" type="button" class="button place">
+            back to home page</button>
+      </section>
     </div>
+
+
   </body>
 </html>

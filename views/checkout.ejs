@@ -100,7 +100,7 @@
 
     <fieldset>
       <legend>Payment Method</legend>
-      <form action="/checkOut/placeOrder" method="post">
+      <form action="/checkOut/save" method="post">
       <div class="payment-options">
      
 
@@ -109,9 +109,6 @@
           <label for="cash">Cash </label>
           <input type="radio"  checked id="cash" name="Method" value="cash" />
         </div>
-     
-  
-      
         <div class="payment">
           <label for="paypal">PayPal</label>
           <input type="radio"  id="paypal" name="Method" value="paypal" />
@@ -126,10 +123,16 @@
       </div>
 
     <div>
-          <button type="submit" class="button place"><span>PLACE ORDER</span></button>  
+          <button type="submit" class="button place"><span>CHOOSE PAYMENT</span></button>  
     </div>
   </form>
 
+
+  <form action="/checkout/placeOrder" method="post">
+  <div>
+    <button type="submit" class="button place"><span>PLACE ORDER</span></button>  
+</div>
+  </form>
   </fieldset>
 
 </div>
