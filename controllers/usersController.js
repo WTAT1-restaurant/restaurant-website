@@ -1,7 +1,7 @@
 "use scrict";
 const passport = require("passport");
-const { resolveInclude } = require("ejs");
 const User = require("../models/user");
+const { validationResult } = require("express-validator");
 
 module.exports = {
     index: (req, res, next) => {
@@ -21,6 +21,18 @@ module.exports = {
     new: (req, res) => {
         res.render("users/new", { title: " setup new user" });
     },
+    validateCreate: (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            let messages = errors.array().map(e => e.msg);
+            req.skip = true;
+            req.flash("error", messages.join(" and "));
+            res.locals.redirect = "/users/new";
+            next();
+        } else {
+            next();
+        }
+    },
     create: (req, res, next) => {
         if (req.skip) next();
 
@@ -37,7 +49,6 @@ module.exports = {
                 city: req.body.city,
             },
             email: req.body.email,
-            password: req.body.password,
             role: req.body.role
         };
 
@@ -80,10 +91,10 @@ module.exports = {
     showView: (req, res) => {
         var firstName = res.locals.user.name.first;
         var lastName = res.locals.user.name.last;
-        if(lastName.charAt(lastName.length - 1) == "s"){
+        if (lastName.charAt(lastName.length - 1) == "s") {
             res.render("users/show", { title: firstName + " " + lastName + "' profile" });
         } else {
-        res.render("users/show", { title: firstName + " " + lastName + "'s profile" });
+            res.render("users/show", { title: firstName + " " + lastName + "'s profile" });
         }
     },
     edit: (req, res, next) => {
@@ -92,7 +103,7 @@ module.exports = {
             .then(user => {
                 var firstName = user.name.first;
                 var lastName = user.name.last;
-                if(lastName.charAt(lastName.length - 1) == "s"){
+                if (lastName.charAt(lastName.length - 1) == "s") {
                     res.render("users/edit", {
                         user: user,
                         title: firstName + " " + lastName + "' profile"
@@ -124,9 +135,21 @@ module.exports = {
                 city: req.body.city
             },
             email: req.body.email,
-            password: req.body.password,
             role: req.body.role
         };
+
+        User.findByUsername(userParams.email)
+            .then(function (sanitizedUser) {
+                if (sanitizedUser) {
+                    sanitizedUser.setPassword(req.body.password, function () {
+                        sanitizedUser.save();
+                    });
+                } else {
+                    console.error('This user does not exist');
+                }
+            }, function (err) {
+                console.error(err);
+            });
 
         User.findByIdAndUpdate(userId, {
             $set: userParams
@@ -179,7 +202,7 @@ module.exports = {
     },
 
     logout: (req, res, next) => {
-        req.logout(function(error) {
+        req.logout(function (error) {
             if (error) {
                 console.log(`Error logging out ${error.message}`);
                 next();

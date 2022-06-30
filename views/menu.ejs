@@ -20,19 +20,19 @@
 
   function updateLink() {
     var link = document.getElementById("sortLink");
-    var veggieLink = "http://localhost:3000/menu?vegetarian=true";
+    var veggieLink = "http://localhost:3000/menu/customerView?vegetarian=true";
 
     if (window.location.href == veggieLink) {
-      link.setAttribute("href", "/menu?vegetarian=true&sortPrice=true");
+      link.setAttribute("href", "/menu/customerView?vegetarian=true&sortPrice=true");
     } else {
-      link.setAttribute("href", "/menu?sortPrice=true");
+      link.setAttribute("href", "/menu/customerView?sortPrice=true");
     }
   }
 </script>
 
 <h1>menu</h1>
 <div class="container">
-  <a href="/menu?vegetarian=true">
+  <a href="/menu/customerView?vegetarian=true">
     <button class="button">VEGETARIAN</button>
   </a>
 </div>

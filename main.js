@@ -1,28 +1,14 @@
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
-const router = express.Router();
 const mongoose = require('mongoose');
-
+const passport = require("passport");
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
-
-const { body, check, validationResult } = require("express-validator");
-//const menu = require('./models/menu');
-
+const router = require("./routes/index");
+const User = require('./models/user');
 // middleware that interprets requests according to a specific query parameter and HTTP method
 const methodOverride = require("method-override");
-
-const menuController = require("./controllers/menuController");
-const errorController = require("./controllers/errorController");
-const cartController = require("./controllers/cartController");
-const checkOutController = require("./controllers/checkOutController");
-const usersController = require("./controllers/usersController");
-
-const passport = require("passport");
-const User = require("./models/user");
-
-
 // express app
 const app = express();
 const port = 3000;
@@ -42,140 +28,48 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     }))
     .catch((err) => console.log(err));
 
+app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");
-app.use(expressLayouts);
 
 // needed to load css in html: https://stackoverflow.com/a/54747432
 // book page 119
-router.use(express.static('public'));
-
+app.use(express.static('public'));
+app.use(expressLayouts);
+// is needed to parse POST body
+app.use(
+    express.urlencoded({
+        extended: false
+    })
+);
 // methodOverride middleware configuration
-router.use(methodOverride("_method", {
+app.use(methodOverride("_method", {
     methods: ["POST", "GET"]
 }));
-
+app.use(express.json());
 // Set Cookie Parser
-router.use(cookieParser('SecretCookies'));
-router.use(session({
+app.use(cookieParser('SecretCookies'));
+app.use(session({
     secret: "SecretCookies",
     cookie: { maxAge: 4000000 },
     resave: false,
     saveUninitialized: false
 }));
-
-router.use(passport.initialize());
-router.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-// is needed to parse POST body
-router.use(
-    express.urlencoded({
-        extended: false
-    })
-);
-router.use(express.json());
-
-router.use(flash());
-
+app.use(flash());
 // Add information about the user and whether he is logged in or not
-router.use((req, res, next) => {
+app.use((req, res, next) => {
     res.locals.loggedIn = req.isAuthenticated();
     res.locals.currentUser = req.user;
     next();
 });
-
 // Middleware to associate connectFlash to flashes on response
-router.use((req, res, next) => {
+app.use((req, res, next) => {
     res.locals.flashMessages = req.flash();
     next();
 });
-
-router.get("/", (req, res) => {
-    //res.sendFile(__dirname + "/views/index.html");
-    res.render("index", { title: "home" });
-});
-
-router.get("/about", (req, res) => {
-    //res.sendFile(__dirname + "/views/menu.html");
-    res.render("about", { title: "about" });
-});
-
-// get menu item by ID
-router.get("/menu/items/:itemId", menuController.getItem);
-
-router.get("/menu", menuController.getMenu);
-
-// page for the restaurant
-router.get("/restaurant", menuController.getRestaurantMenu);
-
-router.post("/menu/items", menuController.addNewItem, menuController.redirectView);
-
-router.post("/menu/items/:itemId/update", menuController.update, menuController.redirectView);
-
-router.post("/menu/items/:itemId/delete", menuController.deleteMenuItem, menuController.redirectView);
-
-// shopping Cart
-router.get("/cart", cartController.get);
-
-router.get("/API/cart", cartController.countBasketItems);
-
-router.post("/cart/add", cartController.addItem, cartController.redirectView);
-
-router.post("/cart/remove", cartController.removeItem, cartController.redirectView);
-
-router.get("/checkout", checkOutController.get);
-// router.get("/checkout/placeOrder", checkOutController.getOrder);
-
-router.post("/checkOut/delivery", checkOutController.deliverOrder);
-router.post("/checkOut/pickUp", checkOutController.pickUpOrder);
-router.post("/checkout/time", checkOutController.setTime);
-router.post("/checkOut/save", checkOutController.setPayment);
-router.post("/checkout/information", checkOutController.saveInfo);
-router.post("/checkout/placeOrder", checkOutController.getBilling);
-
-router.post("/contact", (req, res) => {
-    res.send("Contact information submitted successfully.");
-});
-
-router.post("/menu/items", menuController.addNewItem);
-
-// Users
-router.get("/users", usersController.index, usersController.indexView);
-router.get("/users/new", usersController.new);
-router.post("/users/create",
-    check("email", "Email is invalid").normalizeEmail({ gmail_remove_dots: false, all_lowercase: true }).trim().isEmail(),
-    check("zipCode", "Zip Code is invalid").notEmpty().isInt().isLength({ min: 5, max: 5 }),
-    check("password", "Password cannot be empty").notEmpty(),
-    (req, res, next) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            let messages = errors.array().map(e => e.msg);
-            req.skip = true;
-            req.flash("error", messages.join(" and "));
-            res.locals.redirect = "/users/new";
-            next();
-        } else {
-            next();
-        }
-    }, usersController.create, usersController.redirectView);
-router.get("/users/login", usersController.login);
-router.post("/users/login", usersController.authenticate, usersController.redirectView);
-router.get("/users/logout", usersController.logout, usersController.redirectView);
-router.get("/users/:id", usersController.show, usersController.showView);
-router.get("/users/:id/edit", usersController.edit);
-router.put("/users/:id/update", usersController.update, usersController.redirectView);
-router.delete("/users/:id/delete", usersController.delete, usersController.redirectView);
-
-// https://www.youtube.com/watch?v=pYj48mDXHBU
-// error-handling middleware
-router.use(errorController.respondInternalError);
-router.use(errorController.pageNotFoundError);
-
-// first draft: mongoose and mongo sandbox routes
-//router.get('/add-menu', (req, res) => {
-//  const menu = new menu({})
-//} )
 
 app.use("/", router);
