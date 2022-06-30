@@ -1,7 +1,7 @@
 "use scrict";
 const passport = require("passport");
-const { resolveInclude } = require("ejs");
 const User = require("../models/user");
+const { validationResult } = require("express-validator");
 
 module.exports = {
     index: (req, res, next) => {
@@ -20,6 +20,18 @@ module.exports = {
     },
     new: (req, res) => {
         res.render("users/new", { title: " setup new user" });
+    },
+    validateCreate: (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            let messages = errors.array().map(e => e.msg);
+            req.skip = true;
+            req.flash("error", messages.join(" and "));
+            res.locals.redirect = "/users/new";
+            next();
+        } else {
+            next();
+        }
     },
     create: (req, res, next) => {
         if (req.skip) next();

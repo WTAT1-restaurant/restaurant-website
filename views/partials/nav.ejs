@@ -4,7 +4,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     // do things after the DOM loads partially
     const itemCount = document.getElementsByClassName("total-count")[0];
-    const request = new Request("/API/cart");
+    const request = new Request("/cart/items/count");
     fetch(request) 
       .then((response)=> {
         if (response.ok) {
@@ -23,10 +23,10 @@
   <ul>
     <li><a href="/">Home</a></li>
     <li><a href="/about">About</a></li>
-    <li><a href="/menu">Menu</a></li>
+    <li><a href="/menu/customerView">Menu</a></li>
     <li><a href="/users">Users</a></li>
     <% if (loggedIn && (currentUser.role === 'restaurant' || currentUser.role === 'admin')) { %> 
-    <li><a href="/restaurant">For Restaurant</a></li>
+    <li><a href="/menu/restaurantView">For Restaurant</a></li>
     <% } %>
     <li><a href="/cart" id="cart"><i class='fas fa-shopping-cart' style='font-size:19px;color:rgb(255, 255, 255)'></i><span class="total-count"></span> </a></li>
     <% if (loggedIn) {%>

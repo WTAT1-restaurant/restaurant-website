@@ -15,17 +15,17 @@
       <fieldset>
           <legend>Delivery Option</legend>
           <div class="delivery-options">
-            <form action="/checkOut/delivery" method="post">
+            <form action="/checkout/delivery" method="post">
               <input type="text" name="userID" value="1" hidden>
               <button onclick="delivery()" type="submit" class="button food"  disabled >NOT WORKING</button>
             </form>
             
-            <form action="/checkOut/delivery" method="post">
+            <form action="/checkout/delivery" method="post">
               <input type="text" name="userID" value="1" hidden>
               <button onclick="delivery()" type="submit" class="button food">DELIVER FOOD</button>
             </form>
     
-            <form action="/checkOut/pickUp" method="post">
+            <form action="/checkout/pickUp" method="post">
               <input type="text" name="userID" value="1" hidden>
               <button onclick="pickUp()"type="submit" class="button food">PICK UP FOOD</button>
             </form>
@@ -100,7 +100,7 @@
 
     <fieldset>
       <legend>Payment Method</legend>
-      <form action="/checkOut/save" method="post">
+      <form action="/checkout/placeOrder" method="post">
       <div class="payment-options">
      
 
