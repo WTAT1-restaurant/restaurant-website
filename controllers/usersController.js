@@ -89,12 +89,18 @@ module.exports = {
             });
     },
     showView: (req, res) => {
-        var firstName = res.locals.user.name.first;
-        var lastName = res.locals.user.name.last;
-        if (lastName.charAt(lastName.length - 1) == "s") {
-            res.render("users/show", { title: firstName + " " + lastName + "' profile" });
+        if (req.query.format === "json") {
+            res.json(res.locals.user);
         } else {
-            res.render("users/show", { title: firstName + " " + lastName + "'s profile" });
+            var firstName = res.locals.user.name.first;
+            var lastName = res.locals.user.name.last;
+            var title;
+            if (lastName.charAt(lastName.length - 1) == "s") {
+                title = firstName + " " + lastName + "' Profile";
+            } else {
+                title = firstName + " " + lastName + "'s Profile";
+            }
+            res.render("users/show", { title: firstName + " " + lastName + "'s Profile" });
         }
     },
     edit: (req, res, next) => {
@@ -155,7 +161,7 @@ module.exports = {
             $set: userParams
         })
             .then(user => {
-                res.locals.redirect = `/users/${userId}`;
+                res.locals.redirect = `/users/${userId}/view`;
                 res.locals.user = user;
                 next();
             })
