@@ -85,7 +85,7 @@ const checkoutSchema = mongoose.Schema({
   },
   paymentMethod: {
     type: String,
-	default: "not specified yet",
+	  default: "cash",
     enum: enumPaymentMethod,
     // required : true
   },

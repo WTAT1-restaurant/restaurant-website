@@ -7,6 +7,10 @@ const user = require("../models/user");
 var ObjectId = require("mongoose").Types.ObjectId;
 var query = { checkOut_id: new ObjectId(checkOut._id) };
 
+//global variables
+var sizeCart = 0;
+var totalPrice = 0;
+
 module.exports = {
   get: (req, res) => {
     // Cart.findOne({"userID": req.body.userID})
@@ -18,13 +22,11 @@ module.exports = {
         } else {
           const cartDoc = cart;
           const itemArray = cart.items;
-          var sizeCart = 0;
           for (const item of itemArray) {
             sizeCart = sizeCart + item.quantity;
           }
           // TODO: decide whether to get rid of the totalPrice or not.
           // const totalPrice = cartDoc.totalCost;
-          var totalPrice = 0;
           for (const item of itemArray) {
             totalPrice = totalPrice + item.quantity * item.price;
           }
@@ -42,32 +44,16 @@ module.exports = {
       });
   },
 
-  // getBilling: (req, res) => {
-  //   // Cart.findOne({"userID": req.body.userID})
-  //   checkOut
-  //     .findOne({ fullname: "joey" })
-  //     .exec()
-  //     .then((user) => {
-  //       res.render("placeOrder", {
-  //         user: user,
-  //         fullname: user.fullname,
-  //         title: "checkout",
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.log(error.message);
-  //       return [];
-  //     });
-  // },
-
-
   getBilling: (req, res, next) => {
     // Cart.findOne({"userID": req.body.userID})
-    checkOut.findOne().sort({ _id: -1 })
+    checkOut
+      .findOne()
+      .sort({ _id: -1 })
       .then((checkout) => {
         if (checkout) {
           res.render("placeOrder", { user: checkout, title: "info" });
-      }})
+        }
+      })
       .catch((error) => {
         console.log(error.message);
         return [];
@@ -81,7 +67,13 @@ module.exports = {
         req.flash("success", ` food will be delivered `),
         res.redirect("/checkout")
       )
-      .catch((err) => res.status(422).json(err));
+      .catch((error) =>
+        req.flash(
+          "error",
+          `Failed to save this option because: ${error.message}.`,
+          res.redirect("/checkout")
+        )
+      );
   },
 
   pickUpOrder: (req, res) => {
@@ -91,7 +83,13 @@ module.exports = {
         req.flash("success", ` food will be picked up `),
         res.redirect("/checkout")
       )
-      .catch((err) => res.status(422).json(err));
+      .catch((error) =>
+        req.flash(
+          "error",
+          `Failed to save this option account because: ${error.message}.`,
+          res.redirect("/checkout")
+        )
+      );
   },
 
   saveInfo: (req, res) => {
@@ -109,11 +107,17 @@ module.exports = {
           });
           checkout
             .save()
-            .then((result) => {
-              res.send("your information have been saved");
-            })
+            .then(
+              req.flash("success", ` your billing information is saved `),
+              res.redirect("/checkout")
+            )
             .catch((error) => {
-              if (error) res.send("THE ERROR IS HERE" + error);
+              if (error)
+                req.flash(
+                  "error",
+                  `Failed to save billing because: ${error.message}.`,
+                  res.redirect("/checkout")
+                );
             });
         } else {
           checkout
@@ -129,8 +133,17 @@ module.exports = {
                 },
               }
             )
-            .then(res.send("your information have been updated and saved"))
-            .catch((err) => res.status(422).json(err));
+            .then(
+              req.flash("success", ` your billing information is updated `),
+              res.redirect("/checkout")
+            )
+            .catch((error) =>
+              req.flash(
+                "error",
+                `Failed to update billing information because: ${error.message}.`,
+                res.redirect("/checkout")
+              )
+            );
         }
       });
   },
@@ -143,7 +156,13 @@ module.exports = {
         req.flash("success", ` food will be picked up at ${time}`),
         res.redirect("/checkout")
       )
-      .catch((err) => res.status(422).json(err));
+      .catch((error) =>
+        req.flash(
+          "error",
+          `Failed to set time due to : ${error.message}.`,
+          res.redirect("/checkout")
+        )
+      );
   },
 
   setPayment: (req, res) => {
