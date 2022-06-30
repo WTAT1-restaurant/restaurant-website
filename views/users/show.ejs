@@ -1,28 +1,25 @@
-<%var fullName = user.fullName %>
-<%if(fullName.charAt(fullName.length - 1) == "s") { %> 
-    <h1><%= fullName %>' Profile</h1> 
-<%} else {%>
-    <h1><%= fullName %>'s Profile</h1>
-<%} %>
-<table class="user-ovw">
+<h1><%= title %></h1>
+<table id="user-data" class="user-ovw">
     <tr>
         <th>Name</th>
-        <td><%= user.fullName %></td>
+        <td id="user-name"></td>
     </tr>
     <tr>
         <th>Address</th>
-        <td><%= user.fullAddress %></td>
+        <td id="user-address"></td>
     </tr>
     <tr>
         <th>Email</th>
-        <td><%= user.email %></td>
+        <td id="user-email"></td>
     </tr>
     <tr>
         <th>Role</th>
-        <td><%= user.role %></td>
+        <td id="user-role"></td>
     </tr>
 </table>
 <button class="button" type="submit"><a href="/users">View users</a></button>
-<button class="button" type="submit"><a href="<%= `/users/${user._id}/edit` %>">Edit User</a></button>
-<button class="button" type="submit"><a href="<%= `/users/${user._id}/delete?_method=DELETE` %>"
-        onclick="return confirm('Are you sure you want to delete this record?') ">Delete</a></button>
+<button class="button" type="submit"><a id="user-edit-link">Edit User</a></button>
+<button class="button" type="submit"><a id="user-edit-link" onclick="return confirm('Are you sure you want to delete this record?') ">Delete</a></button>
+<script>
+
+</script>
