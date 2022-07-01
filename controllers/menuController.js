@@ -1,6 +1,7 @@
 "use scrict";
 const menuItem = require("../models/menuItem");
 const MenuItem = require("../models/menuItem");
+const openingHours = require("../models/openingHours");
 const httpStatus = require("http-status-codes");
 
 // save data in mongodb
@@ -165,13 +166,13 @@ module.exports = {
         if (redirectPath) res.redirect(redirectPath);
         else next();
     }, 
-    respondJSON: (req, res) => {
+    respondJSON: (req, res) => { 
         res.json({
         status: httpStatus.OK,
         data: res.locals
         });
-        },
-        errorJSON: (error, req, res, next) => {
+    },
+    errorJSON: (error, req, res, next) => {
         let errorObject;
         if (error) {
         errorObject = {
@@ -185,6 +186,8 @@ module.exports = {
         };
         }
         res.json(errorObject);
-        },
-
+    },
+    getOpeningHours: (req, res) => {
+        
+    }
 };
