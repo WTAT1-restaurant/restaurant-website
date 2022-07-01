@@ -13,35 +13,46 @@ const timeSchema = mongoose.Schema({
     }
 });
 
-const openingHoursSchema = mongoose.Schema({
-    Monday: {
+const openingDaySchema = mongoose.Schema({
+    open: {
         type: timeSchema,
         required: true
     },
-    Tuesday: {
-        type: timeSchema,
-        required: true
-    },
-    Wednesday: {
-        type: timeSchema,
-        required: true
-    },
-    Thursday: {
-        type: timeSchema,
-        required: true
-    },
-    Friday: {
-        type: timeSchema,
-        required: true
-    },
-    Saturday: {
-        type: timeSchema,
-        required: true
-    },
-    Sunday: {
+    close: {
         type: timeSchema,
         required: true
     }
+});
+
+const openingHoursSchema = mongoose.Schema({
+    Monday: {
+        type: openingDaySchema,
+        required: true
+    },
+    Tuesday: {
+        type: openingDaySchema,
+        required: true
+    },
+    Wednesday: {
+        type: openingDaySchema,
+        required: true
+    },
+    Thursday: {
+        type: openingDaySchema,
+        required: true
+    },
+    Friday: {
+        type: openingDaySchema,
+        required: true
+    },
+    Saturday: {
+        type: openingDaySchema,
+        required: true
+    },
+    Sunday: {
+        type: openingDaySchema,
+        required: true
+    },
 });
 
 const openingHours = mongoose.model("openingHours", openingHoursSchema);
