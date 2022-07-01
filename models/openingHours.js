@@ -55,5 +55,4 @@ const openingHoursSchema = mongoose.Schema({
     },
 });
 
-const openingHours = mongoose.model("openingHours", openingHoursSchema);
-module.exports = openingHours;
+module.exports = mongoose.model("openingHours", openingHoursSchema);

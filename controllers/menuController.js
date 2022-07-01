@@ -1,7 +1,6 @@
 "use scrict";
-const menuItem = require("../models/menuItem");
 const MenuItem = require("../models/menuItem");
-const openingHours = require("../models/openingHours");
+const OpeningHours = require("../models/openingHours");
 const httpStatus = require("http-status-codes");
 
 // save data in mongodb
@@ -188,6 +187,19 @@ module.exports = {
         res.json(errorObject);
     },
     getOpeningHours: (req, res) => {
-        
-    }
+        var query = OpeningHours.find({});
+        query.exec((error, data) => {
+            if (data) { res.send(data) };
+        });
+    },
+
+    getOpeningHourOnDay: (req, res) => {
+        const day = req.params.day;
+        var query = OpeningHours.findOne({});
+        query.exec((error, data) => {
+            if (data) {
+                res.send(data[day]);
+            }
+        });
+    },
 };

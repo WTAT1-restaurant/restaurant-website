@@ -6,6 +6,8 @@ const menuController = require('../controllers/menuController');
 router.get("/customerView", menuController.getMenu);
 router.get("/restaurantView", menuController.getRestaurantMenu);
 router.get("/items/:itemId", menuController.getItem);
+router.get("/restaurant/hours", menuController.getOpeningHours);
+router.get("/restaurant/hours/:day", menuController.getOpeningHourOnDay)
 router.post("/items", menuController.addNewItem, menuController.redirectView);
 router.post("/items/:itemId/update", menuController.update, menuController.redirectView);
 router.post("/items/:itemId/delete", menuController.deleteMenuItem, menuController.redirectView);
