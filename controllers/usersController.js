@@ -2,9 +2,11 @@
 const passport = require("passport");
 const User = require("../models/user");
 const { validationResult } = require("express-validator");
+const httpStatus = require("http-status-codes");
 
 module.exports = {
     index: (req, res, next) => {
+       
         User.find({})
             .then((users) => {
                 res.locals.users = users;
@@ -16,7 +18,11 @@ module.exports = {
             });
     },
     indexView: (req, res) => {
+        if (req.query.format === "json") {
+            res.json(res.locals.users);
+        } else {
         res.render("users/index", { title: "users overview" });
+        }
     },
     new: (req, res) => {
         res.render("users/new", { title: " setup new user" });
@@ -217,5 +223,29 @@ module.exports = {
             res.locals.redirect = "/";
             next();
         });
-    }
+    },
+
+    respondJSON: (req, res) => {
+        res.json({
+        status: httpStatus.OK,
+        data: res.locals
+        });
+        },
+        errorJSON: (error, req, res, next) => {
+        let errorObject;
+        if (error) {
+        errorObject = {
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        message: error.message
+        };
+        } else {
+        errorObject = {
+        status: httpStatus.INTERNAL_SERVER_ERROR,
+        message: "Unknown Error."
+        };
+        }
+        res.json(errorObject);
+        },
+
+
 };

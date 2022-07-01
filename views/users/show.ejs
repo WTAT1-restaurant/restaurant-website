@@ -1,25 +1,29 @@
 <h1><%= title %></h1>
 <table id="user-data" class="user-ovw">
-    <tr>
-        <th>Name</th>
-        <td id="user-name"></td>
-    </tr>
-    <tr>
-        <th>Address</th>
-        <td id="user-address"></td>
-    </tr>
-    <tr>
-        <th>Email</th>
-        <td id="user-email"></td>
-    </tr>
-    <tr>
-        <th>Role</th>
-        <td id="user-role"></td>
-    </tr>
+  <tr>
+    <th>Name</th>
+    <td id="user-name"></td>
+  </tr>
+  <tr>
+    <th>Address</th>
+    <td id="user-address"></td>
+  </tr>
+  <tr>
+    <th>Email</th>
+    <td id="user-email"></td>
+  </tr>
+  <tr>
+    <th>Role</th>
+    <td id="user-role"></td>
+  </tr>
 </table>
-<button class="button" type="submit"><a href="/users">View users</a></button>
-<button class="button" type="submit"><a id="user-edit-link">Edit User</a></button>
-<button class="button" type="submit"><a id="user-edit-link" onclick="return confirm('Are you sure you want to delete this record?') ">Delete</a></button>
-<script>
+<a href="/users"> <button class="button" type="submit">View users </button></a>
+<a href="<%= `/users/${user._id}/edit` %>">
+  <button type="submit" class="button">Edit</button>
+</a>
 
-</script>
+<a href="<%= `/users/${user._id}/delete?_method=DELETE` %>" onclick="return confirm('Are you sure you want to delete this record?')">
+  <button type="submit" class="button">Delete</button>
+</a>
+
+

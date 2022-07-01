@@ -3,6 +3,7 @@
 
 // Just created file, couldnt finish it
 const Cart = require("./../models/cart");
+const httpStatus = require("http-status-codes");
 
 // 1. Check if the cart already exists in the database
 // 2. If the cart doesn't exist, create a new cart with the given userID, item, total cost and save it in the database
@@ -156,6 +157,19 @@ module.exports = {
         return [];
       });
   },
+  index: (req, res, next) => {
+       
+    Cart.find({})
+        .then((cart) => {
+            res.locals.cart = cart;
+            next();
+        })
+        .catch((error) => {
+            console.log(`Error fetching cart: ${error.message}`);
+            next(error);
+        });
+},
+
 
   // TODO: inplement what to output when there was no shopping cart created yet.
   get: (req, res) => {
@@ -163,6 +177,7 @@ module.exports = {
     Cart.findOne({ userID: 1 })
       .exec()
       .then((cart) => {
+        res.locals.cart = cart;
         if (cart == null) {
           res.send("Empty shopping cart");
         } else {
@@ -214,5 +229,27 @@ module.exports = {
     let redirectPath = res.locals.redirect;
     if (redirectPath) res.redirect(redirectPath);
     else next();
-  }
+  },
+  respondJSON: (req, res) => {
+    res.json({
+    status: httpStatus.OK,
+    data: res.locals
+    });
+    },
+    errorJSON: (error, req, res, next) => {
+    let errorObject;
+    if (error) {
+    errorObject = {
+    status: httpStatus.INTERNAL_SERVER_ERROR,
+    message: error.message
+    };
+    } else {
+    errorObject = {
+    status: httpStatus.INTERNAL_SERVER_ERROR,
+    message: "Unknown Error."
+    };
+    }
+    res.json(errorObject);
+    },
+
 };
