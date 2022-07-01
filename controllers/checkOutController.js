@@ -45,7 +45,6 @@ module.exports = {
   },
 
   getBilling: (req, res, next) => {
-    // Cart.findOne({"userID": req.body.userID})
     checkOut
       .findOne()
       .sort({ _id: -1 })
