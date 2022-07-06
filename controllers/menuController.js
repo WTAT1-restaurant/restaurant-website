@@ -26,7 +26,7 @@ module.exports = {
         });
     },
     index: (req, res, next) => {
-       
+
         MenuItem.find({})
             .then((items) => {
                 res.locals.items = items;
@@ -39,7 +39,7 @@ module.exports = {
     },
 
     getMenu: (req, res) => {
-      
+
         let veggie = req.query.vegetarian;
         let priceSorted = req.query.sortPrice;
 
@@ -57,10 +57,10 @@ module.exports = {
             } else {
                 query.exec((error, data) => {
                     if (data) {
-                        res.locals.items = data;   
+                        res.locals.items = data;
                         res.render("menu", { "items": data, "vegetarian": true, title: "vegetarian menu" });
-                    
-                }
+
+                    }
                 });
             }
 
@@ -164,27 +164,26 @@ module.exports = {
         let redirectPath = res.locals.redirect;
         if (redirectPath) res.redirect(redirectPath);
         else next();
-    }, 
+    },
     respondJSON: (req, res) => {
         res.json({
-        status: httpStatus.OK,
-        data: res.locals
+            status: httpStatus.OK,
+            data: res.locals
         });
-        },
-        errorJSON: (error, req, res, next) => {
+    },
+    errorJSON: (error, req, res, next) => {
         let errorObject;
         if (error) {
-        errorObject = {
-        status: httpStatus.INTERNAL_SERVER_ERROR,
-        message: error.message
-        };
+            errorObject = {
+                status: httpStatus.INTERNAL_SERVER_ERROR,
+                message: error.message
+            };
         } else {
-        errorObject = {
-        status: httpStatus.INTERNAL_SERVER_ERROR,
-        message: "Unknown Error."
-        };
+            errorObject = {
+                status: httpStatus.INTERNAL_SERVER_ERROR,
+                message: "Unknown Error."
+            };
         }
         res.json(errorObject);
-        },
-
+    }
 };

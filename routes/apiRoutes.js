@@ -5,10 +5,14 @@ const router = require("express").Router();
 const userController = require("../controllers/usersController");
 const menuController = require("../controllers/menuController");
 const cartController = require("../controllers/cartController");
+
+router.post("/login", userController.apiAuthenticate);
+router.use(userController.verifyJWT);
+// router.use(userController.verifyToken);
 router.get("/users", userController.index, userController.respondJSON);
 router.use(userController.errorJSON);
 
-router.get("/menu/customerView", menuController.index, menuController.respondJSON);
+router.get("/menu", menuController.index, menuController.respondJSON);
 router.use(menuController.errorJSON);
 
 router.get("/cart", cartController.index, cartController.respondJSON);

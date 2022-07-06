@@ -1,6 +1,7 @@
 const passportLocalMongoose = require("passport-local-mongoose");
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const randToken = require("rand-token");
 
 const userSchema = new Schema({
     name: {
@@ -47,6 +48,9 @@ const userSchema = new Schema({
         type: String,
         required: true,
         lowercase: true
+    },
+    apiToken: {
+        type: String
     }
 });
 userSchema.plugin(passportLocalMongoose, {
@@ -60,6 +64,13 @@ userSchema.virtual("fullName").get(function () {
 // haven't figured out how to show the data
 userSchema.virtual("fullAddress").get(function () {
     return `${this.address.streetName} ${this.address.houseNumber} ${this.address.zipCode}`;
+});
+
+// called before saving user data in the database
+userSchema.pre("save", function (next) {
+    let user = this;
+    if (!user.apiToken) user.apiToken = randToken.generate(16);
+    next();
 });
 
 module.exports = mongoose.model("User", userSchema);
