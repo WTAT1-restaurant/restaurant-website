@@ -3,10 +3,12 @@ const passport = require("passport");
 const User = require("../models/user");
 const { validationResult } = require("express-validator");
 const httpStatus = require("http-status-codes");
+const token = process.env.TOKEN || "OUR_API_TOKEN";
+const jsonWebToken = require("jsonwebtoken");
 
 module.exports = {
     index: (req, res, next) => {
-       
+
         User.find({})
             .then((users) => {
                 res.locals.users = users;
@@ -21,7 +23,7 @@ module.exports = {
         if (req.query.format === "json") {
             res.json(res.locals.users);
         } else {
-        res.render("users/index", { title: "users overview" });
+            res.render("users/index", { title: "users overview" });
         }
     },
     new: (req, res) => {
@@ -55,7 +57,8 @@ module.exports = {
                 city: req.body.city,
             },
             email: req.body.email,
-            role: req.body.role
+            role: req.body.role,
+            apiToken: req.body.apiToken
         };
 
         let newUser = new User(userParams);
@@ -147,7 +150,8 @@ module.exports = {
                 city: req.body.city
             },
             email: req.body.email,
-            role: req.body.role
+            role: req.body.role,
+            apiToken: req.body.apiToken
         };
 
         User.findByUsername(userParams.email)
@@ -227,25 +231,95 @@ module.exports = {
 
     respondJSON: (req, res) => {
         res.json({
-        status: httpStatus.OK,
-        data: res.locals
+            status: httpStatus.OK,
+            data: res.locals
         });
-        },
-        errorJSON: (error, req, res, next) => {
+    },
+    errorJSON: (error, req, res, next) => {
         let errorObject;
         if (error) {
-        errorObject = {
-        status: httpStatus.INTERNAL_SERVER_ERROR,
-        message: error.message
-        };
+            errorObject = {
+                status: httpStatus.INTERNAL_SERVER_ERROR,
+                message: error.message
+            };
         } else {
-        errorObject = {
-        status: httpStatus.INTERNAL_SERVER_ERROR,
-        message: "Unknown Error."
-        };
+            errorObject = {
+                status: httpStatus.INTERNAL_SERVER_ERROR,
+                message: "Unknown Error."
+            };
         }
         res.json(errorObject);
-        },
+    },
+    verifyToken: (req, res, next) => {
+        let token = req.query.apiToken;
+        if (token) {
+            User.findOne({ apiToken: token })
+                .then(user => {
+                    if (user) next();
+                    else next(new Error("Invalid API token."));
+                })
+                .catch(error => {
+                    next(new Error(error.message));
+                });
+        } else {
+            next(new Error("Invalid API token."));
+        }
+    },
 
+    apiAuthenticate: (req, res, next) => {
+        passport.authenticate("local", (errors, user) => {
+            if (user) {
+                let signedToken = jsonWebToken.sign(
+                    {
+                        data: user._id,
+                        exp: new Date().setDate(new Date().getDate() + 1)
+                    },
+                    "secret_encoding_passphrase"
+                );
+                res.json({
+                    success: true,
+                    token: signedToken
+                });
+            } else
+                res.json({
+                    success: false,
+                    message: "Could not authenticate user."
+                });
+        })(req, res, next);
+    },
 
+    verifyJWT: (req, res, next) => {
+        let token = req.headers.token;
+        if (token) {
+            jsonWebToken.verify(
+                token,
+                "secret_encoding_passphrase",
+                (errors, payload) => {
+                    if (payload) {
+                        User.findById(payload.data).then(user => {
+                            if (user) {
+                                next();
+                            } else {
+                                res.status(httpStatus.FORBIDDEN).json({
+                                    error: true,
+                                    message: "No User account found."
+                                });
+                            }
+                        });
+                    } else {
+                        res.status(httpStatus.UNAUTHORIZED).json({
+                            error: true,
+                            message: "Cannot verify API token."
+                        });
+                        next();
+                    }
+                }
+            );
+        } else {
+            res.status(httpStatus.UNAUTHORIZED).json({
+                error: true,
+                message: "Provide Token"
+            });
+        }
+    }
 };

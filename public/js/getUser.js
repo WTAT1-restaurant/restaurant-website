@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
         // https://www.w3schools.com/jsref/jsref_substring.asp
         let userId = path.substring(7, path.length - 5);
         console.log(userId);
+        let apiToken = $("#apiToken").data("token");
+        console.log("API TOKEN: " + apiToken);
         // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
         fetch('/users/' + userId + "/view?format=json")
             .then(response => response.json())
@@ -20,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 document.getElementById("user-address").textContent = `${data.address.streetName} ${String(data.address.houseNumber)} ${data.address.zipCode}`;
                 document.getElementById("user-email").textContent = data.email;
                 document.getElementById("user-role").textContent = data.role;
+                document.getElementById("user-apiToken").textContent = data.apiToken;
             });
     }
 });
