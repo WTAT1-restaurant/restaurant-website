@@ -1,0 +1,47 @@
+<button class="trigger">ADD ITEM</button>
+
+<div class="modal">
+
+    <div class="modal-content">
+        <form action="/menu/items" method="post">
+            <span class="close-button">&times;</span>
+            <br>            <br>
+
+
+            <label>Title: <br><input type="text" name="title" placeholder="Title" autofocus></label><br>
+            <label>Price: <br><input type="number" step=0.1 name="price" placeholder="Price" autofocus></label><br>
+            <label>Picture url: <br><input type="url" name="picture" placeholder="Picture url"></label><br>
+            <label>Weight: <br><input type="number" step=0.1 name="weight" placeholder="Weight" autofocus></label><br>
+            <label>Fats: <br><input type="number" name="fats" placeholder="Fats" autofocus></label><br>
+            <label>Carbohydrates: <br><input type="number" name="carbohydrates" placeholder="Carbohydrates"
+                autofocus></label><br>
+            <label>Calories: <br><input type="number" name="calories" placeholder="Calories" autofocus></label><br>
+            <label>Vegetarian: <input type="checkbox" name="vegetarian"></label><br>
+            <button class="button food">ADD</button>
+
+          </form>
+    </div>
+</div>
+
+
+<script>
+
+    const modal = document.querySelector(".modal");
+    const trigger = document.querySelector(".trigger");
+    const closeButton = document.querySelector(".close-button");
+    
+    function toggleModal() {
+        modal.classList.toggle("show-modal");
+    }
+    
+    function windowOnClick(event) {
+        if (event.target === modal) {
+            toggleModal();
+        }
+    }
+    
+    trigger.addEventListener("click", toggleModal);
+    closeButton.addEventListener("click", toggleModal);
+    window.addEventListener("click", windowOnClick);
+    
+    </script>
