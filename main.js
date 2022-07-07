@@ -72,5 +72,4 @@ app.use((req, res, next) => {
     res.locals.flashMessages = req.flash();
     next();
 });
-
 app.use("/", router);

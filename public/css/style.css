@@ -564,7 +564,7 @@ input[type="checkbox"] {
   border-radius: 0.5rem;
 }
 
-.close-button {
+.close-button { 
   text-align: center;
   cursor: pointer;
   font-size: 3em;

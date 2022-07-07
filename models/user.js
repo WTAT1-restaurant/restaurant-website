@@ -2,7 +2,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const randToken = require("rand-token");
-
+ 
 const userSchema = new Schema({
     name: {
         first: {

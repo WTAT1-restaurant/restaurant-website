@@ -122,7 +122,7 @@ module.exports = {
                     next(error);
                 });
         });
-    },
+    }, 
     // allows a restaurant owner to delete items from a menu
     deleteMenuItem: (req, res, next) => {
         MenuItem.findOne({

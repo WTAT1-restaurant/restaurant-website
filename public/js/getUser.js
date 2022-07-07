@@ -25,4 +25,4 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 document.getElementById("user-apiToken").textContent = data.apiToken;
             });
     }
-});
+}); 

@@ -6,7 +6,7 @@ const user = require("../models/user");
 
 var ObjectId = require("mongoose").Types.ObjectId;
 var query = { checkOut_id: new ObjectId(checkOut._id) };
-
+ 
 //global variables
 var sizeCart = 0;
 var totalPrice = 0;
