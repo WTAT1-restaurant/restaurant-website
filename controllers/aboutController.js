@@ -5,15 +5,14 @@ const httpStatus = require("http-status-codes");
 
 module.exports = { 
     getOpeningHoursForRender: (req, res) => {
-        // Cart.findOne({"userID": req.body.userID})
-        OpeningHours.find({})
+        OpeningHours.findOne({})
         .exec()
-        .then((times) => {
-            if (times == null) {
+        .then((openingHours) => {
+            if (openingHours == null) {
                 res.send("No opening times defined");
             } else {
                 res.render("about", {
-                openingHours: times,
+                openingHours: openingHours,
                 title: "about"
                 });
             }
@@ -25,11 +24,11 @@ module.exports = {
     },
 
     getOpeningHours: (req, res) => {
-        OpeningHours.find({})
+        OpeningHours.findOne({})
         .exec()
-        .then ((times)=> {
-            if (times) { 
-                res.send(times); 
+        .then ((openingHours)=> {
+            if (openingHours) { 
+                res.send(openingHours); 
             } else {
                 res.send("No opening times defined");
             }
@@ -43,10 +42,10 @@ module.exports = {
             .then(openingHours => {
                 if (openingHours) {
                     // openingHours = JSON.parse(JSON.stringify(openingHours));
-                    const openingHourOnDay = openingHours[day];
-                    res.send(openingHourOnDay);
+                    const openingHoursOnDay = openingHours[day];
+                    res.send(openingHoursOnDay);
                 } else {
-                    res.send("No opening times defined");
+                    res.send("No opening time for this day not defined");
                 }
             });
     },
