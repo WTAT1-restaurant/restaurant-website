@@ -186,21 +186,4 @@ module.exports = {
         }
         res.json(errorObject);
     },
-
-    getOpeningHours: (req, res) => {
-        var query = OpeningHours.find({});
-        query.exec((error, data) => {
-            if (data) { res.send(data) };
-        });
-    },
-
-    getOpeningHourOnDay: (req, res) => {
-        const day = req.params.day;
-        var query = OpeningHours.findOne({});
-        query.exec((error, data) => {
-            if (data) {
-                res.send(data[day]);
-            }
-        });
-    },
 };

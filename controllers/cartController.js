@@ -207,7 +207,6 @@ module.exports = {
       });
   },
 
-  // possible function for the nav bar? Still in progress
   countBasketItems: (req, res) => {
     Cart.findOne({ userID: 1 })
       .exec()
