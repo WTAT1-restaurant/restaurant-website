@@ -22,6 +22,19 @@
         <div class="key"><p><b>sun</b>    </div><div class="value"> closed</p></div>
     </div>
     <div class="item">
+        <h4><b>opening hours:</b></h4>
+        <% for (const day in openingHours[0]) { %>
+        <% console.log(day) %>
+        <% } %>
+        <% console.log(Object.getOwnPropertyNames(day)) %>
+        <div class="key"><p><b><% Object.getOwnPropertyNames(day) %></b></div><div class="value"> 06:00 - 22:00</p></div>
+            <% /* Object.entries(openingHours).map(day => {
+                console.log(day); 
+                console.log(day.key); 
+            }); */ %>
+
+    </div>
+    <div class="item">
         <h4><b>contact:</b></h4>
         <div class="key"><p><b>phone</b></div><div class="value">(030) 5019 - 0</p></div>
         <div class="key"><p><b>fax</b></div><div class="value"></p>555-123-4567</div>

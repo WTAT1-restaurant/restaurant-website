@@ -25,31 +25,31 @@ const openingDaySchema = mongoose.Schema({
 });
 
 const openingHoursSchema = mongoose.Schema({
-    Monday: {
+    monday: {
         type: openingDaySchema,
         required: true
     },
-    Tuesday: {
+    tuesday: {
         type: openingDaySchema,
         required: true
     },
-    Wednesday: {
+    wednesday: {
         type: openingDaySchema,
         required: true
     },
-    Thursday: {
+    thursday: {
         type: openingDaySchema,
         required: true
     },
-    Friday: {
+    friday: {
         type: openingDaySchema,
         required: true
     },
-    Saturday: {
+    saturday: {
         type: openingDaySchema,
         required: true
     },
-    Sunday: {
+    sunday: {
         type: openingDaySchema,
         required: true
     },
