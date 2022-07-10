@@ -1,40 +1,90 @@
-<h1>Add or remove a menu item</h1>
-<p>
-<h2><b>To add a new item to the menu, fill in the fields and click the button to confirm</b></h2>
-</p>
-<form action="/menu/items" method="post">
-  <label>Title: <br><input type="text" name="title" placeholder="Title" autofocus></label><br>
-  <label>Price: <br><input type="number" step=0.1 name="price" placeholder="Price" autofocus></label><br>
-  <label>Picture url: <br><input type="url" name="picture" placeholder="Picture url"></label><br>
-  <label>Weight: <br><input type="number" step=0.1 name="weight" placeholder="Weight" autofocus></label><br>
-  <label>Fats: <br><input type="number" name="fats" placeholder="Fats" autofocus></label><br>
-  <label>Carbohydrates: <br><input type="number" name="carbohydrates" placeholder="Carbohydrates"
-      autofocus></label><br>
-  <label>Calories: <br><input type="number" name="calories" placeholder="Calories" autofocus></label><br>
-  <label>Vegetarian: <input type="checkbox" name="vegetarian"></label><br>
-  <button class="button food">ADD ITEM</button>
-</form>
-
-<!-- display menu items in a loop https://stackoverflow.com/a/38371978 -->
-<% for (var i=0; i < items.length; i++) { %>
-  <div class="item-cell">
-    <h4>
-      <a href="/menu/items/<%= items[i].id %>">
-        <%= items[i].title %> - <%= items[i].price %>€
-      </a>
-    </h4>
-    <a href="/menu/items/<%= items[i].id %>">
-      <img src="<%= items[i].image %>">
-    </a>
-    <div>
-      <form action="/menu/items/<%= items[i].id %>/delete" method="post">
-        <button class="btn first">DELETE</button>
-      </form>
-      <form action="/menu/items/<%= items[i].id %>/update" method="post">
-        <label>Price: <br><input type="number" step=0.1 name="price" placeholder="Price" value="<%= items[i].price %>" autofocus></label><br>
-        <label>Picture url: <br><input type="url" name="picture" placeholder="Picture url" value="<%= items[i].image %>"></label><br>
-        <button class="btn first">UPDATE</button>
-      </form>
+<body onload="startTime()">
+  <script type="text/javascript" src="/js/dayOfWeek.js"></script>
+  <h1>Add or remove a menu item</h1>
+  <p>
+    <h2><b>To add a new item to the menu, fill in the fields and click the button to confirm</b></h2>
+  </p>
+  <div class="open/close info">
+    <script>
+      function startTime() {
+        const today = new Date();
+        let h = today.getHours();
+        let m = today.getMinutes();
+        let s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        document.getElementById('clock').innerHTML =  h + ":" + m + ":" + s;
+        setTimeout(startTime, 1000);
+      }
+      function checkTime(i) {
+        if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+        return i;
+      }
+    </script>
+    <div id="clock"></div>
+    <div class="open/close status">
+      <script>
+        let weekday = getWeekday();
+        // listen for DOMContentLoaded event in the document
+        document.addEventListener("DOMContentLoaded", function () {
+          // do things after the DOM loads partially
+          const request = new Request("/about/restaurant/hours/monday");
+          fetch(request) 
+            .then(response => response.json())
+            .then(data => {
+              var restaurantStatus = isOpen(data.open.hour, data.open.minute, data.close.hour, data.close.minute);
+              const restaurantStatusInterface = document.getElementsByClassName("restaurantStatus")[0];
+              if (restaurantStatus == true) {
+                restaurantStatusInterface.textContent = "open";
+              } else {
+                restaurantStatusInterface.textContent = "close";
+              }
+            })
+            .catch(error => {
+              throw error
+            });
+        });
+      </script>
+      <p>the restaurant is currently: <div class="restaurantStatus"></div></p>
     </div>
+    <a>
+      <button class="button open close">open/close restaurant</button>
+    </a>
   </div>
+  <form action="/menu/items" method="post">
+    <label>Title: <br><input type="text" name="title" placeholder="Title" autofocus></label><br>
+    <label>Price: <br><input type="number" step=0.1 name="price" placeholder="Price" autofocus></label><br>
+    <label>Picture url: <br><input type="url" name="picture" placeholder="Picture url"></label><br>
+    <label>Weight: <br><input type="number" step=0.1 name="weight" placeholder="Weight" autofocus></label><br>
+    <label>Fats: <br><input type="number" name="fats" placeholder="Fats" autofocus></label><br>
+    <label>Carbohydrates: <br><input type="number" name="carbohydrates" placeholder="Carbohydrates"
+        autofocus></label><br>
+    <label>Calories: <br><input type="number" name="calories" placeholder="Calories" autofocus></label><br>
+    <label>Vegetarian: <input type="checkbox" name="vegetarian"></label><br>
+    <button class="button food">ADD ITEM</button>
+  </form>
+
+  <!-- display menu items in a loop https://stackoverflow.com/a/38371978 -->
+  <% for (var i=0; i < items.length; i++) { %>
+    <div class="item-cell">
+      <h4>
+        <a href="/menu/items/<%= items[i].id %>">
+          <%= items[i].title %> - <%= items[i].price %>€
+        </a>
+      </h4>
+      <a href="/menu/items/<%= items[i].id %>">
+        <img src="<%= items[i].image %>">
+      </a>
+      <div>
+        <form action="/menu/items/<%= items[i].id %>/delete" method="post">
+          <button class="btn first">DELETE</button>
+        </form>
+        <form action="/menu/items/<%= items[i].id %>/update" method="post">
+          <label>Price: <br><input type="number" step=0.1 name="price" placeholder="Price" value="<%= items[i].price %>" autofocus></label><br>
+          <label>Picture url: <br><input type="url" name="picture" placeholder="Picture url" value="<%= items[i].image %>"></label><br>
+          <button class="btn first">UPDATE</button>
+        </form>
+      </div>
+    </div>
 <% } %>
+</body>
