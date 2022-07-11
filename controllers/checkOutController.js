@@ -6,7 +6,7 @@ const user = require("../models/user");
 
 var ObjectId = require("mongoose").Types.ObjectId;
 var query = { checkOut_id: new ObjectId(checkOut._id) };
-
+ 
 //global variables
 var sizeCart = 0;
 var totalPrice = 0;
@@ -45,14 +45,12 @@ module.exports = {
   },
 
   getBilling: (req, res, next) => {
-    checkOut
-      .findOne()
-      .sort({ _id: -1 })
+    // Cart.findOne({"userID": req.body.userID})
+    checkOut.findOne().sort({ _id: -1 })
       .then((checkout) => {
         if (checkout) {
           res.render("placeOrder", { user: checkout, title: "info" });
-        }
-      })
+      }})
       .catch((error) => {
         console.log(error.message);
         return [];

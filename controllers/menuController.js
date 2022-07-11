@@ -54,10 +54,10 @@ module.exports = {
             } else {
                 query.exec((error, data) => {
                     if (data) {
-                        res.locals.items = data;   
+                        res.locals.items = data;
                         res.render("menu", { "items": data, "vegetarian": true, title: "vegetarian menu" });
-                    
-                }
+
+                    }
                 });
             }
         } else {
@@ -118,7 +118,6 @@ module.exports = {
                 });
         });
     },
-
     // allows a restaurant owner to delete items from a menu
     deleteMenuItem: (req, res, next) => {
         MenuItem.findOne({
@@ -166,24 +165,24 @@ module.exports = {
 
     respondJSON: (req, res) => { 
         res.json({
-        status: httpStatus.OK,
-        data: res.locals
+            status: httpStatus.OK,
+            data: res.locals
         });
     },
-
+    
     errorJSON: (error, req, res, next) => {
         let errorObject;
         if (error) {
             errorObject = {
-            status: httpStatus.INTERNAL_SERVER_ERROR,
-            message: error.message
+                status: httpStatus.INTERNAL_SERVER_ERROR,
+                message: error.message
             };
         } else {
             errorObject = {
-            status: httpStatus.INTERNAL_SERVER_ERROR,
-            message: "Unknown Error."
+                status: httpStatus.INTERNAL_SERVER_ERROR,
+                message: "Unknown Error."
             };
         }
         res.json(errorObject);
-    },
+    }
 };

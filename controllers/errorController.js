@@ -1,6 +1,6 @@
 "use scrict";
 const httpStatus = require("http-status-codes");
-
+ 
 // catch all errors and respond with a 500 status code
 module.exports = { 
     respondInternalError : (error, req, res, next) => {

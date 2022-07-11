@@ -28,6 +28,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     }))
     .catch((err) => console.log(err));
 
+app.set("token", process.env.TOKEN || "OUR_API_TOKEN");
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");
 
@@ -71,5 +72,4 @@ app.use((req, res, next) => {
     res.locals.flashMessages = req.flash();
     next();
 });
-
 app.use("/", router);

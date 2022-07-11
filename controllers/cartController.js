@@ -8,7 +8,7 @@ const httpStatus = require("http-status-codes");
 // 1. Check if the cart already exists in the database
 // 2. If the cart doesn't exist, create a new cart with the given userID, item, total cost and save it in the database
 // 3. If the cart exists, add item to the cart, update total cost and save it in the database
-
+ 
 module.exports = {
   addItem: (req, res, next) => {
     Cart.findOne({ userID: req.body.userID })
@@ -56,14 +56,14 @@ module.exports = {
               .save()
               .then((result) => {
                 req.flash("success", `Item added to cart: ${req.body.title}`);
-                res.locals.redirect = "/menu";
+                res.locals.redirect = "/menu/customerView";
                 next();
               })
               .catch((error) => {
                 req.flash(
                   "error",
                   `Error adding item to cart: ${error.message}.`);
-                res.locals.redirect = "/menu";
+                res.locals.redirect = "/menu/customerView";
                 next();
               });
           } else {
@@ -77,14 +77,14 @@ module.exports = {
               .save()
               .then((result) => {
                 req.flash("success", `Item added to cart: ${req.body.title}`);
-                res.locals.redirect = "/menu";
+                res.locals.redirect = "/menu/customerView";
                 next();
               })
               .catch((error) => {
                 req.flash(
                   "error",
                   `Error adding item to cart: ${error.message}.`);
-                res.locals.redirect = "/menu";
+                res.locals.redirect = "/menu/customerView";
                 next();
               });
           }
@@ -94,7 +94,7 @@ module.exports = {
         req.flash(
           "error",
           `Error adding item to cart: ${error.message}.`);
-        res.locals.redirect = "/menu";
+        res.locals.redirect = "/menu/customerView" ;
         next();
       });
   },
@@ -119,14 +119,14 @@ module.exports = {
             .save()
             .then((result) => {
               req.flash("success", `Item removed from cart: ${req.body.title}`);
-              res.locals.redirect = "/menu";
+              res.locals.redirect = "/menu/customerView";
               next();
             })
             .catch((error) => {
               req.flash(
                 "error",
                 `Error removing item from cart: ${error.message}.`);
-              res.locals.redirect = "/menu";
+              res.locals.redirect = "/menu/customerView";
               next();
             });
         } else {
@@ -140,14 +140,14 @@ module.exports = {
             .save()
             .then((result) => {
               req.flash("success", `Item removed from cart: ${req.body.title}`);
-              res.locals.redirect = "/menu";
+              res.locals.redirect = "/menu/customerView";
               next();
             })
             .catch((error) => {
               req.flash(
                 "error",
                 `Error removing item from cart: ${error.message}.`);
-              res.locals.redirect = "/menu";
+              res.locals.redirect = "/menu/customerView";
               next();
             });
         }

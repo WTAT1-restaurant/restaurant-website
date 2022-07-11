@@ -19,4 +19,4 @@ router.get("/:id/edit", usersController.edit);
 router.put("/:id/update", usersController.update, usersController.redirectView);
 router.delete("/:id/delete", usersController.delete, usersController.redirectView);
 
-module.exports = router;
+module.exports = router; 
