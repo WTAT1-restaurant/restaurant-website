@@ -1,3 +1,33 @@
+<script>
+    // checking if the restaurant is actually open or not
+    var isRestaurantOpen;
+    document.addEventListener("DOMContentLoaded", function () {
+            const URL = "/about/restaurant/status";
+            // do things after the DOM loads partially
+            const request = new Request(URL);
+            fetch(request) 
+                .then(response => response.json())
+                .then(data => {
+                if (data == true) {
+                    isRestaurantOpen = true;
+                } else {
+                    isRestaurantOpen = false;
+                }
+            })
+            .catch(error => {
+                throw error
+            });
+        });
+
+    function checkIfSubmittionIsPossible() {
+        if (isRestaurantOpen == false) { 
+            alert("restaurant closed. Unable to add/remove item to/from cart at this time.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
 <div class="item-cell">
     <h1><%= item.title %></h1>
     <img src="<%= item.image %>">
@@ -7,19 +37,17 @@
     <p>carbohydrates: <%= item.carbohydrates %>g</p> 
     <p>calories: <%= item.calories %></p>
     <div>
-        <form action="/cart/add" method="post">
+        <form onclick= "return checkIfSubmittionIsPossible();" action="/cart/add" method="post">
             <input type="text" name="userID" value="1" hidden>
             <input type="text" name="title" value="<%= item.title%>" hidden>
             <input type="number" name="price" value="<%= item.price %>" hidden>
             <button type="submit" class="btn first">+</button>
         </form>
-        <form action="/cart/remove" method="post">
+        <form onclick= "return checkIfSubmittionIsPossible();" action="/cart/remove" method="post">
             <input type="text" name="userID" value="1" hidden>
             <input type="text" name="title" value="<%= item.title %>" hidden>
             <input type="number" name="price" value="<%= item.price %>" hidden>
             <button class="btn first">−</button>
         </form>
-      </div>
+    </div>
 </div>
-    
- 
