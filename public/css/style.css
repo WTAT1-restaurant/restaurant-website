@@ -62,7 +62,6 @@ h4 {
   text-decoration: underline;
 }
 
-/* in progress */
 .key {
   text-align: right;
   width: 50%;
@@ -73,6 +72,21 @@ h4 {
 .value {
   text-align: left;
   width: 50%;
+  padding-left: 5px;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.key2 {
+  text-align: right;
+  width: 57%;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.value2 {
+  text-align: left;
+  width: 43%;
   padding-left: 5px;
   display: inline-block;
   box-sizing: border-box;
@@ -310,9 +324,6 @@ footer {
     0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
-
-
-
 .food:active {
   background-color: #5e03a8;
   box-shadow: 0 5px #666;
@@ -350,7 +361,6 @@ footer {
 }
 
 /* Checkout */
-
 .checkout-box {
   border-radius: 2em;
   inline-size: 60em;
@@ -366,9 +376,11 @@ footer {
   border: 3px solid rgb(2, 50, 105);
   padding: 10px;
 }
+
 #checkoutBody {
   background-color: rgb(0, 0, 0);
 }
+
 .form {
   display: grid;
   gap: 2em;
@@ -450,7 +462,6 @@ input[type="checkbox"] {
 }
 
 /* User Section */
-
 .users {
   margin-bottom: 5em;
   margin-top: 5em;
@@ -539,6 +550,35 @@ input[type="checkbox"] {
   font-size: x-large;
 }
 
+.clock{
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.restaurantStatus p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.openClose {
+  font-weight: bold;
+}
+
+.verticalWrapper {
+  display: block;
+  justify-content: center;
+}
+
+.horizontalWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.formItem + .formItem {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
 /* Modal */
 .modal {
   position: fixed;
@@ -573,7 +613,6 @@ input[type="checkbox"] {
 
 .close-button:hover {
   color: #7a00dd;
-  ;
 }
 
 .show-modal {

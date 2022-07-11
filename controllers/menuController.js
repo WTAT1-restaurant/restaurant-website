@@ -1,6 +1,6 @@
 "use scrict";
-const menuItem = require("../models/menuItem");
 const MenuItem = require("../models/menuItem");
+const OpeningHours = require("../models/openingHours");
 const httpStatus = require("http-status-codes");
 
 // save data in mongodb
@@ -25,8 +25,8 @@ module.exports = {
             }
         });
     },
-    index: (req, res, next) => {
 
+    index: (req, res, next) => {
         MenuItem.find({})
             .then((items) => {
                 res.locals.items = items;
@@ -39,15 +39,12 @@ module.exports = {
     },
 
     getMenu: (req, res) => {
-
         let veggie = req.query.vegetarian;
         let priceSorted = req.query.sortPrice;
-
         if (veggie) {
             var query = MenuItem.find({
                 vegetarian: true
             });
-
             if (priceSorted) {
                 query.sort({ price: 1 }).exec((error, data) => {
                     if (data) {
@@ -63,10 +60,8 @@ module.exports = {
                     }
                 });
             }
-
         } else {
             var query = MenuItem.find({});
-
             if (priceSorted) {
                 query.sort({ price: 1 }).exec((error, data) => {
                     if (data) {
@@ -122,7 +117,7 @@ module.exports = {
                     next(error);
                 });
         });
-    }, 
+    },
     // allows a restaurant owner to delete items from a menu
     deleteMenuItem: (req, res, next) => {
         MenuItem.findOne({
@@ -137,6 +132,7 @@ module.exports = {
                 next();
             });
     },
+
     // update menu item price and image
     update: (req, res, next) => {
         let itemId = req.params.itemId;
@@ -158,19 +154,22 @@ module.exports = {
                 next(error);
             });
     },
+
     // Handle requests to view the creation form, to submit
     // data from the creation form, and display a view
     redirectView: (req, res, next) => {
         let redirectPath = res.locals.redirect;
         if (redirectPath) res.redirect(redirectPath);
         else next();
-    },
-    respondJSON: (req, res) => {
+    }, 
+
+    respondJSON: (req, res) => { 
         res.json({
             status: httpStatus.OK,
             data: res.locals
         });
     },
+    
     errorJSON: (error, req, res, next) => {
         let errorObject;
         if (error) {

@@ -1,31 +1,126 @@
-<h1>Add or remove a menu item</h1>
-<p>
-</p>
-
-<%- include("./partials/modal.ejs") %>
-<br>
-
-<!-- display menu items in a loop https://stackoverflow.com/a/38371978 -->
-<% for (var i=0; i < items.length; i++) { %>
-  <div class="item-cell">
-    <h4>
-      <a href="/menu/items/<%= items[i].id %>">
-        <%= items[i].title %> - <%= items[i].price %>€
-      </a>
-    </h4>
-    <a href="/menu/items/<%= items[i].id %>">
-      <img src="<%= items[i].image %>">
-    </a>
-    <div>
-      <form action="/menu/items/<%= items[i].id %>/delete" method="post">
-        <button class="btn first">DELETE</button>
-      </form>
-      <form action="/menu/items/<%= items[i].id %>/update" method="post">
-        <label>Price: <br><input type="number" step=0.1 name="price" placeholder="Price" value="<%= items[i].price %>" autofocus></label><br>
-        <label>Picture url: <br><input type="url" name="picture" placeholder="Picture url" value="<%= items[i].image %>"></label><br>
-        <button class="btn first">UPDATE</button>
-      </form>
+<body onload="startTime()">
+  <h1>Add or remove a menu item</h1>
+  <p>
+  </p>
+  <%- include("./partials/modal.ejs") %>
+  <br>
+  <script type="text/javascript" src="/js/dayOfWeek.js"></script>
+  <h1>Open/close restaurant, and add or remove a menu item</h1>
+  <div class="restaurantStatus wrapper">
+    <script>
+      function startTime() {
+        const today = new Date();
+        let h = today.getHours();
+        let m = today.getMinutes();
+        let s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        document.getElementsByClassName('clock')[0].innerHTML =  h + ":" + m + ":" + s;
+        setTimeout(startTime, 1000);
+      }
+      function checkTime(i) {
+        if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+        return i;
+      }
+    </script>
+    <div class="clock"></div>
+    <div class="isRestaurantOpen">
+      <script>
+        let weekday = getWeekday();
+        // checking if the restaurant is supposed to be open according to the day of the week and the restaurant's opening hours
+        // listen for DOMContentLoaded event in the document
+        document.addEventListener("DOMContentLoaded", function () {
+          const URL = "/about/restaurant/hours/" + weekday;
+          // do things after the DOM loads partially
+          const request = new Request(URL);
+          fetch(request) 
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              var restaurantStatus = isOpen(data.open.hour, data.open.minute, data.close.hour, data.close.minute);
+              const restaurantStatusInterface = document.getElementsByClassName("openClose")[0];
+              if (restaurantStatus == true) {
+                restaurantStatusInterface.textContent = "open";
+              } else {
+                restaurantStatusInterface.textContent = "closed";
+              }
+            })
+            .catch(error => {
+              throw error
+            });
+        });
+        
+        // checking if the restaurant is actually open or not
+        document.addEventListener("DOMContentLoaded", function () {
+          const URL = "/about/restaurant/status";
+          // do things after the DOM loads partially
+          const request = new Request(URL);
+          fetch(request) 
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              const restaurantStatusInterface = document.getElementsByClassName("openClose")[1];
+              if (data == true) {
+                restaurantStatusInterface.textContent = "open";
+              } else {
+                restaurantStatusInterface.textContent = "closed";
+              }
+            })
+            .catch(error => {
+              throw error
+            });
+        });
+      </script>
+      <p class="key2">the restaurant is currently supposed to be <div class="openClose value2"></div></p>
+      <p class="key2">the restaurant is currently <div class="openClose value2"></div></p>
+    </div>
+    <div class="horizontalWrapper">
+      <div class="formItem">
+        <form action="/restaurant/close" method="post">
+          <button class="button restaurantStatusChange"><div class="newRestaurantStatus">open</div> restaurant</button>
+        </form>
+      </div>
+      <div class="formItem">
+        <form action="/restaurant/close" method="post">
+          <button class="button restaurantStatusChange"><div class="newRestaurantStatus">close</div> restaurant</button>
+        </form>
+      </div>
     </div>
   </div>
-<% } %>
+  <form action="/menu/items" method="post">
+    <label>Title: <br><input type="text" name="title" placeholder="Title" autofocus></label><br>
+    <label>Price: <br><input type="number" step=0.1 name="price" placeholder="Price" autofocus></label><br>
+    <label>Picture url: <br><input type="url" name="picture" placeholder="Picture url"></label><br>
+    <label>Weight: <br><input type="number" step=0.1 name="weight" placeholder="Weight" autofocus></label><br>
+    <label>Fats: <br><input type="number" name="fats" placeholder="Fats" autofocus></label><br>
+    <label>Carbohydrates: <br><input type="number" name="carbohydrates" placeholder="Carbohydrates"
+        autofocus></label><br>
+    <label>Calories: <br><input type="number" name="calories" placeholder="Calories" autofocus></label><br>
+    <label>Vegetarian: <input type="checkbox" name="vegetarian"></label><br>
+    <button class="button food">ADD ITEM</button>
+  </form>
 
+  <!-- display menu items in a loop https://stackoverflow.com/a/38371978 -->
+  <% for (var i=0; i < items.length; i++) { %>
+    <div class="item-cell">
+      <h4>
+        <a href="/menu/items/<%= items[i].id %>">
+          <%= items[i].title %> - <%= items[i].price %>€
+        </a>
+      </h4>
+      <a href="/menu/items/<%= items[i].id %>">
+        <img src="<%= items[i].image %>">
+      </a>
+      <div>
+        <form action="/menu/items/<%= items[i].id %>/delete" method="post">
+          <button class="btn first">DELETE</button>
+        </form>
+        <form action="/menu/items/<%= items[i].id %>/update" method="post">
+          <label>Price: <br><input type="number" step=0.1 name="price" placeholder="Price" value="<%= items[i].price %>" autofocus></label><br>
+          <label>Picture url: <br><input type="url" name="picture" placeholder="Picture url" value="<%= items[i].image %>"></label><br>
+          <button class="btn first">UPDATE</button>
+        </form>
+      </div>
+    </div>
+<% } %>
+</body>

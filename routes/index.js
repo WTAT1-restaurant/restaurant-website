@@ -10,6 +10,7 @@ const errorRoutes = require('./errorRoutes');
 const menuRoutes = require('./menuRoutes');
 const userRoutes = require('./userRoutes');
 const homeRoutes = require('./homeRoutes');
+const aboutRoutes = require('./aboutRoutes');
 
 
 // Matching router 
@@ -19,6 +20,7 @@ router.use('/contact', contactRoutes);
 router.use('/menu', menuRoutes);
 router.use('/users', userRoutes);
 router.use("/api", apiRoutes);
+router.use('/about', aboutRoutes);
 router.use('/', homeRoutes);
 router.use('/', errorRoutes);
 
