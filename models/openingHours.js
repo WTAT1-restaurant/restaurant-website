@@ -25,7 +25,7 @@ const openingDaySchema = mongoose.Schema({
 });
 
 const openingHoursSchema = mongoose.Schema({
-    open: {
+    isOpen: {
         type: Boolean,
         required: true
     },

@@ -8,5 +8,9 @@ const aboutController = require('../controllers/aboutController');
 router.get("/", aboutController.getOpeningHoursForRender);
 router.get("/restaurant/hours", aboutController.getOpeningHours);
 router.get("/restaurant/hours/:day", aboutController.getOpeningHourOnDay);
+router.get("/restaurant/status", aboutController.getRestaurantStatus);
+// in progress
+router.post("/restaurant/open", aboutController.openRestaurant);
+router.post("/restaurant/close", aboutController.closeRestaurant);
 
 module.exports = router;

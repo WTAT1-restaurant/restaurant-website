@@ -1,10 +1,7 @@
 <body onload="startTime()">
   <script type="text/javascript" src="/js/dayOfWeek.js"></script>
-  <h1>Add or remove a menu item</h1>
-  <p>
-    <h2><b>To add a new item to the menu, fill in the fields and click the button to confirm</b></h2>
-  </p>
-  <div class="open/close info">
+  <h1>Open/close restaurant, and add or remove a menu item</h1>
+  <div class="restaurantStatus wrapper">
     <script>
       function startTime() {
         const today = new Date();
@@ -13,7 +10,7 @@
         let s = today.getSeconds();
         m = checkTime(m);
         s = checkTime(s);
-        document.getElementById('clock').innerHTML =  h + ":" + m + ":" + s;
+        document.getElementsByClassName('clock')[0].innerHTML =  h + ":" + m + ":" + s;
         setTimeout(startTime, 1000);
       }
       function checkTime(i) {
@@ -21,23 +18,47 @@
         return i;
       }
     </script>
-    <div id="clock"></div>
-    <div class="open/close status">
+    <div class="clock"></div>
+    <div class="isRestaurantOpen">
       <script>
         let weekday = getWeekday();
+        // checking if the restaurant is supposed to be open according to the day of the week and the restaurant's opening hours
         // listen for DOMContentLoaded event in the document
         document.addEventListener("DOMContentLoaded", function () {
+          const URL = "/about/restaurant/hours/" + weekday;
           // do things after the DOM loads partially
-          const request = new Request("/about/restaurant/hours/monday");
+          const request = new Request(URL);
           fetch(request) 
             .then(response => response.json())
             .then(data => {
+              console.log(data);
               var restaurantStatus = isOpen(data.open.hour, data.open.minute, data.close.hour, data.close.minute);
-              const restaurantStatusInterface = document.getElementsByClassName("restaurantStatus")[0];
+              const restaurantStatusInterface = document.getElementsByClassName("openClose")[0];
               if (restaurantStatus == true) {
                 restaurantStatusInterface.textContent = "open";
               } else {
-                restaurantStatusInterface.textContent = "close";
+                restaurantStatusInterface.textContent = "closed";
+              }
+            })
+            .catch(error => {
+              throw error
+            });
+        });
+
+        // checking if the restaurant is actually open or not
+        document.addEventListener("DOMContentLoaded", function () {
+          const URL = "/about/restaurant/status";
+          // do things after the DOM loads partially
+          const request = new Request(URL);
+          fetch(request) 
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              const restaurantStatusInterface = document.getElementsByClassName("openClose")[1];
+              if (data == true) {
+                restaurantStatusInterface.textContent = "open";
+              } else {
+                restaurantStatusInterface.textContent = "closed";
               }
             })
             .catch(error => {
@@ -45,11 +66,21 @@
             });
         });
       </script>
-      <p>the restaurant is currently: <div class="restaurantStatus"></div></p>
+      <p class="key2">the restaurant is currently supposed to be <div class="openClose value2"></div></p>
+      <p class="key2">the restaurant is currently <div class="openClose value2"></div></p>
     </div>
-    <a>
-      <button class="button open close">open/close restaurant</button>
-    </a>
+    <div class="horizontalWrapper">
+      <div class="formItem">
+        <form action="/restaurant/close" method="post">
+          <button class="button restaurantStatusChange"><div class="newRestaurantStatus">open</div> restaurant</button>
+        </form>
+      </div>
+      <div class="formItem">
+        <form action="/restaurant/close" method="post">
+          <button class="button restaurantStatusChange"><div class="newRestaurantStatus">close</div> restaurant</button>
+        </form>
+      </div>
+    </div>
   </div>
   <form action="/menu/items" method="post">
     <label>Title: <br><input type="text" name="title" placeholder="Title" autofocus></label><br>

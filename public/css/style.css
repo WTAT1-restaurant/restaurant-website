@@ -62,7 +62,6 @@ h4 {
   text-decoration: underline;
 }
 
-/* in progress */
 .key {
   text-align: right;
   width: 50%;
@@ -73,6 +72,21 @@ h4 {
 .value {
   text-align: left;
   width: 50%;
+  padding-left: 5px;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.key2 {
+  text-align: right;
+  width: 57%;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.value2 {
+  text-align: left;
+  width: 43%;
   padding-left: 5px;
   display: inline-block;
   box-sizing: border-box;
@@ -561,4 +575,33 @@ input[type="checkbox"] {
   background-color: #191919;
   color: #7a00dd;
   font-size: x-large;
+}
+
+.clock{
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.restaurantStatus p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.openClose {
+  font-weight: bold;
+}
+
+.verticalWrapper {
+  display: block;
+  justify-content: center;
+}
+
+.horizontalWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.formItem + .formItem {
+  margin-left: 2px;
+  margin-right: 2px;
 }
