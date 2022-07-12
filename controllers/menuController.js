@@ -108,7 +108,7 @@ module.exports = {
             menuItem
                 .save()
                 .then((data) => {
-                    res.locals.redirect = "/restaurant";
+                    res.locals.redirect = "/menu/restaurantView";
                     res.locals.addedMenuItem = data;
                     next();
                 })
@@ -124,7 +124,7 @@ module.exports = {
             id: req.params.itemId
         }).remove()
             .then(() => {
-                res.locals.redirect = "/restaurant";
+                res.locals.redirect = "/menu/restaurantView";
                 next();
             })
             .catch(error => {
@@ -146,7 +146,7 @@ module.exports = {
             image: picture
         })
             .then(data => {
-                res.locals.redirect = '/restaurant';
+                res.locals.redirect = '/menu/restaurantView';
                 next();
             })
             .catch(error => {

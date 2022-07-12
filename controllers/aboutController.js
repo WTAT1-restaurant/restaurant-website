@@ -12,7 +12,7 @@ module.exports = {
                 res.send("No opening times defined");
             } else {
                 res.render("about", {
-                openingHours: openingHours,
+                openingHours: openingHours.toObject(),
                 title: "about"
                 });
             }

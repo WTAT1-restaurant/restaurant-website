@@ -16,38 +16,35 @@
         <p>12459 Berlin</p>
     </div>
     <div class="item">
-        <h4><b>opening hours:</b></h4> 
-        <% const mondayOpening = (openingHours.monday.open.hour > 9 ? "" + openingHours.monday.open.hour: "0" + openingHours.monday.open.hour) + ":" + (openingHours.monday.open.minute > 9 ? "" + openingHours.monday.open.minute: "0" + openingHours.monday.open.minute) %>
-        <% const mondayClosing = (openingHours.monday.close.hour > 9 ? "" + openingHours.monday.close.hour: "0" + openingHours.monday.close.hour) + ":" + (openingHours.monday.close.minute > 9 ? "" + openingHours.monday.close.minute: "0" + openingHours.monday.close.minute) %>
-        <div class="key"><p><b>monday</b></div><div class="value"><%= mondayOpening %> - <%= mondayClosing %> </p></div>
+        <h4><b>opening hours:</b></h4>  
+        <%
+            function getFormattedTime({hour, minute}) {
+                return (hour > 9 ? "" + hour: "0" + hour) + ":" + (minute > 9 ? "" + minute: "0" + minute);
+            }
 
-        <% const tuesdayOpening = (openingHours.tuesday.open.hour > 9 ? "" + openingHours.tuesday.open.hour: "0" + openingHours.tuesday.open.hour) + ":" + (openingHours.tuesday.open.minute > 9 ? "" + openingHours.tuesday.open.minute: "0" + openingHours.tuesday.open.minute) %>
-        <% const tuesdayClosing = (openingHours.tuesday.close.hour > 9 ? "" + openingHours.tuesday.close.hour: "0" + openingHours.tuesday.close.hour) + ":" + (openingHours.tuesday.close.minute > 9 ? "" + openingHours.tuesday.close.minute: "0" + openingHours.tuesday.close.minute) %>
-        <div class="key"><p><b>tuesday</b></div><div class="value"><%= tuesdayOpening %> - <%= tuesdayClosing %></p></div>
+            function getFormattedOpeningHours(dayHours) {
+                let openTime = getFormattedTime(dayHours.open);
+                let closeTime = getFormattedTime(dayHours.close);
 
-        <% const wednesdayOpening = (openingHours.wednesday.open.hour > 9 ? "" + openingHours.wednesday.open.hour: "0" + openingHours.wednesday.open.hour) + ":" + (openingHours.wednesday.open.minute > 9 ? "" + openingHours.wednesday.open.minute: "0" + openingHours.wednesday.open.minute) %>
-        <% const wednesdayClosing = (openingHours.wednesday.close.hour > 9 ? "" + openingHours.wednesday.close.hour: "0" + openingHours.wednesday.close.hour) + ":" + (openingHours.wednesday.close.minute > 9 ? "" + openingHours.wednesday.close.minute: "0" + openingHours.wednesday.close.minute) %>
-        <div class="key"><p><b>wednesday</b></div><div class="value"><%= wednesdayOpening %> - <%= wednesdayClosing %></p></div>
-
-        <% const thursdayOpening = (openingHours.thursday.open.hour > 9 ? "" + openingHours.thursday.open.hour: "0" + openingHours.thursday.open.hour) + ":" + (openingHours.thursday.open.minute > 9 ? "" + openingHours.thursday.open.minute: "0" + openingHours.thursday.open.minute) %>
-        <% const thursdayClosing = (openingHours.thursday.close.hour > 9 ? "" + openingHours.thursday.close.hour: "0" + openingHours.thursday.close.hour) + ":" + (openingHours.thursday.close.minute > 9 ? "" + openingHours.thursday.close.minute: "0" + openingHours.thursday.close.minute) %>
-        <div class="key"><p><b>thursday</b></div><div class="value"><%= thursdayOpening %> - <%= thursdayClosing %></p></div>
-
-        <% const fridayOpening = (openingHours.friday.open.hour > 9 ? "" + openingHours.friday.open.hour: "0" + openingHours.friday.open.hour) + ":" + (openingHours.friday.open.minute > 9 ? "" + openingHours.friday.open.minute: "0" + openingHours.friday.open.minute) %>
-        <% const fridayClosing = (openingHours.friday.close.hour > 9 ? "" + openingHours.friday.close.hour: "0" + openingHours.friday.close.hour) + ":" + (openingHours.friday.close.minute > 9 ? "" + openingHours.friday.close.minute: "0" + openingHours.friday.close.minute) %>
-        <div class="key"><p><b>friday</b></div><div class="value"><%= fridayOpening %> - <%= fridayClosing %></p></div>
-
-        <% const saturdayOpening = (openingHours.saturday.open.hour > 9 ? "" + openingHours.saturday.open.hour: "0" + openingHours.saturday.open.hour) + ":" + (openingHours.saturday.open.minute > 9 ? "" + openingHours.saturday.open.minute: "0" + openingHours.saturday.open.minute) %>
-        <% const saturdayClosing = (openingHours.saturday.close.hour > 9 ? "" + openingHours.saturday.close.hour: "0" + openingHours.saturday.close.hour) + ":" + (openingHours.saturday.close.minute > 9 ? "" + openingHours.saturday.close.minute: "0" + openingHours.saturday.close.minute) %>
-        <div class="key"><p><b>saturday</b></div><div class="value"><%= saturdayOpening %> - <%= saturdayClosing %></p></div>
-
-        <% const sundayOpening = (openingHours.sunday.open.hour > 9 ? "" + openingHours.sunday.open.hour: "0" + openingHours.sunday.open.hour) + ":" + (openingHours.sunday.open.minute > 9 ? "" + openingHours.sunday.open.minute: "0" + openingHours.sunday.open.minute) %>
-        <% const sundayClosing = (openingHours.sunday.close.hour > 9 ? "" + openingHours.sunday.close.hour: "0" + openingHours.sunday.close.hour) + ":" + (openingHours.sunday.close.minute > 9 ? "" + openingHours.sunday.close.minute: "0" + openingHours.sunday.close.minute) %>
-        <% if (sundayOpening == sundayClosing) { %>
-            <div class="key"><p><b>sunday</b></div><div class="value">closed</p></div>
-        <% } else { %>
-            <div class="key"><p><b>sunday</b></div><div class="value"><%= sundayOpening %> - <%= sundayClosing %></p></div>
-        <% }%>
+                if (openTime == closeTime){
+                    return "closed"
+                }
+                return `${openTime} - ${closeTime}`;
+            }
+        %>
+        <%
+            [
+                "monday",
+                "tuesday",
+                "wednesday",
+                "thursday",
+                "friday",
+                "saturday",
+                "sunday",
+            ].forEach(day => {
+        %>
+        <div class="key"><p><b><%= day %></b></div><div class="value"><%= getFormattedOpeningHours(openingHours[day]) %></p></div>
+        <% }) %>
     </div>
     <div class="item">
         <h4><b>contact:</b></h4>

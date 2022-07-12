@@ -43,6 +43,7 @@ body {
 
 .item + .item {
   margin-left: 1%;
+  margin-right: 1%;
 }
 
 .aboutUs {
