@@ -22,11 +22,13 @@ const port = 3000;
 // anni = i4eIB3sN6sAJ7pZP
 
 const dbURI = 'mongodb+srv://anni:i4eIB3sN6sAJ7pZP@foodorder.enn28.mongodb.net/FoodOrder?retryWrites=true&w=majority'
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then((result) => app.listen(port, () => {
-        console.log(`The Express.js server has started and is listening on port number: ${port}`);
-    }))
-    .catch((err) => console.log(err));
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }).then((result) => {
+    const server = app.listen(app.get("port"), () => {
+        console.log(`Server running at http://localhost:${ app.get("port") }`);
+    }),
+    io = require("socket.io")(server);
+    require("./controllers/chatController")(io)
+}).catch((err) => console.log(err));
 
 app.set("token", process.env.TOKEN || "OUR_API_TOKEN");
 app.set("port", process.env.PORT || 3000);
