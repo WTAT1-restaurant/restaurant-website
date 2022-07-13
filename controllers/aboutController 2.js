@@ -1,4 +1,4 @@
-"use scrict";
+ "use scrict";
 const OpeningHours = require("../models/openingHours");
 const httpStatus = require("http-status-codes");
 

@@ -9,6 +9,7 @@ const router = require("./routes/index");
 const User = require('./models/user');
 // middleware that interprets requests according to a specific query parameter and HTTP method
 const methodOverride = require("method-override");
+
 // express app
 const app = express();
 const port = 3000;

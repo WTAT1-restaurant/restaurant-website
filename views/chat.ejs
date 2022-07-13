@@ -2,6 +2,7 @@
 
     <% if (currentUser) { %>
     <h1>Chat</h1>
+    <h2>  welcome to the chat box, <%= currentUser.name.first %>  </h2>
     <form id="chatForm">
         <input id="chat-input" type="text">
         <input id="chat-user-name" type="hidden"

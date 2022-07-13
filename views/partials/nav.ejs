@@ -19,6 +19,7 @@
       });
   });
 </script>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <nav>
   <ul>
     <li><a href="/">Home</a></li>
@@ -31,6 +32,7 @@
     <li><a href="/cart" id="cart"><i class='fas fa-shopping-cart' style='font-size:19px;color:rgb(255, 255, 255)'></i><span class="total-count"></span> </a></li>
     <% if (loggedIn) {%>
     <li><a href="/users/<%= currentUser.id %>/view">Hello, <%= currentUser.name.first %></a></li>
+    <a href="/chat" class='fas fa-comment' style='font-size:24px' id ="chat-icon" ></a>
     <% } %>
     <% if (loggedIn) {%>
     <li><a href="/users/logout">Log out</a></li>

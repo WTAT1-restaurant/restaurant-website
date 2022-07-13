@@ -154,6 +154,62 @@ module.exports = {
                 next(error);
             });
     },
+    closeRestaurant: (req, res, next) => {
+        // const change = req.body.newRestaurantStatus;
+        // console.log(change);
+        // OpeningHours.findOneAndUpdate({}, {isOpen: false})
+        //     .exec()
+        //     .then(data => {
+        //         data.save;
+        //         res.locals.redirect = '/menu/restaurantView';
+        //         next();
+        //     })
+        //     .catch((error) => {
+        //         console.log(error.message);
+        //         next(error);
+        //     });
+        OpeningHours.updateOne({}, { $set: { isOpen: false } })
+        .then(      
+            req.flash("success", ` you opened the restaurant`),
+             res.redirect("/menu/restaurantView")
+       )
+       .catch((error) => {
+         req.flash(
+             "error",
+             `Failed open because: ${error.message}.`,
+             res.redirect("/checkout"),
+      
+       );  next(error) });
+   },
+    
+      openRestaurant: (req, res, next) => {
+        // const change = req.body.newRestaurantStatus;
+        // console.log(change);
+        // OpeningHours.findOneAndUpdate({}, {isOpen: true})
+        //     .exec()
+        //     .then(data => {
+        //         data.save;
+        //         res.locals.redirect = '/menu/restaurantView';
+        //         next();
+        //     })
+        //     .catch((error) => {
+        //         console.log(error.message);
+        //         next(error);
+        //     });
+        OpeningHours.updateOne({}, { $set: { isOpen: true } })
+          .then(      
+               req.flash("success", ` you opened the restaurant`),
+                res.redirect("/menu/restaurantView")
+          )
+          .catch((error) => {
+            req.flash(
+                "error",
+                `Failed open because: ${error.message}.`,
+                res.redirect("/checkout"),
+         
+          );  next(error) });
+      },
+
 
     // Handle requests to view the creation form, to submit
     // data from the creation form, and display a view
