@@ -11,7 +11,7 @@ module.exports = io => {
         
         Message.find({})
         .sort({ createdAt: -1 })
-        .limit(10)
+        .limit(20)
         .then(messages => {
           client.emit("load all messages", messages.reverse());
         });
@@ -22,8 +22,8 @@ module.exports = io => {
               userName: data.userName,
               user: data.userId
             };
-       m = new Message(messageAttributes);
-      m.save()
+        m = new Message(messageAttributes);
+        m.save()
         .then(() => {
           io.emit("message", messageAttributes);
         })
