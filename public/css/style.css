@@ -663,10 +663,10 @@ input[type="checkbox"] {
 .chatContainer {
   background-color: #ffffff;
   display:inline-block;
-  width: 40%;
-  height: 1000px;
-  margin-left: 30%;
-  margin-right: 30%;
+  width: 60%;
+  height: 80%;
+  margin-left: 20%;
+  margin-right: 20%;
   margin-top: 1%;
   margin-bottom: 1%;
   border: 1px solid #7a00dd;
