@@ -475,7 +475,6 @@ legend {
 }
 
 input {
-  height: 10px;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -659,4 +658,43 @@ input[type="checkbox"] {
   visibility: visible;
   transform: scale(1.0);
   transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.chatContainer {
+  background-color: #ffffff;
+  display:inline-block;
+  width: 40%;
+  height: 1000px;
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  border: 1px solid #7a00dd;
+}
+
+strong.message.current-user {
+  color: #7a00dd;
+}
+
+#chat li {
+  text-align: left;
+}
+
+.chatContainer input[type=submit] {
+  background-color: #7a00dd;
+  color: white;
+  padding: 16px 32px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.chatContainer input[type=text] {
+  width: 60%;
+  border-color: #7a00dd;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  padding: 16px 32px;
+  margin: 4px 2px;
+  cursor: pointer;
 }

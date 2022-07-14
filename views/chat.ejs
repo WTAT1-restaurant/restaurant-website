@@ -1,7 +1,11 @@
-<div class="container">
-
+<style>
+    body {
+        background-color: #191919;
+    }
+</style>
+<h1>Chat</h1>
+<div class="chatContainer">
     <% if (currentUser) { %>
-    <h1>Chat</h1>
     <h2>  welcome to the chat box, <%= currentUser.name.first %>  </h2>
     <form id="chatForm">
         <input id="chat-input" type="text">
@@ -9,7 +13,7 @@
         value="<%= currentUser.fullName %>">
         <input id="chat-user-id" type="hidden"
         value="<%= currentUser._id %>">
-        <input type="submit" value="Send">
+        <input type="submit" value="send">
         </form>
     <div id="chat"></div>
     <% } %>
