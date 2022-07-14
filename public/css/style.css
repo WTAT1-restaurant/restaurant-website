@@ -41,19 +41,6 @@ body {
   margin-bottom: 10px;
 }
 
-.item + .item {
-  margin-left: 1%;
-  margin-right: 1%;
-}
-
-.aboutUs {
-  width: 62%;
-  padding: 15px;
-  border: 1px solid #7a00dd;
-  /* border-radius: 25px; */
-  margin: 10px;
-}
-
 .item p,
 h4 {
   margin: 0;
@@ -61,6 +48,56 @@ h4 {
 
 .item h4 {
   text-decoration: underline;
+}
+
+.item + .item {
+  margin-left: 1%;
+  margin-right: 1%;
+}
+
+.gridContainer {
+  display: grid;
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  gap: 1%;
+}
+
+.gridItem { 
+  padding: 15px;
+  border: 1px solid #7a00dd;
+  background-color: #ffffff;
+}
+
+.gridItem p,
+h4 {
+  margin: 0;
+}
+
+.gridItem h4 {
+  text-decoration: underline;
+}
+
+.aboutUs {
+  grid-column: 1 / 4;
+  grid-row: 1 / 4;
+}
+
+.restaurantLocation {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+.restaurantOpeningHours {
+  grid-column: 4;
+  grid-row: 2 / 3;
+}
+
+.restaurantContactInfo {
+  grid-column: 4;
+  grid-row: 4;
 }
 
 .key {
@@ -94,8 +131,9 @@ h4 {
 }
 
 .map {
-  width: 64%;
+  width: 60%;
   height: 500px;
+  border: 1px solid #7a00dd;
 }
 
 /* normaler Link */

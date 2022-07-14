@@ -1,21 +1,26 @@
+<style>
+    body {
+        background-color: #191919;
+    }
+</style>
 <h1>restaurant information</h1>
-<div class="flexContainer">
-    <div class="aboutUs">
+<div class="gridContainer">
+    <div class="gridItem aboutUs">
         <p>From a very young age, I saw my mom take out a little book, wrapped in dark leather, and write something down with an inscrutable smile while she cooked or ate. One day she gave us the very mysterious little book she had kept for years. A book in which she wrote all her wonderful letters - we thought. Curious, we opened the first pages and were surprised to find exact cooking information missing over and over again.
+            From a very young age, I saw my mom take out a little book, wrapped in dark leather, and write something down with an inscrutable smile while she cooked or ate. One day she gave us the very mysterious little book she had kept for years. A book in which she wrote all her wonderful letters - we thought. Curious, we opened the first pages and were surprised to find exact cooking information missing over and over again.
             It was not a recipe book - but what was it?
             The surprise was astonishing when we looked more closely at the pages and realized that while details of the steps might be missing, the book revealed much more about one thing; one thing much more valuable than knowing if there was a pinch of salt: feelings. What our mother had done was to fill a recipe book with sentiments. Like a diary, she had put into words the unique atmosphere that emerged each time we sat together and tried one of her newly created dishes; how my brother's mood changed from initial skepticism, to thoughtfulness at the first bite, to scooping to try the dish. And, as is often the case, made us all laugh.
             No matter what she prepared, she never forgot the most important ingredient in everything she cooked for us: love.
         </p>
     </div>
-</div>
-<div class="flexContainer">
-    <div class="item">
+    <div class="gridItem restaurantLocation">
         <h4><b>address:</b></h4>
         <p>HTW Berlin</p>
         <p>Wilhelminenhofstraße 75A</p>
         <p>12459 Berlin</p>
     </div>
-    <div class="item">
+
+    <div class="gridItem restaurantOpeningHours">
         <h4><b>opening hours:</b></h4>  
         <%
             function getFormattedTime({hour, minute}) {
@@ -47,7 +52,7 @@
         <% }) %>
     </div>
 
-    <div class="item">
+    <div class="gridItem restaurantContantInfo">
         <h4><b>contact:</b></h4>
         <div class="key"><p><b>phone</b></div><div class="value">(030) 5019 - 0</p></div>
         <div class="key"><p><b>fax</b></div><div class="value"></p>555-123-4567</div>
